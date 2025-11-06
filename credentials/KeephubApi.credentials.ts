@@ -61,7 +61,7 @@ export class KeephubApi implements ICredentialType {
         },
       },
       default: '',
-      placeholder: 'your@email.com',
+      placeholder: 'username',
       description: 'Your Keephub username or email',
     },
     {
@@ -88,8 +88,8 @@ export class KeephubApi implements ICredentialType {
           authType: ['apiCredentials'],
         },
       },
-      default: '/api/auth/login',
-      description: 'The endpoint to get your token (usually /api/auth/login)',
+      default: '/authentication',
+      description: 'The endpoint to get your token (/authentication for Keephub)',
     },
   ];
 }

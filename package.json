@@ -1,52 +1,43 @@
 {
-	"name": "n8n-nodes-<...>",
-	"version": "0.1.0",
-	"description": "",
-	"license": "MIT",
-	"homepage": "",
-	"keywords": [
-		"n8n-community-node-package"
-	],
-	"author": {
-		"name": "",
-		"email": ""
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/<...>/n8n-nodes-<...>.git"
-	},
-	"scripts": {
-		"build": "n8n-node build",
-		"build:watch": "tsc --watch",
-		"dev": "n8n-node dev",
-		"lint": "n8n-node lint",
-		"lint:fix": "n8n-node lint --fix",
-		"release": "n8n-node release",
-		"prepublishOnly": "n8n-node prerelease"
-	},
-	"files": [
-		"dist"
-	],
-	"n8n": {
-		"n8nNodesApiVersion": 1,
-		"strict": true,
-		"credentials": [
-			"dist/credentials/GithubIssuesApi.credentials.js",
-			"dist/credentials/GithubIssuesOAuth2Api.credentials.js"
-		],
-		"nodes": [
-			"dist/nodes/GithubIssues/GithubIssues.node.js",
-			"dist/nodes/Example/Example.node.js"
-		]
-	},
-	"devDependencies": {
-		"@n8n/node-cli": "*",
-		"eslint": "9.32.0",
-		"prettier": "3.6.2",
-		"release-it": "^19.0.4",
-		"typescript": "5.9.2"
-	},
-	"peerDependencies": {
-		"n8n-workflow": "*"
-	}
+  "name": "n8n-nodes-keephub",
+  "version": "0.1.0",
+  "description": "Keephub custom nodes for n8n",
+  "license": "MIT",
+  "keywords": [
+    "n8n-community-node-package"
+  ],
+  "author": {
+    "name": "Niksa Perovic",
+    "email": "niksa.perovic.90@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<...>/n8n-nodes-keephub.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && npm run copy-assets",
+    "copy-assets": "mkdir -p dist/nodes/Keephub && mkdir -p dist/nodes/KeephubTrigger && cp icons/Keephub.svg dist/nodes/Keephub/ && cp icons/Keephub.svg dist/nodes/KeephubTrigger/",
+    "dev": "tsc -w"
+  },
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "strict": true,
+    "credentials": [
+      "dist/credentials/KeephubApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Keephub/Keephub.node.js"
+    ]
+  },
+  "devDependencies": {
+    "typescript": "5.9.2",
+    "prettier": "3.6.2",
+    "@types/node": "^20.0.0"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
 }
