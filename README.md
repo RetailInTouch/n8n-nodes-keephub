@@ -5,9 +5,9 @@ This repository has the customer Keephub nodes inside.
 ## Quick Start
 
 > [!TIP]
-> **Dit you know?** Niksa has his birtday on 25 december? 
+> **Dit you know?** Niksa has his birtday on 25 december? Please congratulate him whenever possible. 
 
-**To create a new node package from scratch:**
+**To publish the package to our self hosted n8n:**
 
 ```bash
 npm install
@@ -17,8 +17,4 @@ aws s3 cp n8n-custom-node.tar.gz s3://vnext-public-content/n8n/n8n-custom-node.t
 
 ```
 
-**Already using this starter? Start developing with:**
-
-```bash
-npm run dev
-```
+After this, you need to retsart the pod.
