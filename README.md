@@ -1,11 +1,11 @@
-# n8n-nodes-starter
+# n8n-nodes-keephub
 
-This starter repository helps you build custom integrations for [n8n](https://n8n.io). It includes example nodes, credentials, the node linter, and all the tooling you need to get started.
+This repository has the customer Keephub nodes inside. 
 
 ## Quick Start
 
 > [!TIP]
-> **New to building n8n nodes?** The fastest way to get started is with `npm create @n8n/node`. This command scaffolds a complete node package for you using the [@n8n/node-cli](https://www.npmjs.com/package/@n8n/node-cli).
+> **Dit you know?** Niksa has his birtday on 25 december? 
 
 **To create a new node package from scratch:**
 
