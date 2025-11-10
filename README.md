@@ -2,10 +2,10 @@
 
 <div align="center">
 
-[![npm version](https://img.shields.io/npm/v/n8n-nodes-keephub.svg?style=flat-square)](https://www.npmjs.com/package/n8n-nodes-keephub)
-[![npm downloads](https://img.shields.io/npm/dm/n8n-nodes-keephub.svg?style=flat-square)](https://www.npmjs.com/package/n8n-nodes-keephub)
+<!-- [![npm version](https://img.shields.io/npm/v/n8n-nodes-keephub.svg?style=flat-square)](https://www.npmjs.com/package/n8n-nodes-keephub) -->
+<!-- [![npm downloads](https://img.shields.io/npm/dm/n8n-nodes-keephub.svg?style=flat-square)](https://www.npmjs.com/package/n8n-nodes-keephub) -->
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](./LICENSE)
-[![Maintenance](https://img.shields.io/badge/maintained%3F-yes-green.svg?style=flat-square)](https://github.com/yourusername/n8n-nodes-keephub)
+[![Maintenance](https://img.shields.io/badge/maintained%3F-yes-green.svg?style=flat-square)](https://github.com/RetailInTouch/n8n-nodes-keephub)
 
 **Seamlessly integrate Keephub with your n8n workflows** 🎯
 
@@ -31,7 +31,15 @@ This is a professional **n8n community node** that enables you to harness the fu
 
 ---
 
-<!-- ## 🔧 Installation -->
+## 🔧 Installation
+
+## To publish the package to our self-hosted n8n:
+```npm install
+npm run build
+tar -C dist -czf n8n-custom-node.tar.gz nodes credentials icons
+aws s3 cp n8n-custom-node.tar.gz s3://vnext-public-content/n8n/n8n-custom-node.tar.gz --acl public-read
+```
+After this, you need to restart the pod.
 
 <!-- ### 📦 Community Nodes Method (Recommended)
 
@@ -63,7 +71,8 @@ npm install n8n-nodes-keephub
 npm install -g n8n-nodes-keephub
 ```
 
-Restart your n8n instance and the Keephub node will appear in your palette! 🎨
+> [!TIP]
+> Restart your n8n instance and the Keephub node will appear in your palette! 🎨
 
 ---
 
@@ -74,7 +83,7 @@ Restart your n8n instance and the Keephub node will appear in your palette! 🎨
 1. In n8n, go to **Credentials** 🔐
 2. Create **New** → Search for **Keephub API**
 3. Fill in your credentials:
-   - **Client URL**: `https://yourcompany.keephub.io`
+   - **Client URL**: https://yourcompany.keephub.io
    - **Auth Type**: Choose Bearer Token or Username/Password
    - **Language** (optional): Default is `en`
 4. Test & Save ✔️
@@ -338,7 +347,7 @@ Enable "Continue on Error" to handle failures gracefully in your workflow.
 ## 📚 Documentation
 
 - 📖 [n8n Documentation](https://docs.n8n.io/)
-- 🔗 [Keephub API Docs](https://yourclientname.api.keephub.io)
+- 🔗 [Keephub API Docs](https://dev.api.keephub.io)
 - 💬 [n8n Community Forum](https://community.n8n.io/)
 
 ---
@@ -414,7 +423,7 @@ Contributions are welcome! 🙌
 
 ### Development Setup
 ```bash
-git clone https://github.com/yourusername/n8n-nodes-keephub.git
+git clone https://github.com/RetailInTouch/n8n-nodes-keephub.git
 cd n8n-nodes-keephub
 npm install
 npm run build
@@ -432,10 +441,9 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 Found a bug? Have a feature request? 
 
-- 🐛 [Open an Issue](https://github.com/yourusername/n8n-nodes-keephub/issues)
-- 💬 [Start a Discussion](https://github.com/yourusername/n8n-nodes-keephub/discussions)
-- 📧 [Email us](mailto:support@example.com)
-
+- 🐛 [Open an Issue](https://github.com/RetailInTouch/n8n-nodes-keephub/issues)
+- 💬 [Start a Discussion](https://github.com/RetailInTouch/n8n-nodes-keephub/discussions)
+- 
 ---
 
 ## ⭐ Show Your Support
@@ -451,6 +459,6 @@ If you find this node useful, please consider:
 
 **Made with ❤️ for the automation community**
 
-<!-- [Visit n8n](https://n8n.io) • [View on npm](https://www.npmjs.com/package/n8n-nodes-keephub) • [GitHub Repo](https://github.com/yourusername/n8n-nodes-keephub) -->
+<!-- [Visit n8n](https://n8n.io) • [View on npm](https://www.npmjs.com/package/n8n-nodes-keephub) • [GitHub Repo](https://github.com/RetailInTouch/n8n-nodes-keephub) -->
 
 </div>
