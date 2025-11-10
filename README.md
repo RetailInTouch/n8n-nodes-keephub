@@ -2,8 +2,8 @@
 
 <div align="center">
 
-<!-- [![npm version](https://img.shields.io/npm/v/n8n-nodes-keephub.svg?style=flat-square)](https://www.npmjs.com/package/n8n-nodes-keephub) -->
-<!-- [![npm downloads](https://img.shields.io/npm/dm/n8n-nodes-keephub.svg?style=flat-square)](https://www.npmjs.com/package/n8n-nodes-keephub) -->
+[![npm version](https://img.shields.io/npm/v/n8n-nodes-keephub.svg?style=flat-square)](https://www.npmjs.com/package/n8n-nodes-keephub)
+[![npm downloads](https://img.shields.io/npm/dm/n8n-nodes-keephub.svg?style=flat-square)](https://www.npmjs.com/package/n8n-nodes-keephub)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](./LICENSE)
 [![Maintenance](https://img.shields.io/badge/maintained%3F-yes-green.svg?style=flat-square)](https://github.com/RetailInTouch/n8n-nodes-keephub)
 
@@ -233,6 +233,27 @@ Output:
 
 ---
 
+### Orgchart Operations
+
+| Operation | Description |
+|-----------|-------------|
+| **Get by ID** | Retrieve an orgchart node by ID |
+| **Get Parent** | Fetch the parent node of an orgchart node |
+| **Get Ancestors** | Get all ancestors in the org hierarchy |
+| **Get Children** | Retrieve all children/descendants |
+
+**Example:**
+```javascript
+{
+  resource: "orgchart",
+operation: "getChildren",
+nodeId: "node123"
+}
+```
+
+---
+
+
 ## 🔐 Credentials Setup
 
 ### Bearer Token Authentication
@@ -364,12 +385,14 @@ n8n-nodes-keephub/
 │       │   ├── UserDescription.ts
 │       │   ├── ContentDescription.ts
 │       │   ├── TaskDescription.ts
-│       │   └── FormSubmissionDescription.ts
+│       │   ├── FormSubmissionDescription.ts
+│       │   └── OrgchartDescription.ts
 │       ├── actions/                  # Operation implementations
 │       │   ├── user/
 │       │   ├── content/
 │       │   ├── task/
-│       │   └── formSubmission/
+│       │   ├── formSubmission/
+│       │   └── orgchart/
 │       └── utils/
 │           └── helpers.ts
 ├── credentials/
@@ -408,6 +431,10 @@ npm run lint
 - ✅ Task template operations
 - 📋 Form submission handling
 - 🔐 Secure API authentication
+- v1.0.1 (2025-11-10) 📦
+  - 📊 Added Orgchart operations (Get, Parent, Ancestors, Children)
+  - 🧹 Fixed console.log in updateById operation
+  - 🔧 Code cleanup and optimizations
 
 ---
 
@@ -459,6 +486,6 @@ If you find this node useful, please consider:
 
 **Made with ❤️ for the automation community**
 
-<!-- [Visit n8n](https://n8n.io) • [View on npm](https://www.npmjs.com/package/n8n-nodes-keephub) • [GitHub Repo](https://github.com/RetailInTouch/n8n-nodes-keephub) -->
+[Visit n8n](https://n8n.io) • [View on npm](https://www.npmjs.com/package/n8n-nodes-keephub) • [GitHub Repo](https://github.com/RetailInTouch/n8n-nodes-keephub)
 
 </div>

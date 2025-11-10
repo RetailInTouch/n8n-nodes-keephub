@@ -10,11 +10,13 @@ import * as userActions from './actions/user';
 import * as contentActions from './actions/content';
 import * as taskActions from './actions/task';
 import * as formSubmissionActions from './actions/formSubmission/index';
+import * as orgchartActions from './actions/orgchart/index';
 import { authFields } from './descriptions/AuthDescription';
 import { userFields } from './descriptions/UserDescription';
 import { contentFields } from './descriptions/ContentDescription';
 import { taskFields } from './descriptions/TaskDescription';
 import { formSubmissionFields } from './descriptions/FormSubmissionDescription';
+import { orgchartFields } from './descriptions/OrgchartDescription';
 
 export class Keephub implements INodeType {
 	description: INodeTypeDescription = {
@@ -47,6 +49,7 @@ export class Keephub implements INodeType {
 					{ name: 'Content', value: 'content' },
 					{ name: 'Task', value: 'task' },
 					{ name: 'Form Submission', value: 'formSubmission' },
+					{ name: 'Orgchart', value: 'orgchart' },
 				],
 				default: 'auth',
 			},
@@ -55,6 +58,7 @@ export class Keephub implements INodeType {
 			...contentFields,
 			...taskFields,
 			...formSubmissionFields,
+			...orgchartFields,
 		] as INodeProperties[],
 	};
 
@@ -91,6 +95,13 @@ export class Keephub implements INodeType {
 				getSubmissionOrgunits: formSubmissionActions.getSubmissionOrgunitsExecute,
 				updateSubmissionOrgunits: formSubmissionActions.updateSubmissionOrgunitsExecute,
 				calculateResponseDuration: formSubmissionActions.calculateResponseDurationExecute,
+			},
+			orgchart: {
+				getById: orgchartActions.getByIdExecute,
+				getParent: orgchartActions.getParentExecute,
+				getAncestors: orgchartActions.getAncestorsExecute,
+				getChildren: orgchartActions.getChildrenExecute,
+
 			},
 		};
 
