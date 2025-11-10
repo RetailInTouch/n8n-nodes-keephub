@@ -1,43 +1,63 @@
 {
-  "name": "n8n-nodes-keephub",
-  "version": "0.1.0",
-  "description": "Keephub custom nodes for n8n",
-  "license": "MIT",
-  "keywords": [
-    "n8n-community-node-package"
-  ],
-  "author": {
-    "name": "Niksa Perovic",
-    "email": "niksa.perovic.90@gmail.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/<...>/n8n-nodes-keephub.git"
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "tsc && npm run copy-assets",
-    "copy-assets": "mkdir -p dist/nodes/Keephub && mkdir -p dist/nodes/KeephubTrigger && cp icons/Keephub.svg dist/nodes/Keephub/ && cp icons/Keephub.svg dist/nodes/KeephubTrigger/",
-    "dev": "tsc -w"
-  },
-  "n8n": {
-    "n8nNodesApiVersion": 1,
-    "strict": true,
-    "credentials": [
-      "dist/credentials/KeephubApi.credentials.js"
-    ],
-    "nodes": [
-      "dist/nodes/Keephub/Keephub.node.js"
-    ]
-  },
-  "devDependencies": {
-    "typescript": "5.9.2",
-    "prettier": "3.6.2",
-    "@types/node": "^20.0.0"
-  },
-  "peerDependencies": {
-    "n8n-workflow": "*"
-  }
+	"name": "n8n-nodes-keephub",
+	"version": "1.0.0",
+	"description": "Keephub integration node for n8n workflow automation",
+	"license": "MIT",
+	"keywords": [
+		"n8n-community-node-package",
+		"keephub",
+		"employee-engagement",
+		"workflow-automation"
+	],
+	"author": {
+		"name": "Niksa Perovic",
+		"email": "niksa.perovic.90@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/RetailInTouch/n8n-nodes-keephub.git"
+	},
+	"homepage": "https://github.com/RetailInTouch/n8n-nodes-keephub#readme",
+	"bugs": {
+		"url": "https://github.com/RetailInTouch/n8n-nodes-keephub/issues"
+	},
+	"main": "dist/index.js",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsc && npm run copy-assets",
+		"copy-assets": "mkdir -p dist/nodes/Keephub && cp icons/Keephub.svg dist/nodes/Keephub/",
+		"dev": "tsc -w",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"format": "prettier --write .",
+		"test": "npm run lint && npm run build"
+	},
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"strict": true,
+		"credentials": [
+			"dist/credentials/KeephubApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/Keephub/Keephub.node.js"
+		]
+	},
+	"engines": {
+		"node": ">=14.20.0"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.39.1",
+		"@types/node": "^20.19.24",
+		"@typescript-eslint/eslint-plugin": "^7.0.0",
+		"@typescript-eslint/parser": "^7.0.0",
+		"eslint": "^8.57.1",
+		"prettier": "^3.6.2",
+		"typescript": "^5.9.2",
+		"typescript-eslint": "^8.46.3"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	}
 }

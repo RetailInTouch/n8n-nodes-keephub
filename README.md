@@ -1,247 +1,456 @@
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+# 🚀 n8n-nodes-keephub
 
-# n8n-nodes-starter
+<div align="center">
 
-This starter repository helps you build custom integrations for [n8n](https://n8n.io). It includes example nodes, credentials, the node linter, and all the tooling you need to get started.
+[![npm version](https://img.shields.io/npm/v/n8n-nodes-keephub.svg?style=flat-square)](https://www.npmjs.com/package/n8n-nodes-keephub)
+[![npm downloads](https://img.shields.io/npm/dm/n8n-nodes-keephub.svg?style=flat-square)](https://www.npmjs.com/package/n8n-nodes-keephub)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](./LICENSE)
+[![Maintenance](https://img.shields.io/badge/maintained%3F-yes-green.svg?style=flat-square)](https://github.com/yourusername/n8n-nodes-keephub)
 
-## Quick Start
+**Seamlessly integrate Keephub with your n8n workflows** 🎯
 
-> [!TIP]
-> **New to building n8n nodes?** The fastest way to get started is with `npm create @n8n/node`. This command scaffolds a complete node package for you using the [@n8n/node-cli](https://www.npmjs.com/package/@n8n/node-cli).
+Unlock the power of employee engagement and communication automation with this comprehensive n8n community node for Keephub.
 
-**To create a new node package from scratch:**
+[🔧 Installation](#-installation) • [📚 Documentation](#-operations) • [🚀 Quick Start](#-quick-start) • [🤝 Contributing](#-contributing)
 
+</div>
+
+---
+
+## 📖 About
+
+This is a professional **n8n community node** that enables you to harness the full power of **Keephub** within your workflow automation.
+
+**Keephub** is an enterprise-grade employee engagement platform for managing:
+- 👥 User management and organizational structures
+- 📰 Content creation and distribution
+- ✅ Task management and templates
+- 📋 Dynamic form submissions and responses
+
+**n8n** is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform that puts automation in the hands of technical and business users.
+
+---
+
+<!-- ## 🔧 Installation -->
+
+<!-- ### 📦 Community Nodes Method (Recommended)
+
+1. Open your n8n instance
+2. Navigate to **Settings** ⚙️ → **Community Nodes**
+3. Click **Install a community node**
+4. Enter: `n8n-nodes-keephub`
+5. Click **Install**
+6. ✅ Done! The node is ready to use -->
+
+### 🛠️ Manual Installation
+
+**For Local n8n:**
 ```bash
-npm create @n8n/node
+cd ~/.n8n/nodes
+npm install n8n-nodes-keephub
 ```
 
-**Already using this starter? Start developing with:**
-
+**For Docker:**
 ```bash
-npm run dev
+docker exec -it <n8n-container> sh
+cd /home/node/.n8n/nodes
+npm install n8n-nodes-keephub
+# Restart your container
 ```
 
-This starts n8n with your nodes loaded and hot reload enabled.
-
-## What's Included
-
-This starter repository includes two example nodes to learn from:
-
-- **[Example Node](nodes/Example/)** - A simple starter node that shows the basic structure with a custom `execute` method
-- **[GitHub Issues Node](nodes/GithubIssues/)** - A complete, production-ready example built using the **declarative style**:
-  - **Low-code approach** - Define operations declaratively without writing request logic
-  - Multiple resources (Issues, Comments)
-  - Multiple operations (Get, Get All, Create)
-  - Two authentication methods (OAuth2 and Personal Access Token)
-  - List search functionality for dynamic dropdowns
-  - Proper error handling and typing
-  - Ideal for HTTP API-based integrations
-
-> [!TIP]
-> The declarative/low-code style (used in GitHub Issues) is the recommended approach for building nodes that interact with HTTP APIs. It significantly reduces boilerplate code and handles requests automatically.
-
-Browse these examples to understand both approaches, then modify them or create your own.
-
-## Finding Inspiration
-
-Looking for more examples? Check out these resources:
-
-- **[npm Community Nodes](https://www.npmjs.com/search?q=keywords:n8n-community-node-package)** - Browse thousands of community-built nodes on npm using the `n8n-community-node-package` tag
-- **[n8n Built-in Nodes](https://github.com/n8n-io/n8n/tree/master/packages/nodes-base/nodes)** - Study the source code of n8n's official nodes for production-ready patterns and best practices
-- **[n8n Credentials](https://github.com/n8n-io/n8n/tree/master/packages/nodes-base/credentials)** - See how authentication is implemented for various services
-
-These are excellent resources to understand how to structure your nodes, handle different API patterns, and implement advanced features.
-
-## Prerequisites
-
-Before you begin, install the following on your development machine:
-
-### Required
-
-- **[Node.js](https://nodejs.org/)** (v22 or higher) and npm
-  - Linux/Mac/WSL: Install via [nvm](https://github.com/nvm-sh/nvm)
-  - Windows: Follow [Microsoft's NodeJS guide](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows)
-- **[git](https://git-scm.com/downloads)**
-
-### Recommended
-
-- Follow n8n's [development environment setup guide](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/)
-
-> [!NOTE]
-> The `@n8n/node-cli` is included as a dev dependency and will be installed automatically when you run `npm install`. The CLI includes n8n for local development, so you don't need to install n8n globally.
-
-## Getting Started with this Starter
-
-Follow these steps to create your own n8n community node package:
-
-### 1. Create Your Repository
-
-[Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template, then clone it:
-
+**For Node.js n8n:**
 ```bash
-git clone https://github.com/<your-organization>/<your-repo-name>.git
-cd <your-repo-name>
+npm install -g n8n-nodes-keephub
 ```
 
-### 2. Install Dependencies
+Restart your n8n instance and the Keephub node will appear in your palette! 🎨
 
-```bash
-npm install
+---
+
+## 🚀 Quick Start
+
+### 1️⃣ Set Up Credentials
+
+1. In n8n, go to **Credentials** 🔐
+2. Create **New** → Search for **Keephub API**
+3. Fill in your credentials:
+   - **Client URL**: `https://yourcompany.keephub.io`
+   - **Auth Type**: Choose Bearer Token or Username/Password
+   - **Language** (optional): Default is `en`
+4. Test & Save ✔️
+
+### 2️⃣ Add the Node to Your Workflow
+
+1. Click **+** to add a node
+2. Search for **Keephub**
+3. Select your resource and operation
+4. Configure parameters
+5. Run! 🏃
+
+### 3️⃣ Example: Get User Info
+
+```
+Keephub Node Configuration:
+├── Resource: User
+├── Operation: Find by Login Name
+└── Login Name: john.doe
+
+Output:
+{
+  "id": "63bd885034d0466d11073575",
+  "loginName": "john.doe",
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@company.com"
+}
 ```
 
-This installs all required dependencies including the `@n8n/node-cli`.
+---
 
-### 3. Explore the Examples
+## 📚 Operations
 
-Browse the example nodes in [nodes/](nodes/) and [credentials/](credentials/) to understand the structure:
+### 👥 **User Operations**
 
-- Start with [nodes/Example/](nodes/Example/) for a basic node
-- Study [nodes/GithubIssues/](nodes/GithubIssues/) for a real-world implementation
+| Operation | Description |
+|-----------|-------------|
+| 🆔 **Get by ID** | Retrieve a user by their unique ID |
+| 🔍 **Find by Login Name** | Search users by login name |
+| 👨‍💼 **Find by Group** | Fetch all users in a specific group |
+| 🏢 **Find by Orgunit** | Retrieve users from an organization unit |
 
-### 4. Build Your Node
-
-Edit the example nodes to fit your use case, or create new node files by copying the structure from [nodes/Example/](nodes/Example/).
-
-> [!TIP]
-> If you want to scaffold a completely new node package, use `npm create @n8n/node` to start fresh with the CLI's interactive generator.
-
-### 5. Configure Your Package
-
-Update `package.json` with your details:
-
-- `name` - Your package name (must start with `n8n-nodes-`)
-- `author` - Your name and email
-- `repository` - Your repository URL
-- `description` - What your node does
-
-Make sure your node is registered in the `n8n.nodes` array.
-
-### 6. Develop and Test Locally
-
-Start n8n with your node loaded:
-
-```bash
-npm run dev
+**Example:**
+```javascript
+// Get all users in a group
+{
+  "resource": "user",
+  "operation": "findByGroup",
+  "groupId": "group_12345"
+}
 ```
 
-This command runs `n8n-node dev` which:
+---
 
-- Builds your node with watch mode
-- Starts n8n with your node available
-- Automatically rebuilds when you make changes
-- Opens n8n in your browser (usually http://localhost:5678)
+### 📰 **Content Operations**
 
-You can now test your node in n8n workflows!
+| Operation | Description |
+|-----------|-------------|
+| ✨ **Create** | Create new content (news, announcements, etc.) |
+| 📖 **Get by ID** | Retrieve specific content |
+| 📁 **Find by Content Pool** | Filter content by pool |
+| 🏷️ **Find by Group** | Get content assigned to groups |
+| 🏢 **Find by Orgunit** | Retrieve content by organization |
+| ✏️ **Update by ID** | Modify existing content |
+| 🗑️ **Delete** | Remove content |
 
-> [!NOTE]
-> Learn more about CLI commands in the [@n8n/node-cli documentation](https://www.npmjs.com/package/@n8n/node-cli).
-
-### 7. Lint Your Code
-
-Check for errors:
-
-```bash
-npm run lint
+**Example - Create Content:**
+```json
+{
+  "resource": "content",
+  "operation": "create",
+  "defineContentInput": "json",
+  "contentBody": {
+    "originLanguage": "en",
+    "contentType": "news",
+    "contentPool": "POOL_ID",
+    "title": { "en": "🎉 Company Announcement" },
+    "message": { "en": "<p>Great news everyone!</p>" },
+    "orgchartSelection": { "include": ["root0001"], "exclude": [] }
+  }
+}
 ```
 
-Auto-fix issues when possible:
+---
 
-```bash
-npm run lint:fix
+### ✅ **Task Operations**
+
+| Operation | Description |
+|-----------|-------------|
+| 📋 **Get by ID** | Retrieve a task template |
+| ➕ **Create** | Create a new task template |
+| 📊 **Get Status** | Check task template status |
+| 📈 **Get Status Counts** | View task completion statistics |
+| 🗑️ **Delete** | Remove a task template |
+
+**Example:**
+```javascript
+{
+  "resource": "task",
+  "operation": "create",
+  "defineTaskInput": "json",
+  "taskJsonBody": {
+    "title": { "en": "Q4 Performance Review" },
+    "template": {
+      "form": {
+        "fields": [
+          { "name": "rating", "type": "number" },
+          { "name": "feedback", "type": "text" }
+        ]
+      }
+    }
+  }
+}
 ```
 
-### 8. Build for Production
+---
 
-When ready to publish:
+### 📋 **Form Submission Operations**
 
+| Operation | Description |
+|-----------|-------------|
+| 📥 **Get** | Fetch complete form submission data |
+| 👤 **Get Submitter Details** | Retrieve full user profile of submitter |
+| 🏢 **Get Submission Orgunits** | View orgunit hierarchy |
+| 📍 **Update Submission Orgunits** | Change visibility by orgunit |
+| ⏱️ **Calculate Response Duration** | Time from creation to submission |
+
+**Example - Calculate Response Time:**
+```javascript
+{
+  "resource": "formSubmission",
+  "operation": "calculateResponseDuration",
+  "formSubmissionId": "form_67890"
+}
+
+// Returns:
+{
+  "duration": {
+    "days": 2,
+    "hours": 5,
+    "minutes": 30,
+    "totalSeconds": 183930
+  }
+}
+```
+
+---
+
+## 🔐 Credentials Setup
+
+### Bearer Token Authentication
+```
+✓ Most secure for API integrations
+✓ Use existing API tokens from Keephub
+✓ Perfect for server-to-server communication
+```
+
+### Username/Password Authentication
+```
+✓ Automatic token generation
+✓ Simple to set up
+✓ Credentials securely stored in n8n
+```
+
+**All credentials are encrypted** 🔒 and never exposed in logs or workflows.
+
+---
+
+## 💡 Real-World Examples
+
+### 📧 Example 1: Auto-Create Tasks from Email
+
+```
+Gmail Trigger
+  ↓
+Extract email data
+  ↓
+Keephub: Create Task
+  ↓
+Send confirmation email
+```
+
+### 📊 Example 2: Sync Users to Slack
+
+```
+Keephub: Get all users in a group
+  ↓
+Filter active users
+  ↓
+Slack: Create channels per user
+```
+
+### 📋 Example 3: Form Response Automation
+
+```
+Keephub: Form Submission Trigger
+  ↓
+Get submitter details
+  ↓
+Calculate response time
+  ↓
+Store in database
+  ↓
+Send thank you message
+```
+
+---
+
+## ⚙️ Node Configuration
+
+### Input Data
+- All parameters support dynamic expressions with `{{ }}`
+- Use previous node outputs: `{{ $node["Previous Node"].json.field }}`
+- Access environment variables: `{{ $env.MY_VAR }}`
+
+### Output Format
+```javascript
+{
+  "pairedItem": { "item": 0 },
+  "json": {
+    // API response data
+  }
+}
+```
+
+### Error Handling
+Enable "Continue on Error" to handle failures gracefully in your workflow.
+
+---
+
+## 📦 Requirements
+
+| Requirement | Version |
+|-----------|---------|
+| **n8n** | v0.199.0+ |
+| **Node.js** | 14.20.0+ |
+| **npm** | 6.0.0+ |
+
+---
+
+## 🐛 Troubleshooting
+
+### ❌ "Authentication failed"
+- ✅ Verify your Keephub instance URL
+- ✅ Check API credentials are correct
+- ✅ Ensure credentials have required permissions
+
+### ❌ "Unknown operation"
+- ✅ Verify resource and operation combination exist
+- ✅ Check node version is latest
+- ✅ Try refreshing the node palette
+
+### ❌ "Connection timeout"
+- ✅ Check network connectivity
+- ✅ Verify firewall allows outbound HTTPS
+- ✅ Check Keephub instance is accessible
+
+---
+
+## 📚 Documentation
+
+- 📖 [n8n Documentation](https://docs.n8n.io/)
+- 🔗 [Keephub API Docs](https://yourclientname.api.keephub.io)
+- 💬 [n8n Community Forum](https://community.n8n.io/)
+
+---
+
+## 🏗️ Project Structure
+
+```
+n8n-nodes-keephub/
+├── nodes/
+│   └── Keephub/
+│       ├── Keephub.node.ts           # Main node class
+│       ├── descriptions/             # Field definitions
+│       │   ├── AuthDescription.ts
+│       │   ├── UserDescription.ts
+│       │   ├── ContentDescription.ts
+│       │   ├── TaskDescription.ts
+│       │   └── FormSubmissionDescription.ts
+│       ├── actions/                  # Operation implementations
+│       │   ├── user/
+│       │   ├── content/
+│       │   ├── task/
+│       │   └── formSubmission/
+│       └── utils/
+│           └── helpers.ts
+├── credentials/
+│   └── KeephubApi.credentials.ts
+├── package.json
+└── README.md
+```
+
+---
+
+## 🚀 Development
+
+### Build
 ```bash
 npm run build
 ```
 
-This compiles your TypeScript code to the `dist/` folder.
-
-### 9. Prepare for Publishing
-
-Before publishing:
-
-1. **Update documentation**: Replace this README with your node's documentation. Use [README_TEMPLATE.md](README_TEMPLATE.md) as a starting point.
-2. **Update the LICENSE**: Add your details to the [LICENSE](LICENSE.md) file.
-3. **Test thoroughly**: Ensure your node works in different scenarios.
-
-### 10. Publish to npm
-
-Publish your package to make it available to the n8n community:
-
+### Test
 ```bash
-npm publish
+npm run test
 ```
 
-Learn more about [publishing to npm](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+### Lint
+```bash
+npm run lint
+```
 
-### 11. Submit for Verification (Optional)
+---
 
-Get your node verified for n8n Cloud:
+## 📝 Version History
 
-1. Ensure your node meets the [requirements](https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/):
-   - Uses MIT license ✅ (included in this starter)
-   - No external package dependencies
-   - Follows n8n's design guidelines
-   - Passes quality and security review
+### v1.0.0 (2025-01-09) 🎉
+- ✨ Initial release
+- 👥 User management operations
+- 📰 Content creation & management
+- ✅ Task template operations
+- 📋 Form submission handling
+- 🔐 Secure API authentication
 
-2. Submit through the [n8n Creator Portal](https://creators.n8n.io/nodes)
+---
 
-**Benefits of verification:**
+## 🤝 Contributing
 
-- Available directly in n8n Cloud
-- Discoverable in the n8n nodes panel
-- Verified badge for quality assurance
-- Increased visibility in the n8n community
+Contributions are welcome! 🙌
 
-## Available Scripts
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
 
-This starter includes several npm scripts to streamline development:
+### Development Setup
+```bash
+git clone https://github.com/yourusername/n8n-nodes-keephub.git
+cd n8n-nodes-keephub
+npm install
+npm run build
+```
 
-| Script                | Description                                                      |
-| --------------------- | ---------------------------------------------------------------- |
-| `npm run dev`         | Start n8n with your node and watch for changes (runs `n8n-node dev`) |
-| `npm run build`       | Compile TypeScript to JavaScript for production (runs `n8n-node build`) |
-| `npm run build:watch` | Build in watch mode (auto-rebuild on changes)                    |
-| `npm run lint`        | Check your code for errors and style issues (runs `n8n-node lint`) |
-| `npm run lint:fix`    | Automatically fix linting issues when possible (runs `n8n-node lint --fix`) |
-| `npm run release`     | Create a new release (runs `n8n-node release`)                   |
+---
 
-> [!TIP]
-> These scripts use the [@n8n/node-cli](https://www.npmjs.com/package/@n8n/node-cli) under the hood. You can also run CLI commands directly, e.g., `npx n8n-node dev`.
+## 📄 License
 
-## Troubleshooting
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-### My node doesn't appear in n8n
+---
+<!-- 
+## 🙏 Support
 
-1. Make sure you ran `npm install` to install dependencies
-2. Check that your node is listed in `package.json` under `n8n.nodes`
-3. Restart the dev server with `npm run dev`
-4. Check the console for any error messages
+Found a bug? Have a feature request? 
 
-### Linting errors
+- 🐛 [Open an Issue](https://github.com/yourusername/n8n-nodes-keephub/issues)
+- 💬 [Start a Discussion](https://github.com/yourusername/n8n-nodes-keephub/discussions)
+- 📧 [Email us](mailto:support@example.com)
 
-Run `npm run lint:fix` to automatically fix most common issues. For remaining errors, check the [n8n node development guidelines](https://docs.n8n.io/integrations/creating-nodes/).
+---
 
-### TypeScript errors
+## ⭐ Show Your Support
 
-Make sure you're using Node.js v22 or higher and have run `npm install` to get all type definitions.
+If you find this node useful, please consider:
+- ⭐ Starring this repository
+- 🐦 Sharing it on social media
+- 📢 Recommending it to the community -->
 
-## Resources
+---
 
-- **[n8n Node Documentation](https://docs.n8n.io/integrations/creating-nodes/)** - Complete guide to building nodes
-- **[n8n Community Forum](https://community.n8n.io/)** - Get help and share your nodes
-- **[@n8n/node-cli Documentation](https://www.npmjs.com/package/@n8n/node-cli)** - CLI tool reference
-- **[n8n Creator Portal](https://creators.n8n.io/nodes)** - Submit your node for verification
-- **[Submit Community Nodes Guide](https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/)** - Verification requirements and process
+<div align="center">
 
-## Contributing
+**Made with ❤️ for the automation community**
 
-Have suggestions for improving this starter? [Open an issue](https://github.com/n8n-io/n8n-nodes-starter/issues) or submit a pull request!
+<!-- [Visit n8n](https://n8n.io) • [View on npm](https://www.npmjs.com/package/n8n-nodes-keephub) • [GitHub Repo](https://github.com/yourusername/n8n-nodes-keephub) -->
 
-## License
-
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
+</div>
