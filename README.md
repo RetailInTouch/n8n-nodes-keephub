@@ -144,12 +144,12 @@ Output:
 | Operation | Description |
 |-----------|-------------|
 | ✨ **Create** | Create new content (news, announcements, etc.) |
-| 📖 **Get by ID** | Retrieve specific content |
-| 📁 **Find by Content Pool** | Filter content by pool |
-| 🏷️ **Find by Group** | Get content assigned to groups |
-| 🏢 **Find by Orgunit** | Retrieve content by organization |
-| ✏️ **Update by ID** | Modify existing content |
 | 🗑️ **Delete** | Remove content |
+| 📁 **Find by Content Pool** | Filter content by pool with optional sorting |
+| 🏷️ **Find by Group** | Get content assigned to groups with optional sorting |
+| 🏢 **Find by Orgunit** | Retrieve content by organization with optional sorting |
+| 📖 **Get by ID** | Retrieve specific content |
+| ✏️ **Update by ID** | Modify existing content |
 
 **Example - Create Content:**
 ```json
@@ -168,17 +168,44 @@ Output:
 }
 ```
 
+**Example - Find Content by Orgunit with Filtering:**
+```json
+{
+  "resource": "content",
+  "operation": "findByOrgunit",
+  "orgunitId": "root0077",
+  "limit": 50,
+  "options": {
+    "skip": 0,
+    "sortBy": "createdAt",
+    "sortOrder": 1
+  }
+}
+```
+Content Filtering Parameters:
+
+Limit (optional, default: 50): Maximum number of results to return
+
+Options:
+
+Skip: Number of results to skip (pagination)
+
+Sort Field: Field to sort by (e.g., createdAt, updatedAt)
+
+Sort Order: 1 for ascending, -1 for descending
+
 ---
 
 ### ✅ **Task Operations**
 
 | Operation | Description |
 |-----------|-------------|
-| 📋 **Get by ID** | Retrieve a task template |
 | ➕ **Create** | Create a new task template |
+| 🗑️ **Delete** | Remove a task template |
+| 📋 **Get by ID** | Retrieve a task template |
+| 🔍 **Get By Orgunit**	| Fetch tasks by organization unit with filtering & pagination |
 | 📊 **Get Status** | Check task template status |
 | 📈 **Get Status Counts** | View task completion statistics |
-| 🗑️ **Delete** | Remove a task template |
 
 **Example:**
 ```javascript
@@ -199,6 +226,39 @@ Output:
   }
 }
 ```
+**Example - Get Tasks by Orgunit with Filtering:**
+```json
+{
+  "resource": "task",
+  "operation": "getTaskByOrgunit",
+  "orgunitId": "root0077",
+  "limit": 50,
+  "options": {
+    "skip": 0,
+    "sortBy": "template.dueDate",
+    "sortOrder": 1,
+    "startDateGte": "2025-11-01T00:00:00Z",
+    "startDateLte": "2025-11-30T23:59:59Z"
+  }
+}
+```
+Parameters:
+
+Orgunit ID (required): The organization unit ID to filter tasks
+
+Limit (optional, default: 50): Maximum number of results to return
+
+Options:
+
+Skip: Number of results to skip (pagination)
+
+Sort Field: Field to sort by (e.g., template.dueDate)
+
+Sort Order: 1 for ascending, -1 for descending
+
+Start Date After: Filter tasks created/updated after this date (dateTime picker)
+
+Start Date Before: Filter tasks created/updated before this date (dateTime picker)
 
 ---
 
@@ -430,10 +490,14 @@ npm run lint
 - ✅ Task template operations
 - 📋 Form submission handling
 - 🔐 Secure API authentication
-- v1.0.1 (2025-11-10) 📦
+- v1.1.0 (2025-11-10) 📦
   - 📊 Added Orgchart operations (Get, Parent, Ancestors, Children)
   - 🧹 Fixed console.log in updateById operation
   - 🔧 Code cleanup and optimizations
+- v1.2.0 (2025-11-12) 🆕
+  - 🔍 Added Get By Orgunit task operation
+  - 📅 Date range filtering support for tasks (Start Date Before/After)
+  - 📰 Enhanced Content filtering:
 
 ---
 

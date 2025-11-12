@@ -25,6 +25,12 @@ export const taskFields = [
 				action: 'Get a task by ID',
 			},
 			{
+				name: 'Get By Orgunit',
+				value: 'getTaskByOrgunit',
+				description: 'Get tasks by orgunit',
+				action: 'Get tasks by orgunit',
+			},
+			{
 				name: 'Get Status',
 				value: 'getTaskStatus',
 				description: 'Get task template status',
@@ -112,5 +118,89 @@ export const taskFields = [
 		},
 		default: false,
 		description: 'Whether to send notifications',
+	},
+	{
+		displayName: 'Orgunit ID',
+		name: 'orgunitId',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['task'],
+				operation: ['getTaskByOrgunit'],
+			},
+		},
+		default: '',
+		placeholder: 'root0077',
+		description: 'Orgunit ID to filter tasks by',
+		required: true,
+	},
+	{
+		displayName: 'Limit',
+		name: 'limit',
+		type: 'number',
+		typeOptions: { minValue: 1 },
+		displayOptions: {
+			show: {
+				resource: ['task'],
+				operation: ['getTaskByOrgunit'],
+			},
+		},
+		default: 50,
+		description: 'Max number of results to return',
+	},
+	{
+		displayName: 'Options',
+		name: 'options',
+		type: 'collection',
+		displayOptions: {
+			show: {
+				resource: ['task'],
+				operation: ['getTaskByOrgunit'],
+			},
+		},
+		default: {},
+		noDataExpression: true,
+		placeholder: 'Add option',
+		options: [
+			{
+				displayName: 'Skip',
+				name: 'skip',
+				type: 'number',
+				default: 0,
+				description: 'Number of results to skip (pagination)',
+			},
+			{
+				displayName: 'Sort Field',
+				name: 'sortBy',
+				type: 'string',
+				default: '',
+				placeholder: 'template.dueDate',
+				description: 'Field you wish to sort by should be preceded with "template." (example: template.title)',
+			},
+			{
+				displayName: 'Sort Order',
+				name: 'sortOrder',
+				type: 'options',
+				options: [
+					{ name: 'Ascending', value: 1 },
+					{ name: 'Descending', value: -1 },
+				],
+				default: 1,
+			},
+			{
+				displayName: 'Start Date After',
+				name: 'startDateGte',
+				type: 'dateTime',
+				default: '',
+				description: 'Filter tasks with start date after this date',
+			},
+			{
+				displayName: 'Start Date Before',
+				name: 'startDateLte',
+				type: 'dateTime',
+				default: '',
+				description: 'Filter tasks with start date before this date',
+			},
+		],
 	},
 ];
