@@ -7,7 +7,7 @@ import {
 export class KeephubApi implements ICredentialType {
 	name = 'keephubApi';
 	displayName = 'Keephub API';
-	documentationUrl = 'https://github.com/RetailInTouch/n8n-nodes-keephub/blob/master/README.md'; 
+	documentationUrl = 'https://dev.api.keephub.io/api-docs/'; 
 	icon = 'file:Keephub.svg' as const; 
 
 	properties: INodeProperties[] = [
