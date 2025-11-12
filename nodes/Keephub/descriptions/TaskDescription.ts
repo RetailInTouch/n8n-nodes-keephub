@@ -6,16 +6,38 @@ export const taskFields = [
 		noDataExpression: true,
 		displayOptions: { show: { resource: ['task'] } },
 		options: [
-			{ name: 'Get by ID', value: 'getTask', description: 'Get a task template by ID' },
-			{ name: 'Create', value: 'createTask', description: 'Create a new task template' },
-			{ name: 'Get Status', value: 'getTaskStatus', description: 'Get task template status' },
+			{
+				name: 'Create',
+				value: 'createTask',
+				description: 'Create a new task template',
+				action: 'Create a task',
+			},
+			{
+				name: 'Delete',
+				value: 'deleteTask',
+				description: 'Delete a task template',
+				action: 'Delete a task',
+			},
+			{
+				name: 'Get by ID',
+				value: 'getTask',
+				description: 'Get a task template by ID',
+				action: 'Get a task by ID',
+			},
+			{
+				name: 'Get Status',
+				value: 'getTaskStatus',
+				description: 'Get task template status',
+				action: 'Get status for a task',
+			},
 			{
 				name: 'Get Status Counts',
 				value: 'getTaskStatusCounts',
 				description: 'Get task template status counts',
+				action: 'Get status counts for a task',
 			},
-			{ name: 'Delete', value: 'deleteTask', description: 'Delete a task template' },
 		],
+
 		default: 'createTask',
 	},
 	{

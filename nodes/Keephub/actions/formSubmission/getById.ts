@@ -1,5 +1,4 @@
-import type { INodeExecutionData, IDataObject } from 'n8n-workflow';
-import type { IExecuteFunctions } from 'n8n-workflow';
+import type { INodeExecutionData, IDataObject, IExecuteFunctions } from 'n8n-workflow';
 import { NodeOperationError } from 'n8n-workflow';
 import { apiRequest, validateMongoId } from '../../utils/helpers';
 
@@ -15,28 +14,22 @@ export async function execute(
 	item: INodeExecutionData,
 	index: number,
 ): Promise<INodeExecutionData[]> {
-	try {
-		const formSubmissionId = this.getNodeParameter('formSubmissionId', index) as string;
+	const formSubmissionId = this.getNodeParameter('formSubmissionId', index) as string;
 
-		validateMongoId.call(this, formSubmissionId, 'Form Submission ID', index);
+	validateMongoId.call(this, formSubmissionId, 'Form Submission ID', index);
 
-		const response = await apiRequest.call(this, 'GET', `/formvalues/${formSubmissionId}`);
+	const response = await apiRequest.call(this, 'GET', `/formvalues/${formSubmissionId}`);
 
-		if (!response) {
-			throw new NodeOperationError(
-				this.getNode(),
-				`Form submission not found: ${formSubmissionId}`,
-				{ itemIndex: index },
-			);
-		}
-
-		return [
-			{
-				json: response as IDataObject,
-				pairedItem: { item: index },
-			},
-		];
-	} catch (error) {
-		throw error;
+	if (!response) {
+		throw new NodeOperationError(this.getNode(), `Form submission not found: ${formSubmissionId}`, {
+			itemIndex: index,
+		});
 	}
+
+	return [
+		{
+			json: response as IDataObject,
+			pairedItem: { item: index },
+		},
+	];
 }

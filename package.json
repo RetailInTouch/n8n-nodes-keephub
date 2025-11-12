@@ -27,7 +27,7 @@
 	],
 	"scripts": {
 		"build": "tsc && npm run copy-assets",
-		"copy-assets": "mkdir -p dist/nodes/Keephub && cp icons/Keephub.svg dist/nodes/Keephub/",
+		"copy-assets": "mkdir -p dist/credentials && cp icons/Keephub.svg dist/credentials/ && mkdir -p dist/nodes/Keephub && cp icons/Keephub.svg dist/nodes/Keephub/",
 		"dev": "tsc -w",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
@@ -49,10 +49,11 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.39.1",
+		"@n8n/node-cli": "^0.14.0",
 		"@types/node": "^20.19.24",
 		"@typescript-eslint/eslint-plugin": "^7.0.0",
 		"@typescript-eslint/parser": "^7.0.0",
-		"eslint": "^8.57.1",
+		"eslint": "^9.39.1",
 		"prettier": "^3.6.2",
 		"typescript": "^5.9.2",
 		"typescript-eslint": "^8.46.3"

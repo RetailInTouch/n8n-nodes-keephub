@@ -27,7 +27,7 @@ export function generateApiUrl(clientUrl: string): string {
 		}
 
 		return clientUrl;
-	} catch (error) {
+	} catch {
 		throw new Error(`Invalid client URL: ${clientUrl}`);
 	}
 }
@@ -88,10 +88,7 @@ export async function acquireApiToken(this: IExecuteFunctions): Promise<string> 
 			});
 		}
 	} else {
-		throw new NodeOperationError(
-			this.getNode(),
-			`Unsupported authentication type: ${authType}`,
-		);
+		throw new NodeOperationError(this.getNode(), `Unsupported authentication type: ${authType}`);
 	}
 
 	return apiToken;
@@ -130,7 +127,7 @@ export async function apiRequest(
 		headers: {
 			Authorization: `Bearer ${apiToken}`,
 			'Content-Type': 'application/json',
-			'lang': language,
+			lang: language,
 		},
 		json: true,
 	};
@@ -183,25 +180,17 @@ export function parseJsonParameter(
 	itemIndex: number,
 ): IDataObject {
 	if (input === null || input === undefined) {
-		throw new NodeOperationError(
-			this.getNode(),
-			`${parameterName} is required`,
-			{ itemIndex },
-		);
+		throw new NodeOperationError(this.getNode(), `${parameterName} is required`, { itemIndex });
 	}
 
 	if (typeof input === 'string') {
 		try {
 			return JSON.parse(input) as IDataObject;
 		} catch (error) {
-			throw new NodeOperationError(
-				this.getNode(),
-				`Invalid JSON in ${parameterName}`,
-				{
-					description: `Please check your JSON syntax. Error: ${(error as Error).message}`,
-					itemIndex,
-				},
-			);
+			throw new NodeOperationError(this.getNode(), `Invalid JSON in ${parameterName}`, {
+				description: `Please check your JSON syntax. Error: ${(error as Error).message}`,
+				itemIndex,
+			});
 		}
 	}
 

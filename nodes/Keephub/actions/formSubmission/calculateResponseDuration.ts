@@ -1,5 +1,4 @@
-import type { INodeExecutionData, IDataObject } from 'n8n-workflow';
-import type { IExecuteFunctions } from 'n8n-workflow';
+import type { INodeExecutionData, IDataObject, IExecuteFunctions } from 'n8n-workflow';
 import { NodeOperationError } from 'n8n-workflow';
 import { apiRequest, validateMongoId } from '../../utils/helpers';
 
@@ -15,63 +14,55 @@ export async function execute(
 	item: INodeExecutionData,
 	index: number,
 ): Promise<INodeExecutionData[]> {
-	try {
-		const formSubmissionId = this.getNodeParameter('formSubmissionId', index) as string;
+	const formSubmissionId = this.getNodeParameter('formSubmissionId', index) as string;
 
-		validateMongoId.call(this, formSubmissionId, 'Form Submission ID', index);
+	validateMongoId.call(this, formSubmissionId, 'Form Submission ID', index);
 
-		// Get form submission first to extract contentRef ID
-		const formSubmission = (await apiRequest.call(
-			this,
-			'GET',
-			`/formvalues/${formSubmissionId}`,
-		)) as IDataObject;
+	// Get form submission first to extract contentRef ID
+	const formSubmission = (await apiRequest.call(
+		this,
+		'GET',
+		`/formvalues/${formSubmissionId}`,
+	)) as IDataObject;
 
-		if (!formSubmission || !formSubmission.contentRef) {
-			throw new NodeOperationError(this.getNode(), 'Form submission or contentRef not found', {
-				itemIndex: index,
-			});
-		}
-
-		const contentId =
-			formSubmission.contentRef instanceof Object
-				? (formSubmission.contentRef as IDataObject)._id
-				: formSubmission.contentRef;
-
-		// Now fetch the form/content to get creation time
-		const contentRef = (await apiRequest.call(
-			this,
-			'GET',
-			`/contents/${contentId}`,
-		)) as IDataObject;
-
-		const createdAt = new Date(contentRef.createdAt as string).getTime();
-		const submittedAt = new Date(formSubmission.createdAt as string).getTime();
-
-		const durationMs = submittedAt - createdAt;
-		const durationSecs = Math.floor(durationMs / 1000);
-		const durationMins = Math.floor(durationSecs / 60);
-		const durationHours = Math.floor(durationMins / 60);
-		const durationDays = Math.floor(durationHours / 24);
-
-		const remainingSecs = durationSecs % 60;
-		const remainingMins = durationMins % 60;
-		const remainingHours = durationHours % 24;
-
-		return [
-			{
-				json: {
-					formId: contentId,
-					formCreatedAt: contentRef.createdAt,
-					submittedAt: formSubmission.createdAt,
-					duration: {
-						timeSinceFormCreated: `${durationDays}d ${remainingHours}h ${remainingMins}m ${remainingSecs}s`,
-					},
-				},
-				pairedItem: { item: index },
-			},
-		];
-	} catch (error) {
-		throw error;
+	if (!formSubmission || !formSubmission.contentRef) {
+		throw new NodeOperationError(this.getNode(), 'Form submission or contentRef not found', {
+			itemIndex: index,
+		});
 	}
+
+	const contentId =
+		formSubmission.contentRef instanceof Object
+			? (formSubmission.contentRef as IDataObject)._id
+			: formSubmission.contentRef;
+
+	// Now fetch the form/content to get creation time
+	const contentRef = (await apiRequest.call(this, 'GET', `/contents/${contentId}`)) as IDataObject;
+
+	const createdAt = new Date(contentRef.createdAt as string).getTime();
+	const submittedAt = new Date(formSubmission.createdAt as string).getTime();
+
+	const durationMs = submittedAt - createdAt;
+	const durationSecs = Math.floor(durationMs / 1000);
+	const durationMins = Math.floor(durationSecs / 60);
+	const durationHours = Math.floor(durationMins / 60);
+	const durationDays = Math.floor(durationHours / 24);
+
+	const remainingSecs = durationSecs % 60;
+	const remainingMins = durationMins % 60;
+	const remainingHours = durationHours % 24;
+
+	return [
+		{
+			json: {
+				formId: contentId,
+				formCreatedAt: contentRef.createdAt,
+				submittedAt: formSubmission.createdAt,
+				duration: {
+					timeSinceFormCreated: `${durationDays}d ${remainingHours}h ${remainingMins}m ${remainingSecs}s`,
+				},
+			},
+			pairedItem: { item: index },
+		},
+	];
 }

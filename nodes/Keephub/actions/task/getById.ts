@@ -1,5 +1,4 @@
-import type { INodeExecutionData, IDataObject } from 'n8n-workflow';
-import type { IExecuteFunctions } from 'n8n-workflow';
+import type { INodeExecutionData, IDataObject, IExecuteFunctions } from 'n8n-workflow';
 import { NodeOperationError } from 'n8n-workflow';
 import { apiRequest } from '../../utils/helpers';
 
@@ -15,29 +14,24 @@ export async function execute(
 	item: INodeExecutionData,
 	index: number,
 ): Promise<INodeExecutionData[]> {
-	try {
-		const taskId = this.getNodeParameter('taskId', index) as string;
+	const taskId = this.getNodeParameter('taskId', index) as string;
 
-		if (!taskId || taskId.trim().length === 0) {
-			throw new NodeOperationError(this.getNode(), 'Task ID cannot be empty', {
-				itemIndex: index,
-			});
-		}
-
-		const response = await apiRequest.call(
-			this,
-			'GET',
-			`/tasktemplates/${encodeURIComponent(taskId)}`,
-		);
-
-		return [
-			{
-				json: response as IDataObject,
-				pairedItem: { item: index },
-			},
-		];
-	} catch (error) {
-		throw error;
+	if (!taskId || taskId.trim().length === 0) {
+		throw new NodeOperationError(this.getNode(), 'Task ID cannot be empty', {
+			itemIndex: index,
+		});
 	}
-}
 
+	const response = await apiRequest.call(
+		this,
+		'GET',
+		`/tasktemplates/${encodeURIComponent(taskId)}`,
+	);
+
+	return [
+		{
+			json: response as IDataObject,
+			pairedItem: { item: index },
+		},
+	];
+}

@@ -1,5 +1,4 @@
-import type { INodeExecutionData, IDataObject } from 'n8n-workflow';
-import type { IExecuteFunctions } from 'n8n-workflow';
+import type { INodeExecutionData, IDataObject, IExecuteFunctions } from 'n8n-workflow';
 import { NodeOperationError } from 'n8n-workflow';
 import { apiRequest, validateMongoId } from '../../utils/helpers';
 
@@ -15,53 +14,49 @@ export async function execute(
 	item: INodeExecutionData,
 	index: number,
 ): Promise<INodeExecutionData[]> {
-	try {
-		const formSubmissionId = this.getNodeParameter('formSubmissionId', index) as string;
-		const newOrgunitIds = this.getNodeParameter('newOrgunitId', index) as string;
+	const formSubmissionId = this.getNodeParameter('formSubmissionId', index) as string;
+	const newOrgunitIds = this.getNodeParameter('newOrgunitId', index) as string;
 
-		validateMongoId.call(this, formSubmissionId, 'Form Submission ID', index);
+	validateMongoId.call(this, formSubmissionId, 'Form Submission ID', index);
 
-		const orgunitArray = newOrgunitIds
-			.split(',')
-			.map((id: string) => id.trim())
-			.filter((id: string) => id.length > 0);
+	const orgunitArray = newOrgunitIds
+		.split(',')
+		.map((id: string) => id.trim())
+		.filter((id: string) => id.length > 0);
 
-		if (orgunitArray.length === 0) {
-			throw new NodeOperationError(this.getNode(), 'At least one Orgunit ID must be provided', {
-				itemIndex: index,
-			});
-		}
+	if (orgunitArray.length === 0) {
+		throw new NodeOperationError(this.getNode(), 'At least one Orgunit ID must be provided', {
+			itemIndex: index,
+		});
+	}
 
-		const formSubmission = (await apiRequest.call(
-			this,
-			'GET',
-			`/formvalues/${formSubmissionId}`,
-		)) as IDataObject;
+	const formSubmission = (await apiRequest.call(
+		this,
+		'GET',
+		`/formvalues/${formSubmissionId}`,
+	)) as IDataObject;
 
-		const contentRef =
-			formSubmission.contentRef instanceof Object
-				? (formSubmission.contentRef as IDataObject)._id
-				: formSubmission.contentRef;
+	const contentRef =
+		formSubmission.contentRef instanceof Object
+			? (formSubmission.contentRef as IDataObject)._id
+			: formSubmission.contentRef;
 
-		const response = await apiRequest.call(this, 'PATCH', `/formvalues/${formSubmissionId}`, {
-			contentRef,
-			values: formSubmission.values,
-			$set: {
+	await apiRequest.call(this, 'PATCH', `/formvalues/${formSubmissionId}`, {
+		contentRef,
+		values: formSubmission.values,
+		$set: {
+			orgunitsOfCreator: orgunitArray,
+		},
+	});
+
+	return [
+		{
+			json: {
+				success: true,
+				message: 'Updated orgunitsOfCreator',
 				orgunitsOfCreator: orgunitArray,
 			},
-		});
-
-		return [
-			{
-				json: {
-					success: true,
-					message: 'Updated orgunitsOfCreator',
-					orgunitsOfCreator: orgunitArray,
-				},
-				pairedItem: { item: index },
-			},
-		];
-	} catch (error) {
-		throw error;
-	}
+			pairedItem: { item: index },
+		},
+	];
 }

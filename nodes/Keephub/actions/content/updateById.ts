@@ -1,5 +1,4 @@
-import type { INodeExecutionData, IDataObject } from 'n8n-workflow';
-import type { IExecuteFunctions } from 'n8n-workflow';
+import type { INodeExecutionData, IDataObject, IExecuteFunctions } from 'n8n-workflow';
 import { NodeOperationError } from 'n8n-workflow';
 import { apiRequest } from '../../utils/helpers';
 
@@ -39,50 +38,46 @@ export async function execute(
 		});
 	}
 
-	try {
-		const currentContent = (await apiRequest.call(
-			this,
-			'GET',
-			`/contents/${encodeURIComponent(contentId)}`,
-		)) as IDataObject;
+	const currentContent = (await apiRequest.call(
+		this,
+		'GET',
+		`/contents/${encodeURIComponent(contentId)}`,
+	)) as IDataObject;
 
-		const assignments = (updateDataRaw?.assignments as Array<Record<string, unknown>>) || [];
-		if (assignments.length === 0) {
-			throw new NodeOperationError(this.getNode(), 'No fields to update', {
-				itemIndex: index,
-			});
-		}
-
-		// Build updates from assignments
-		for (const assignment of assignments) {
-			let name = assignment.name as string;
-			const value = assignment.value as unknown;
-
-			// STRIP THE [0].json PREFIX IF IT EXISTS (this is what was working before)
-			if (name.startsWith('[0].json.')) {
-				name = name.substring(9); // Remove '[0].json.' (9 characters)
-			}
-
-			if (name && name.trim().length > 0) {
-				setNestedValue(currentContent, name, value);
-			}
-		}
-
-		// Send the complete updated object
-		const response = await apiRequest.call(
-			this,
-			'PATCH',
-			`/contents/${encodeURIComponent(contentId)}`,
-			currentContent,
-		);
-
-		return [
-			{
-				json: response as IDataObject,
-				pairedItem: { item: index },
-			},
-		];
-	} catch (error) {
-		throw error;
+	const assignments = (updateDataRaw?.assignments as Array<Record<string, unknown>>) || [];
+	if (assignments.length === 0) {
+		throw new NodeOperationError(this.getNode(), 'No fields to update', {
+			itemIndex: index,
+		});
 	}
+
+	// Build updates from assignments
+	for (const assignment of assignments) {
+		let name = assignment.name as string;
+		const value = assignment.value as unknown;
+
+		// STRIP THE [0].json PREFIX IF IT EXISTS (this is what was working before)
+		if (name.startsWith('[0].json.')) {
+			name = name.substring(9); // Remove '[0].json.' (9 characters)
+		}
+
+		if (name && name.trim().length > 0) {
+			setNestedValue(currentContent, name, value);
+		}
+	}
+
+	// Send the complete updated object
+	const response = await apiRequest.call(
+		this,
+		'PATCH',
+		`/contents/${encodeURIComponent(contentId)}`,
+		currentContent,
+	);
+
+	return [
+		{
+			json: response as IDataObject,
+			pairedItem: { item: index },
+		},
+	];
 }

@@ -6,28 +6,38 @@ export const formSubmissionFields = [
 		noDataExpression: true,
 		displayOptions: { show: { resource: ['formSubmission'] } },
 		options: [
-			{ name: 'Get', value: 'getFormSubmission', description: 'Fetch full form submission data' },
 			{
-				name: 'Get Submitter Details',
-				value: 'getSubmitterDetails',
-				description: 'Fetch full user data of the submitter',
+				name: 'Calculate Response Duration',
+				value: 'calculateResponseDuration',
+				description: 'Time from form creation to submission',
+				action: 'Calculate response duration for a form submission',
+			},
+			{
+				name: 'Get',
+				value: 'getFormSubmission',
+				description: 'Fetch full form submission data',
+				action: 'Get a form submission',
 			},
 			{
 				name: 'Get Submission Orgunits',
 				value: 'getSubmissionOrgunits',
 				description: 'Fetch orgunit hierarchy',
+				action: 'Get submission orgunits for a form submission',
+			},
+			{
+				name: 'Get Submitter Details',
+				value: 'getSubmitterDetails',
+				description: 'Fetch full user data of the submitter',
+				action: 'Get submitter details for a form submission',
 			},
 			{
 				name: 'Update Submission Orgunits',
 				value: 'updateSubmissionOrgunits',
 				description: 'Change submission orgunit to limit visibility',
-			},
-			{
-				name: 'Calculate Response Duration',
-				value: 'calculateResponseDuration',
-				description: 'Time from form creation to submission',
+				action: 'Update submission orgunits for a form submission',
 			},
 		],
+
 		default: 'getFormSubmission',
 	},
 	{

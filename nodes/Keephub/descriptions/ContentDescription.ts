@@ -6,22 +6,50 @@ export const contentFields = [
 		noDataExpression: true,
 		displayOptions: { show: { resource: ['content'] } },
 		options: [
-			{ name: 'Create', value: 'create', description: 'Create new content' },
-			{ name: 'Get by ID', value: 'getById', description: 'Get content by ID' },
+			{
+				name: 'Create',
+				value: 'create',
+				description: 'Create new content',
+				action: 'Create a content',
+			},
+			{
+				name: 'Delete',
+				value: 'delete',
+				description: 'Delete content by ID',
+				action: 'Delete a content',
+			},
 			{
 				name: 'Find by Content Pool',
 				value: 'findByContentPool',
 				description: 'Find contents by content pool',
+				action: 'Find a content by content pool',
 			},
-			{ name: 'Find by Group', value: 'findByGroup', description: 'Find contents by group' },
+			{
+				name: 'Find by Group',
+				value: 'findByGroup',
+				description: 'Find contents by group',
+				action: 'Find a content by group',
+			},
 			{
 				name: 'Find by Orgunit',
 				value: 'findByOrgunit',
 				description: 'Find contents by organization unit',
+				action: 'Find a content by orgunit',
 			},
-			{ name: 'Update by ID', value: 'updateById', description: 'Update content by ID' },
-			{ name: 'Delete', value: 'delete', description: 'Delete content by ID' },
+			{
+				name: 'Get by ID',
+				value: 'getById',
+				description: 'Get content by ID',
+				action: 'Get a content by ID',
+			},
+			{
+				name: 'Update by ID',
+				value: 'updateById',
+				description: 'Update content by ID',
+				action: 'Update a content by ID',
+			},
 		],
+
 		default: 'create',
 	},
 	{
@@ -43,7 +71,7 @@ export const contentFields = [
 		displayOptions: { show: { resource: ['content'], operation: ['create'] } },
 		options: [{ name: 'Using JSON', value: 'json' }],
 		default: 'json',
-		description: 'Modify JSON body per your needs.',
+		description: 'Modify JSON body per your needs',
 	},
 	{
 		displayName: 'JSON Body',
@@ -72,7 +100,7 @@ export const contentFields = [
 		type: 'string',
 		displayOptions: { show: { resource: ['content'], operation: ['findByGroup'] } },
 		default: '',
-		placeholder: 'group-id',
+		placeholder: 'group-ID',
 		description: 'Group ID to filter by',
 		required: true,
 	},
@@ -82,7 +110,7 @@ export const contentFields = [
 		type: 'string',
 		displayOptions: { show: { resource: ['content'], operation: ['findByOrgunit'] } },
 		default: '',
-		placeholder: 'orgunit-id',
+		placeholder: 'orgunit-ID',
 		description: 'Organization unit ID to filter by',
 		required: true,
 	},
@@ -90,6 +118,9 @@ export const contentFields = [
 		displayName: 'Limit',
 		name: 'limit',
 		type: 'number',
+		typeOptions: {
+			minValue: 1,
+		},
 		displayOptions: {
 			show: {
 				resource: ['content'],
@@ -97,7 +128,7 @@ export const contentFields = [
 			},
 		},
 		default: 50,
-		description: 'Maximum number of results to return',
+		description: 'Max number of results to return',
 	},
 	{
 		displayName: 'Update Fields',
@@ -106,8 +137,8 @@ export const contentFields = [
 		typeOptions: {
 			assignmentLimit: 100,
 			fields: [
-				{ displayName: 'Field Name', name: 'name', type: 'string' },
-				{ displayName: 'Field Value', name: 'value', type: 'string' },
+				{ displayName: 'Field Name', name: 'name', type: 'string', default: '' },
+				{ displayName: 'Field Value', name: 'value', type: 'string', default: '' },
 			],
 		},
 		displayOptions: { show: { resource: ['content'], operation: ['updateById'] } },

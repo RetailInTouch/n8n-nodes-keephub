@@ -6,17 +6,16 @@ import {
 	INodeTypeDescription,
 	NodeOperationError,
 } from 'n8n-workflow';
-import * as userActions from './actions/user';
 import * as contentActions from './actions/content';
-import * as taskActions from './actions/task';
 import * as formSubmissionActions from './actions/formSubmission/index';
 import * as orgchartActions from './actions/orgchart/index';
-import { authFields } from './descriptions/AuthDescription';
-import { userFields } from './descriptions/UserDescription';
+import * as userActions from './actions/user';
+import * as taskActions from './actions/task';
 import { contentFields } from './descriptions/ContentDescription';
-import { taskFields } from './descriptions/TaskDescription';
 import { formSubmissionFields } from './descriptions/FormSubmissionDescription';
 import { orgchartFields } from './descriptions/OrgchartDescription';
+import { taskFields } from './descriptions/TaskDescription';
+import { userFields } from './descriptions/UserDescription';
 
 export class Keephub implements INodeType {
 	description: INodeTypeDescription = {
@@ -44,22 +43,21 @@ export class Keephub implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Auth', value: 'auth' },
-					{ name: 'User', value: 'user' },
 					{ name: 'Content', value: 'content' },
-					{ name: 'Task', value: 'task' },
 					{ name: 'Form Submission', value: 'formSubmission' },
 					{ name: 'Orgchart', value: 'orgchart' },
+					{ name: 'Task', value: 'task' },
+					{ name: 'User', value: 'user' },
 				],
-				default: 'auth',
+				default: 'content',
 			},
-			...authFields,
-			...userFields,
 			...contentFields,
-			...taskFields,
 			...formSubmissionFields,
 			...orgchartFields,
+			...taskFields,
+			...userFields,
 		] as INodeProperties[],
+		usableAsTool: true,
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
@@ -67,12 +65,6 @@ export class Keephub implements INodeType {
 		const returnData: INodeExecutionData[] = [];
 
 		const operationMap = {
-			user: {
-				getById: userActions.getByIdExecute,
-				findByLoginName: userActions.findByLoginNameExecute,
-				findByGroup: userActions.findByGroupExecute,
-				findByOrgunit: userActions.findByOrgunitExecute,
-			},
 			content: {
 				create: contentActions.createExecute,
 				getById: contentActions.getByIdExecute,
@@ -81,13 +73,6 @@ export class Keephub implements INodeType {
 				findByOrgunit: contentActions.findByOrgunitExecute,
 				updateById: contentActions.updateByIdExecute,
 				delete: contentActions.deleteExecute,
-			},
-			task: {
-				getTask: taskActions.getByIdExecute,
-				createTask: taskActions.createTaskExecute,
-				getTaskStatus: taskActions.getTaskStatusExecute,
-				getTaskStatusCounts: taskActions.getTaskStatusCountsExecute,
-				deleteTask: taskActions.deleteTaskExecute,
 			},
 			formSubmission: {
 				getFormSubmission: formSubmissionActions.getByIdExecute,
@@ -101,14 +86,28 @@ export class Keephub implements INodeType {
 				getParent: orgchartActions.getParentExecute,
 				getAncestors: orgchartActions.getAncestorsExecute,
 				getChildren: orgchartActions.getChildrenExecute,
-
+			},
+			task: {
+				getTask: taskActions.getByIdExecute,
+				createTask: taskActions.createTaskExecute,
+				getTaskStatus: taskActions.getTaskStatusExecute,
+				getTaskStatusCounts: taskActions.getTaskStatusCountsExecute,
+				deleteTask: taskActions.deleteTaskExecute,
+			},
+			user: {
+				getById: userActions.getByIdExecute,
+				findByLoginName: userActions.findByLoginNameExecute,
+				findByGroup: userActions.findByGroupExecute,
+				findByOrgunit: userActions.findByOrgunitExecute,
 			},
 		};
 
 		const resource = this.getNodeParameter('resource', 0) as string;
 		const operation = this.getNodeParameter('operation', 0) as string;
 
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const handler = (operationMap as any)[resource]?.[operation];
+
 		if (!handler) {
 			throw new NodeOperationError(
 				this.getNode(),

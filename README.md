@@ -381,7 +381,6 @@ n8n-nodes-keephub/
 │   └── Keephub/
 │       ├── Keephub.node.ts           # Main node class
 │       ├── descriptions/             # Field definitions
-│       │   ├── AuthDescription.ts
 │       │   ├── UserDescription.ts
 │       │   ├── ContentDescription.ts
 │       │   ├── TaskDescription.ts

@@ -1,5 +1,4 @@
-import type { INodeExecutionData, IDataObject } from 'n8n-workflow';
-import type { IExecuteFunctions } from 'n8n-workflow';
+import type { INodeExecutionData, IDataObject, IExecuteFunctions  } from 'n8n-workflow';
 import { NodeOperationError } from 'n8n-workflow';
 import { apiRequest, validateMongoId } from '../../utils/helpers';
 
@@ -15,7 +14,7 @@ export async function execute(
 	item: INodeExecutionData,
 	index: number,
 ): Promise<INodeExecutionData[]> {
-	try {
+
 		const formSubmissionId = this.getNodeParameter('formSubmissionId', index) as string;
 
 		validateMongoId.call(this, formSubmissionId, 'Form Submission ID', index);
@@ -61,7 +60,7 @@ export async function execute(
 					name: orgunitData.name || 'Unknown',
 					path: ((orgunitData.namepath as string) || '').slice(1),
 				});
-			} catch (err) {
+			} catch {
 				// Skip if orgunit fetch fails
 				orgunitDetails.push({
 					id: orgunitId,
@@ -81,7 +80,5 @@ export async function execute(
 				pairedItem: { item: index },
 			},
 		];
-	} catch (error) {
-		throw error;
-	}
+
 }

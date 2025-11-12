@@ -1,5 +1,4 @@
-import type { INodeExecutionData, IDataObject } from 'n8n-workflow';
-import type { IExecuteFunctions } from 'n8n-workflow';
+import type { INodeExecutionData, IDataObject, IExecuteFunctions  } from 'n8n-workflow';
 import { NodeOperationError } from 'n8n-workflow';
 import { apiRequest } from '../../utils/helpers';
 
@@ -15,7 +14,6 @@ export async function execute(
 	item: INodeExecutionData,
 	index: number,
 ): Promise<INodeExecutionData[]> {
-	try {
 		const contentId = this.getNodeParameter('contentId', index) as string;
 
 		if (!contentId || contentId.trim().length === 0) {
@@ -36,7 +34,4 @@ export async function execute(
 				pairedItem: { item: index },
 			},
 		];
-	} catch (error) {
-		throw error;
-	}
 }

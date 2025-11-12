@@ -6,21 +6,29 @@ export const userFields = [
 		noDataExpression: true,
 		displayOptions: { show: { resource: ['user'] } },
 		options: [
-			{ name: 'Get by ID', value: 'getById', description: 'Retrieve a user by their unique ID' },
+			{
+				name: 'Get by ID',
+				value: 'getById',
+				description: 'Retrieve a user by their unique ID',
+				action: 'Get a user by ID',
+			},
 			{
 				name: 'Find by Login Name',
 				value: 'findByLoginName',
 				description: 'Retrieve a user by their Login Name',
+				action: 'Find a user by login name',
 			},
 			{
 				name: 'Find by Group',
 				value: 'findByGroup',
 				description: 'Find all users in a specific group',
+				action: 'Find a user by group',
 			},
 			{
 				name: 'Find by Orgunit',
 				value: 'findByOrgunit',
 				description: 'Find all users in a specific organization unit',
+				action: 'Find a user by orgunit',
 			},
 		],
 		default: 'getById',

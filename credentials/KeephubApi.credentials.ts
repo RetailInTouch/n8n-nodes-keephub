@@ -1,8 +1,14 @@
-import { ICredentialType, INodeProperties } from 'n8n-workflow';
+import {
+	ICredentialTestRequest,
+	ICredentialType,
+	INodeProperties,
+} from 'n8n-workflow';
 
 export class KeephubApi implements ICredentialType {
 	name = 'keephubApi';
 	displayName = 'Keephub API';
+	documentationUrl = 'https://github.com/RetailInTouch/n8n-nodes-keephub/blob/master/README.md'; 
+	icon = 'file:Keephub.svg' as const; 
 
 	properties: INodeProperties[] = [
 		{
@@ -100,6 +106,17 @@ export class KeephubApi implements ICredentialType {
 			},
 			default: '/authentication',
 			description: 'The endpoint to get your token (/authentication for Keephub)',
+			typeOptions: { password: true },
 		},
 	];
+
+	test: ICredentialTestRequest = {
+		request: {
+			baseURL: '={{$credentials.clientUrl}}',
+			url: '/api/user/current',
+			headers: {
+				Authorization: '=Bearer {{$credentials.bearerToken}}',
+			},
+		},
+	};
 }

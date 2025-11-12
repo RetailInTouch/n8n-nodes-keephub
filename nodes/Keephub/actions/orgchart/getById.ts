@@ -1,5 +1,4 @@
-import type { INodeExecutionData, IDataObject } from 'n8n-workflow';
-import type { IExecuteFunctions } from 'n8n-workflow';
+import type { INodeExecutionData, IDataObject, IExecuteFunctions } from 'n8n-workflow';
 import { NodeOperationError } from 'n8n-workflow';
 import { apiRequest } from '../../utils/helpers';
 
@@ -15,22 +14,18 @@ export async function execute(
 	item: INodeExecutionData,
 	index: number,
 ): Promise<INodeExecutionData[]> {
-	try {
-		const nodeId = this.getNodeParameter('nodeId', index) as string;
+	const nodeId = this.getNodeParameter('nodeId', index) as string;
 
-		if (!nodeId) {
-			throw new NodeOperationError(this.getNode(), 'Node ID is required', { itemIndex: index });
-		}
-
-		const response = (await apiRequest.call(this, 'GET', `/orgchart/${nodeId}`)) as IDataObject;
-
-		return [
-			{
-				json: response,
-				pairedItem: { item: index },
-			},
-		];
-	} catch (error) {
-		throw error;
+	if (!nodeId) {
+		throw new NodeOperationError(this.getNode(), 'Node ID is required', { itemIndex: index });
 	}
+
+	const response = (await apiRequest.call(this, 'GET', `/orgchart/${nodeId}`)) as IDataObject;
+
+	return [
+		{
+			json: response,
+			pairedItem: { item: index },
+		},
+	];
 }

@@ -5,6 +5,7 @@ export const orgchartFields: INodeProperties[] = [
 		displayName: 'Operation',
 		name: 'operation',
 		type: 'options',
+		noDataExpression: true,
 		displayOptions: {
 			show: {
 				resource: ['orgchart'],
@@ -15,25 +16,25 @@ export const orgchartFields: INodeProperties[] = [
 				name: 'Get by ID',
 				value: 'getById',
 				description: 'Get a single orgchart node by ID',
-				action: 'Get an Orgchart Node',
+				action: 'Get an orgchart node',
 			},
 			{
 				name: 'Get Parent',
 				value: 'getParent',
 				description: 'Get the parent of an orgchart node by ID',
-				action: 'Get Parent of an Orgchart Node',
+				action: 'Get parent of an orgchart node',
 			},
 			{
 				name: 'Get Ancestors',
 				value: 'getAncestors',
 				description: 'Get all ancestors of an orgchart node by ID',
-				action: 'Get Ancestors of an Orgchart Node',
+				action: 'Get ancestors of an orgchart node',
 			},
 			{
 				name: 'Get Children',
 				value: 'getChildren',
 				description: 'Get all children/descendants of an orgchart node by ID',
-				action: 'Get Children of an Orgchart Node',
+				action: 'Get children of an orgchart node',
 			},
 		],
 		default: 'getById',
@@ -72,13 +73,16 @@ export const orgchartFields: INodeProperties[] = [
 		displayName: 'Result Limit',
 		name: 'limit',
 		type: 'number',
-		default: 0,
+		typeOptions: {
+			minValue: 1,
+		},
+		default: 50,
 		displayOptions: {
 			show: {
 				resource: ['orgchart'],
 				operation: ['getChildren'],
 			},
 		},
-		description: 'Maximum number of results to return (0 = all)',
+		description: 'Max number of results to return',
 	},
 ];
