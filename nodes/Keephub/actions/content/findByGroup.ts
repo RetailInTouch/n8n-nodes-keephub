@@ -2,13 +2,6 @@ import type { INodeExecutionData, IDataObject, IExecuteFunctions } from 'n8n-wor
 import { NodeOperationError } from 'n8n-workflow';
 import { apiRequest } from '../../utils/helpers';
 
-export const description = {
-	displayName: 'Find by Group',
-	name: 'findByGroup',
-	action: 'Find contents by group',
-	description: 'Find contents by group',
-};
-
 export async function execute(
 	this: IExecuteFunctions,
 	item: INodeExecutionData,
@@ -16,6 +9,7 @@ export async function execute(
 ): Promise<INodeExecutionData[]> {
 	const groupId = this.getNodeParameter('groupId', index) as string;
 	const limit = this.getNodeParameter('limit', index, 50) as number;
+	const options = this.getNodeParameter('options', index, {}) as IDataObject;
 
 	if (!groupId || groupId.trim().length === 0) {
 		throw new NodeOperationError(this.getNode(), 'Group ID cannot be empty', {
@@ -23,18 +17,51 @@ export async function execute(
 		});
 	}
 
-	const params = new URLSearchParams();
-	params.append('groupId', groupId);
-	if (limit) {
-		params.append('limit', limit.toString());
+	if (limit < 1) {
+		throw new NodeOperationError(this.getNode(), 'Limit must be greater than 0', {
+			itemIndex: index,
+		});
 	}
 
-	const response = await apiRequest.call(this, 'GET', `/contents?${params.toString()}`);
+	try {
+		const skip = (options.skip as number) || 0;
+		const sortBy = (options.sortBy as string) || '';
+		const sortOrder = (options.sortOrder as number) || 1;
 
-	const items = Array.isArray(response) ? response : [response];
+		let endpoint = `/contentsview?$limit=${limit}&$skip=${skip}&$and[0][groups.selection]=${encodeURIComponent(groupId)}`;
 
-	return items.map((item: IDataObject) => ({
-		json: item,
-		pairedItem: { item: index },
-	}));
+		if (sortBy) {
+			endpoint += `&$sort[${sortBy}]=${sortOrder}`;
+		}
+
+		const response = (await apiRequest.call(this, 'GET', endpoint)) as IDataObject;
+
+		let items: IDataObject[] = [];
+
+		if (Array.isArray(response)) {
+			items = response;
+		} else if (response && response.data && Array.isArray(response.data)) {
+			items = response.data as IDataObject[];
+		}
+
+		if (items.length === 0) {
+			throw new NodeOperationError(this.getNode(), `No content found in group: ${groupId}`, {
+				itemIndex: index,
+			});
+		}
+
+		return items.map((dataItem: IDataObject) => ({
+			json: dataItem,
+			pairedItem: { item: index },
+		}));
+	} catch (error) {
+		if (error instanceof NodeOperationError) {
+			throw error;
+		}
+
+		throw new NodeOperationError(this.getNode(), 'Error searching content by group', {
+			description: (error as Error).message,
+			itemIndex: index,
+		});
+	}
 }
