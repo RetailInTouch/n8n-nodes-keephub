@@ -368,7 +368,7 @@ Enable "Continue on Error" to handle failures gracefully in your workflow.
 ## 📚 Documentation
 
 - 📖 [n8n Documentation](https://docs.n8n.io/)
-- 🔗 [Keephub API Docs](https://dev.api.keephub.io)
+- 🔗 [Keephub API Docs](https://dev.api.keephub.io/api-docs/)
 - 💬 [n8n Community Forum](https://community.n8n.io/)
 
 ---
@@ -462,7 +462,7 @@ npm run build
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ---
-<!-- 
+
 ## 🙏 Support
 
 Found a bug? Have a feature request? 
@@ -477,7 +477,7 @@ Found a bug? Have a feature request?
 If you find this node useful, please consider:
 - ⭐ Starring this repository
 - 🐦 Sharing it on social media
-- 📢 Recommending it to the community -->
+- 📢 Recommending it to the community
 
 ---
 
