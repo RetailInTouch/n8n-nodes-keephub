@@ -1,5 +1,9 @@
-<img src="./assets/Keephub Banner.png" alt="Keephub Banner" width="50%" height="auto">
-
+<div align="center">
+  <a href="https://keephub.io" target="_blank">
+    <img src="https://github.com/RetailInTouch/n8n-nodes-keephub/blob/master/assets/Keephub%20Banner.png?raw=true" alt="Keephub Banner" width="50%" height="auto">
+  </a>
+</div>
+```
 # 🚀 n8n-nodes-keephub
 
 <div align="center">
