@@ -197,7 +197,7 @@ Sort Order: 1 for ascending, -1 for descending
 | 🗑️ **Delete** | Remove a task template |
 | 📋 **Get by ID** | Retrieve a task template |
 | 🔍 **Get By Orgunit**	| Fetch tasks by organization unit with filtering & pagination |
-| 📊 **Get Status** | Check task template status |
+| 📊 **Get Progress** | Check task template progress |
 | 📈 **Get Status Counts** | View task completion statistics |
 
 **Example:**
