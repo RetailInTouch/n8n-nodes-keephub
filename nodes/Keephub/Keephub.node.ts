@@ -90,7 +90,7 @@ export class Keephub implements INodeType {
 			task: {
 				getTask: taskActions.getByIdExecute,
 				createTask: taskActions.createTaskExecute,
-				getTaskStatus: taskActions.getTaskStatusExecute,
+				getTaskProgress: taskActions.getTaskProgressExecute,
 				getTaskStatusCounts: taskActions.getTaskStatusCountsExecute,
 				deleteTask: taskActions.deleteTaskExecute,
 				getTaskByOrgunit: taskActions.getByOrgunitExecute,

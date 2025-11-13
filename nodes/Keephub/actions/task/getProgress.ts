@@ -3,10 +3,10 @@ import { NodeOperationError } from 'n8n-workflow';
 import { apiRequest } from '../../utils/helpers';
 
 export const description = {
-	displayName: 'Get Status',
-	name: 'getTaskStatus',
-	action: 'Get task template status',
-	description: 'Get task template status',
+	displayName: 'Get Progress',
+	name: 'getTaskProgress',
+	action: 'Get task template progress',
+	description: 'Get task template progress',
 };
 
 export async function execute(
@@ -30,6 +30,7 @@ export async function execute(
 
 	const progressArray = (response.progress as IDataObject[]) || [];
 	const progressData = progressArray[0] || {};
+	delete progressData.orgunits;
 
 	return [
 		{

@@ -10,13 +10,13 @@ export const taskFields = [
 				name: 'Create',
 				value: 'createTask',
 				description: 'Create a new task template',
-				action: 'Create a task',
+				action: 'Create a task template',
 			},
 			{
 				name: 'Delete',
 				value: 'deleteTask',
 				description: 'Delete a task template',
-				action: 'Delete a task',
+				action: 'Delete a task template',
 			},
 			{
 				name: 'Get by ID',
@@ -31,16 +31,16 @@ export const taskFields = [
 				action: 'Get tasks by orgunit',
 			},
 			{
-				name: 'Get Status',
-				value: 'getTaskStatus',
-				description: 'Get task template status',
-				action: 'Get status for a task',
+				name: 'Get Progress',
+				value: 'getTaskProgress',
+				description: 'Get task template progress',
+				action: 'Get progress for a task template',
 			},
 			{
 				name: 'Get Status Counts',
 				value: 'getTaskStatusCounts',
 				description: 'Get task template status counts',
-				action: 'Get status counts for a task',
+				action: 'Get status counts for a task template',
 			},
 		],
 
@@ -77,7 +77,7 @@ export const taskFields = [
 		displayOptions: {
 			show: {
 				resource: ['task'],
-				operation: ['getTask', 'deleteTask', 'getTaskStatus', 'getTaskStatusCounts'],
+				operation: ['getTask', 'deleteTask', 'getTaskProgress', 'getTaskStatusCounts'],
 			},
 		},
 		default: '',
