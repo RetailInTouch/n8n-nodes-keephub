@@ -45,9 +45,6 @@ export async function execute(
                 childId: child._id as string,
                 childName: child.name as string,
             });
-
-            // Recursively get descendants
-            await traverseChildren(child._id as string);
         }
     }
 
