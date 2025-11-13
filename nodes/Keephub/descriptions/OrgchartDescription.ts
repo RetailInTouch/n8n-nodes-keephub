@@ -39,7 +39,6 @@ export const orgchartFields: INodeProperties[] = [
 		],
 		default: 'getById',
 	},
-	// Node ID - used by all operations
 	{
 		displayName: 'Node ID',
 		name: 'nodeId',
@@ -54,7 +53,6 @@ export const orgchartFields: INodeProperties[] = [
 		placeholder: 'e.g., 123456',
 		description: 'The ID of the orgchart node to operate on',
 	},
-	// Depth Limit - used by getAncestors and getChildren
 	{
 		displayName: 'Depth Limit',
 		name: 'depthLimit',
@@ -63,12 +61,11 @@ export const orgchartFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['orgchart'],
-				operation: ['getAncestors', 'getChildren'],
+				operation: ['getAncestors'],
 			},
 		},
 		description: 'Maximum depth to traverse (0 = unlimited)',
 	},
-	// Result Limit - used only by getChildren
 	{
 		displayName: 'Result Limit',
 		name: 'limit',
