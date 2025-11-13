@@ -1,3 +1,5 @@
+<img src="./assets/banner.png" alt="Keephub Banner" width="100%" height="auto">
+
 # 🚀 n8n-nodes-keephub
 
 <div align="center">
