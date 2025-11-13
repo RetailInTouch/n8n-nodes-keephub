@@ -33,22 +33,15 @@ This is a professional **n8n community node** that enables you to harness the fu
 
 ## 🔧 Installation
 
-## To publish the package to our self-hosted n8n:
-```npm install
-npm run build
-tar -C dist -czf n8n-custom-node.tar.gz nodes credentials icons
-aws s3 cp n8n-custom-node.tar.gz s3://vnext-public-content/n8n/n8n-custom-node.tar.gz --acl public-read
-```
-After this, you need to restart the pod.
 
-<!-- ### 📦 Community Nodes Method (Recommended)
+### 📦 Community Nodes Method (Recommended)
 
 1. Open your n8n instance
 2. Navigate to **Settings** ⚙️ → **Community Nodes**
 3. Click **Install a community node**
 4. Enter: `n8n-nodes-keephub`
 5. Click **Install**
-6. ✅ Done! The node is ready to use -->
+6. ✅ Done! The node is ready to use
 
 ### 🛠️ Manual Installation
 
@@ -143,7 +136,7 @@ Output:
 
 | Operation | Description |
 |-----------|-------------|
-| ✨ **Create** | Create new content (news, announcements, etc.) |
+| ✨ **Create** | Create new content (news, forms, manuals, etc.) |
 | 🗑️ **Delete** | Remove content |
 | 📁 **Find by Content Pool** | Filter content by pool with optional sorting |
 | 🏷️ **Find by Group** | Get content assigned to groups with optional sorting |
@@ -355,7 +348,7 @@ Keephub: Get all users in a group
   ↓
 Filter active users
   ↓
-Slack: Create channels per user
+Slack: Create channels per active users in group
 ```
 
 ### 📋 Example 3: Form Response Automation
