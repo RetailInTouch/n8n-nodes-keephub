@@ -39,7 +39,7 @@ This is a professional **n8n community node** that enables you to harness the fu
 
 ## 🔧 Installation
 
-<!--
+
 ### 📦 Community Nodes Method (Recommended)
 
 1. Open your n8n instance
@@ -47,7 +47,7 @@ This is a professional **n8n community node** that enables you to harness the fu
 3. Click **Install a community node**
 4. Enter: `n8n-nodes-keephub`
 5. Click **Install**
-6. ✅ Done! The node is ready to use -->
+6. ✅ Done! The node is ready to use
 
 ### 🛠️ Manual Installation
 
@@ -497,6 +497,8 @@ npm run lint
   - 🔍 Added Get By Orgunit task operation
   - 📅 Date range filtering support for tasks (Start Date Before/After)
   - 📰 Enhanced Content filtering:
+    - v1.2.1 (2025-11-20)
+      - README updates
 
 ---
 
@@ -532,7 +534,6 @@ Found a bug? Have a feature request?
 
 - 🐛 [Open an Issue](https://github.com/RetailInTouch/n8n-nodes-keephub/issues)
 - 💬 [Start a Discussion](https://github.com/RetailInTouch/n8n-nodes-keephub/discussions)
-- 
 ---
 
 ## ⭐ Show Your Support
