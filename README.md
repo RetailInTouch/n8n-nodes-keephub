@@ -39,7 +39,7 @@ This is a professional **n8n community node** that enables you to harness the fu
 
 ## 🔧 Installation
 
-
+<!--
 ### 📦 Community Nodes Method (Recommended)
 
 1. Open your n8n instance
@@ -47,7 +47,7 @@ This is a professional **n8n community node** that enables you to harness the fu
 3. Click **Install a community node**
 4. Enter: `n8n-nodes-keephub`
 5. Click **Install**
-6. ✅ Done! The node is ready to use
+6. ✅ Done! The node is ready to use -->
 
 ### 🛠️ Manual Installation
 
