@@ -489,16 +489,22 @@ npm run lint
 - ✅ Task template operations
 - 📋 Form submission handling
 - 🔐 Secure API authentication
-- v1.1.0 (2025-11-10) 📦
-  - 📊 Added Orgchart operations (Get, Parent, Ancestors, Children)
-  - 🧹 Fixed console.log in updateById operation
-  - 🔧 Code cleanup and optimizations
-- v1.2.0 (2025-11-12) 🆕
-  - 🔍 Added Get By Orgunit task operation
-  - 📅 Date range filtering support for tasks (Start Date Before/After)
-  - 📰 Enhanced Content filtering:
-    - v1.2.1 (2025-11-20)
-      - README updates
+
+### v1.1.0 (2025-11-10) 📦
+- 📊 Added Orgchart operations (Get, Parent, Ancestors, Children)
+- 🧹 Fixed console.log in updateById operation
+- 🔧 Code cleanup and optimizations
+
+### v1.2.0 (2025-11-12) 🆕
+- 🔍 Added Get By Orgunit task operation
+- 📅 Date range filtering support for tasks (Start Date Before/After)
+- 📰 Enhanced Content filtering
+
+### v1.2.1 (2025-11-20)
+- 📖 README updates and documentation improvements
+
+### v1.2.2 (2025-11-20)
+- 🧹 Build process improvements (added dist folder cleanup script)
 
 ---
 

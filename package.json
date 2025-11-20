@@ -26,6 +26,8 @@
 		"dist"
 	],
 	"scripts": {
+		"clean": "rm -rf dist",
+		"prebuild": "npm run clean",
 		"build": "tsc && npm run copy-assets",
 		"copy-assets": "mkdir -p dist/credentials && cp icons/Keephub.svg dist/credentials/ && mkdir -p dist/nodes/Keephub && cp icons/Keephub.svg dist/nodes/Keephub/",
 		"dev": "tsc -w",
