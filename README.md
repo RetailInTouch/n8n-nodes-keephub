@@ -17,7 +17,7 @@
 
 Unlock the power of employee engagement and communication automation with this comprehensive n8n community node for Keephub.
 
-[🔧 Installation](#-installation) • [📚 Documentation](#-operations) • [🚀 Quick Start](#-quick-start) • [🤝 Contributing](#-contributing)
+[🔧 Installation](#-installation) • [📚 Documentation](#-operations) • [🚀 Quick Start](#-quick-start) • [📝 Changelog](#-version-history) • [🤝 Contributing](#-contributing)
 
 </div>
 
@@ -296,10 +296,11 @@ Start Date Before: Filter tasks created/updated before this date (dateTime picke
 
 | Operation | Description |
 |-----------|-------------|
-| **Get by ID** | Retrieve an orgchart node by ID |
-| **Get Parent** | Fetch the parent node of an orgchart node |
 | **Get Ancestors** | Get all ancestors in the org hierarchy |
+| **Get by External Ref** | Retrieve an orgchart node by its externalRef value |
+| **Get by ID** | Retrieve an orgchart node by ID |
 | **Get Children** | Retrieve all children/descendants |
+| **Get Parent** | Fetch the parent node of an orgchart node |
 
 **Example:**
 ```javascript
@@ -506,6 +507,8 @@ npm run lint
 ### v1.2.2 (2025-11-20)
 - 🧹 Build process improvements (added dist folder cleanup script)
 
+### v1.3.0 (2025-12-04)
+- 🔍 Added Get by External Ref operation to Orgchart resource for querying nodes by external reference
 ---
 
 ## 🤝 Contributing

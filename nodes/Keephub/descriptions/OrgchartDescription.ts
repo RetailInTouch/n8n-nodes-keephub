@@ -13,28 +13,34 @@ export const orgchartFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Get by ID',
-				value: 'getById',
-				description: 'Get a single orgchart node by ID',
-				action: 'Get an orgchart node',
-			},
-			{
-				name: 'Get Parent',
-				value: 'getParent',
-				description: 'Get the parent of an orgchart node by ID',
-				action: 'Get parent of an orgchart node',
-			},
-			{
 				name: 'Get Ancestors',
 				value: 'getAncestors',
 				description: 'Get all ancestors of an orgchart node by ID',
 				action: 'Get ancestors of an orgchart node',
 			},
 			{
+				name: 'Get by External Ref',
+				value: 'getByExternalRef',
+				description: 'Get a single orgchart node by external reference',
+				action: 'Get an orgchart node by external reference',
+			},
+			{
+				name: 'Get by ID',
+				value: 'getById',
+				description: 'Get a single orgchart node by ID',
+				action: 'Get an orgchart node',
+			},
+			{
 				name: 'Get Children',
 				value: 'getChildren',
 				description: 'Get all children/descendants of an orgchart node by ID',
 				action: 'Get children of an orgchart node',
+			},
+			{
+				name: 'Get Parent',
+				value: 'getParent',
+				description: 'Get the parent of an orgchart node by ID',
+				action: 'Get parent of an orgchart node',
 			},
 		],
 		default: 'getById',
@@ -48,10 +54,26 @@ export const orgchartFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['orgchart'],
+				operation: ['getById', 'getParent', 'getAncestors', 'getChildren'],
 			},
 		},
 		placeholder: 'e.g., 123456',
 		description: 'The ID of the orgchart node to operate on',
+	},
+	{
+		displayName: 'External Reference',
+		name: 'externalRef',
+		type: 'string',
+		required: true,
+		default: '',
+		displayOptions: {
+			show: {
+				resource: ['orgchart'],
+				operation: ['getByExternalRef'],
+			},
+		},
+		placeholder: 'e.g., department_finance',
+		description: 'The external reference of the orgchart node to retrieve',
 	},
 	{
 		displayName: 'Depth Limit',
