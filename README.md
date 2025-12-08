@@ -509,6 +509,9 @@ npm run lint
 
 ### v1.3.0 (2025-12-04)
 - 🔍 Added Get by External Ref operation to Orgchart resource for querying nodes by external reference
+
+### v1.3.1 (2025-12-09)
+- 🔧 Added externalRef of orgunit to the output of the Get sumission orgunits node
 ---
 
 ## 🤝 Contributing
