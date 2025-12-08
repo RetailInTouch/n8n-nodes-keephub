@@ -539,12 +539,9 @@ npm run lint
 
 - 🔍 Added Get by External Ref operation to Orgchart resource for querying nodes by external reference
 
-### v1.3.1 (2025-12-08)
+### v1.3.3 (2025-12-08)
 
 - 🔧 Added externalRef of orgunit to the output of the Get submission orgunits node
-
-### v1.3.1 (2025-12-08)
-
 - 🧹 Fixed typo that was causing README rendering issues
 
 ---
