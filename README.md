@@ -28,6 +28,7 @@ Unlock the power of employee engagement and communication automation with this c
 This is a professional **n8n community node** that enables you to harness the full power of **Keephub** within your workflow automation.
 
 **Keephub** is an enterprise-grade employee engagement platform for managing:
+
 - 👥 User management and organizational structures
 - 📰 Content creation and distribution
 - ✅ Task management and templates
@@ -38,7 +39,6 @@ This is a professional **n8n community node** that enables you to harness the fu
 ---
 
 ## 🔧 Installation
-
 
 ### 📦 Community Nodes Method (Recommended)
 
@@ -52,12 +52,14 @@ This is a professional **n8n community node** that enables you to harness the fu
 ### 🛠️ Manual Installation
 
 **For Local n8n:**
+
 ```bash
 cd ~/.n8n/nodes
 npm install n8n-nodes-keephub
 ```
 
 **For Docker:**
+
 ```bash
 docker exec -it <n8n-container> sh
 cd /home/node/.n8n/nodes
@@ -66,6 +68,7 @@ npm install n8n-nodes-keephub
 ```
 
 **For Node.js n8n:**
+
 ```bash
 npm install -g n8n-nodes-keephub
 ```
@@ -119,14 +122,15 @@ Output:
 
 ### 👥 **User Operations**
 
-| Operation | Description |
-|-----------|-------------|
-| 🆔 **Get by ID** | Retrieve a user by their unique ID |
-| 🔍 **Find by Login Name** | Search users by login name |
-| 👨‍💼 **Find by Group** | Fetch all users in a specific group |
-| 🏢 **Find by Orgunit** | Retrieve users from an organization unit |
+| Operation                 | Description                              |
+| ------------------------- | ---------------------------------------- |
+| 🆔 **Get by ID**          | Retrieve a user by their unique ID       |
+| 🔍 **Find by Login Name** | Search users by login name               |
+| 👨‍💼 **Find by Group**      | Fetch all users in a specific group      |
+| 🏢 **Find by Orgunit**    | Retrieve users from an organization unit |
 
 **Example:**
+
 ```javascript
 // Get all users in a group
 {
@@ -140,47 +144,50 @@ Output:
 
 ### 📰 **Content Operations**
 
-| Operation | Description |
-|-----------|-------------|
-| ✨ **Create** | Create new content (news, forms, manuals, etc.) |
-| 🗑️ **Delete** | Remove content |
-| 📁 **Find by Content Pool** | Filter content by pool with optional sorting |
-| 🏷️ **Find by Group** | Get content assigned to groups with optional sorting |
-| 🏢 **Find by Orgunit** | Retrieve content by organization with optional sorting |
-| 📖 **Get by ID** | Retrieve specific content |
-| ✏️ **Update by ID** | Modify existing content |
+| Operation                   | Description                                            |
+| --------------------------- | ------------------------------------------------------ |
+| ✨ **Create**               | Create new content (news, forms, manuals, etc.)        |
+| 🗑️ **Delete**               | Remove content                                         |
+| 📁 **Find by Content Pool** | Filter content by pool with optional sorting           |
+| 🏷️ **Find by Group**        | Get content assigned to groups with optional sorting   |
+| 🏢 **Find by Orgunit**      | Retrieve content by organization with optional sorting |
+| 📖 **Get by ID**            | Retrieve specific content                              |
+| ✏️ **Update by ID**         | Modify existing content                                |
 
 **Example - Create Content:**
+
 ```json
 {
-  "resource": "content",
-  "operation": "create",
-  "defineContentInput": "json",
-  "contentBody": {
-    "originLanguage": "en",
-    "contentType": "news",
-    "contentPool": "POOL_ID",
-    "title": { "en": "🎉 Company Announcement" },
-    "message": { "en": "<p>Great news everyone!</p>" },
-    "orgchartSelection": { "include": ["root0001"], "exclude": [] }
-  }
+	"resource": "content",
+	"operation": "create",
+	"defineContentInput": "json",
+	"contentBody": {
+		"originLanguage": "en",
+		"contentType": "news",
+		"contentPool": "POOL_ID",
+		"title": { "en": "🎉 Company Announcement" },
+		"message": { "en": "<p>Great news everyone!</p>" },
+		"orgchartSelection": { "include": ["root0001"], "exclude": [] }
+	}
 }
 ```
 
 **Example - Find Content by Orgunit with Filtering:**
+
 ```json
 {
-  "resource": "content",
-  "operation": "findByOrgunit",
-  "orgunitId": "root0077",
-  "limit": 50,
-  "options": {
-    "skip": 0,
-    "sortBy": "createdAt",
-    "sortOrder": 1
-  }
+	"resource": "content",
+	"operation": "findByOrgunit",
+	"orgunitId": "root0077",
+	"limit": 50,
+	"options": {
+		"skip": 0,
+		"sortBy": "createdAt",
+		"sortOrder": 1
+	}
 }
 ```
+
 Content Filtering Parameters:
 
 Limit (optional, default: 50): Maximum number of results to return
@@ -197,16 +204,17 @@ Sort Order: 1 for ascending, -1 for descending
 
 ### ✅ **Task Operations**
 
-| Operation | Description |
-|-----------|-------------|
-| ➕ **Create** | Create a new task template |
-| 🗑️ **Delete** | Remove a task template |
-| 📋 **Get by ID** | Retrieve a task template |
-| 🔍 **Get By Orgunit**	| Fetch tasks by organization unit with filtering & pagination |
-| 📊 **Get Progress** | Check task template progress |
-| 📈 **Get Status Counts** | View task completion statistics |
+| Operation                | Description                                                  |
+| ------------------------ | ------------------------------------------------------------ |
+| ➕ **Create**            | Create a new task template                                   |
+| 🗑️ **Delete**            | Remove a task template                                       |
+| 📋 **Get by ID**         | Retrieve a task template                                     |
+| 🔍 **Get By Orgunit**    | Fetch tasks by organization unit with filtering & pagination |
+| 📊 **Get Progress**      | Check task template progress                                 |
+| 📈 **Get Status Counts** | View task completion statistics                              |
 
 **Example:**
+
 ```javascript
 {
   "resource": "task",
@@ -225,22 +233,25 @@ Sort Order: 1 for ascending, -1 for descending
   }
 }
 ```
+
 **Example - Get Tasks by Orgunit with Filtering:**
+
 ```json
 {
-  "resource": "task",
-  "operation": "getTaskByOrgunit",
-  "orgunitId": "root0077",
-  "limit": 50,
-  "options": {
-    "skip": 0,
-    "sortBy": "template.dueDate",
-    "sortOrder": 1,
-    "startDateGte": "2025-11-01T00:00:00Z",
-    "startDateLte": "2025-11-30T23:59:59Z"
-  }
+	"resource": "task",
+	"operation": "getTaskByOrgunit",
+	"orgunitId": "root0077",
+	"limit": 50,
+	"options": {
+		"skip": 0,
+		"sortBy": "template.dueDate",
+		"sortOrder": 1,
+		"startDateGte": "2025-11-01T00:00:00Z",
+		"startDateLte": "2025-11-30T23:59:59Z"
+	}
 }
 ```
+
 Parameters:
 
 Orgunit ID (required): The organization unit ID to filter tasks
@@ -263,15 +274,16 @@ Start Date Before: Filter tasks created/updated before this date (dateTime picke
 
 ### 📋 **Form Submission Operations**
 
-| Operation | Description |
-|-----------|-------------|
-| 📥 **Get** | Fetch complete form submission data |
-| 👤 **Get Submitter Details** | Retrieve full user profile of submitter |
-| 🏢 **Get Submission Orgunits** | View orgunit hierarchy |
-| 📍 **Update Submission Orgunits** | Change visibility by orgunit |
-| ⏱️ **Calculate Response Duration** | Time from creation to submission |
+| Operation                          | Description                             |
+| ---------------------------------- | --------------------------------------- |
+| 📥 **Get**                         | Fetch complete form submission data     |
+| 👤 **Get Submitter Details**       | Retrieve full user profile of submitter |
+| 🏢 **Get Submission Orgunits**     | View orgunit hierarchy                  |
+| 📍 **Update Submission Orgunits**  | Change visibility by orgunit            |
+| ⏱️ **Calculate Response Duration** | Time from creation to submission        |
 
 **Example - Calculate Response Time:**
+
 ```javascript
 {
   "resource": "formSubmission",
@@ -294,15 +306,16 @@ Start Date Before: Filter tasks created/updated before this date (dateTime picke
 
 ### Orgchart Operations
 
-| Operation | Description |
-|-----------|-------------|
-| **Get Ancestors** | Get all ancestors in the org hierarchy |
+| Operation               | Description                                        |
+| ----------------------- | -------------------------------------------------- |
+| **Get Ancestors**       | Get all ancestors in the org hierarchy             |
 | **Get by External Ref** | Retrieve an orgchart node by its externalRef value |
-| **Get by ID** | Retrieve an orgchart node by ID |
-| **Get Children** | Retrieve all children/descendants |
-| **Get Parent** | Fetch the parent node of an orgchart node |
+| **Get by ID**           | Retrieve an orgchart node by ID                    |
+| **Get Children**        | Retrieve all children/descendants                  |
+| **Get Parent**          | Fetch the parent node of an orgchart node          |
 
 **Example:**
+
 ```javascript
 {
   resource: "orgchart",
@@ -313,10 +326,10 @@ nodeId: "node123"
 
 ---
 
-
 ## 🔐 Credentials Setup
 
 ### Bearer Token Authentication
+
 ```
 ✓ Most secure for API integrations
 ✓ Use existing API tokens from Keephub
@@ -324,6 +337,7 @@ nodeId: "node123"
 ```
 
 ### Username/Password Authentication
+
 ```
 ✓ Automatic token generation
 ✓ Simple to set up
@@ -377,11 +391,13 @@ Send thank you message
 ## ⚙️ Node Configuration
 
 ### Input Data
+
 - All parameters support dynamic expressions with `{{ }}`
 - Use previous node outputs: `{{ $node["Previous Node"].json.field }}`
 - Access environment variables: `{{ $env.MY_VAR }}`
 
 ### Output Format
+
 ```javascript
 {
   "pairedItem": { "item": 0 },
@@ -392,33 +408,37 @@ Send thank you message
 ```
 
 ### Error Handling
+
 Enable "Continue on Error" to handle failures gracefully in your workflow.
 
 ---
 
 ## 📦 Requirements
 
-| Requirement | Version |
-|-----------|---------|
-| **n8n** | v0.199.0+ |
-| **Node.js** | 14.20.0+ |
-| **npm** | 6.0.0+ |
+| Requirement | Version   |
+| ----------- | --------- |
+| **n8n**     | v0.199.0+ |
+| **Node.js** | 14.20.0+  |
+| **npm**     | 6.0.0+    |
 
 ---
 
 ## 🐛 Troubleshooting
 
 ### ❌ "Authentication failed"
+
 - ✅ Verify your Keephub instance URL
 - ✅ Check API credentials are correct
 - ✅ Ensure credentials have required permissions
 
 ### ❌ "Unknown operation"
+
 - ✅ Verify resource and operation combination exist
 - ✅ Check node version is latest
 - ✅ Try refreshing the node palette
 
 ### ❌ "Connection timeout"
+
 - ✅ Check network connectivity
 - ✅ Verify firewall allows outbound HTTPS
 - ✅ Check Keephub instance is accessible
@@ -465,16 +485,19 @@ n8n-nodes-keephub/
 ## 🚀 Development
 
 ### Build
+
 ```bash
 npm run build
 ```
 
 ### Test
+
 ```bash
 npm run test
 ```
 
 ### Lint
+
 ```bash
 npm run lint
 ```
@@ -484,6 +507,7 @@ npm run lint
 ## 📝 Version History
 
 ### v1.0.0 (2025-01-09) 🎉
+
 - ✨ Initial release
 - 👥 User management operations
 - 📰 Content creation & management
@@ -492,26 +516,37 @@ npm run lint
 - 🔐 Secure API authentication
 
 ### v1.1.0 (2025-11-10) 📦
+
 - 📊 Added Orgchart operations (Get, Parent, Ancestors, Children)
 - 🧹 Fixed console.log in updateById operation
 - 🔧 Code cleanup and optimizations
 
 ### v1.2.0 (2025-11-12) 🆕
+
 - 🔍 Added Get By Orgunit task operation
 - 📅 Date range filtering support for tasks (Start Date Before/After)
 - 📰 Enhanced Content filtering
 
 ### v1.2.1 (2025-11-20)
+
 - 📖 README updates and documentation improvements
 
 ### v1.2.2 (2025-11-20)
+
 - 🧹 Build process improvements (added dist folder cleanup script)
 
 ### v1.3.0 (2025-12-04)
+
 - 🔍 Added Get by External Ref operation to Orgchart resource for querying nodes by external reference
 
 ### v1.3.1 (2025-12-08)
-- 🔧 Added externalRef of orgunit to the output of the Get sumission orgunits node
+
+- 🔧 Added externalRef of orgunit to the output of the Get submission orgunits node
+
+### v1.3.1 (2025-12-08)
+
+- 🧹 Fixed typo that was causing README rendering issues
+
 ---
 
 ## 🤝 Contributing
@@ -525,6 +560,7 @@ Contributions are welcome! 🙌
 5. **Open** a Pull Request
 
 ### Development Setup
+
 ```bash
 git clone https://github.com/RetailInTouch/n8n-nodes-keephub.git
 cd n8n-nodes-keephub
@@ -542,15 +578,17 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 🙏 Support
 
-Found a bug? Have a feature request? 
+Found a bug? Have a feature request?
 
 - 🐛 [Open an Issue](https://github.com/RetailInTouch/n8n-nodes-keephub/issues)
 - 💬 [Start a Discussion](https://github.com/RetailInTouch/n8n-nodes-keephub/discussions)
+
 ---
 
 ## ⭐ Show Your Support
 
 If you find this node useful, please consider:
+
 - ⭐ Starring this repository
 - 🐦 Sharing it on social media
 - 📢 Recommending it to the community
