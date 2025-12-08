@@ -1,4 +1,4 @@
-![Keephub Banner](https://github.com/RetailInTouch/n8n-nodes-keephub/blob/master/assets/Keephub%20Banner.png?raw=true)
+					![Keephub Banner](https://github.com/RetailInTouch/n8n-nodes-keephub/blob/master/assets/Keephub%20Banner.png?raw=true)
 
 # 🚀 n8n-nodes-keephub
 
