@@ -40,7 +40,8 @@
 		"n8nNodesApiVersion": 1,
 		"strict": true,
 		"credentials": [
-			"dist/credentials/KeephubApi.credentials.js"
+			"dist/credentials/KeephubBearerApi.credentials.js",
+			"dist/credentials/KeephubLoginApi.credentials.js"
 		],
 		"nodes": [
 			"dist/nodes/Keephub/Keephub.node.js"

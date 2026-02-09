@@ -28,10 +28,10 @@ export async function execute(
 		`/users?orgunits=${encodeURIComponent(orgunitId)}`,
 	);
 
-	const items = Array.isArray(response) ? response : [response];
+	const results = Array.isArray(response) ? response : [response];
 
-	return items.map((item: IDataObject) => ({
-		json: item,
+	return results.map((entry: IDataObject) => ({
+		json: entry,
 		pairedItem: { item: index },
 	}));
 }

@@ -1,4 +1,6 @@
-export const formSubmissionFields = [
+import type { INodeProperties } from 'n8n-workflow';
+
+export const formSubmissionFields: INodeProperties[] = [
 	{
 		displayName: 'Operation',
 		name: 'operation',

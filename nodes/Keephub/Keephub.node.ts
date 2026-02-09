@@ -1,9 +1,9 @@
 import {
 	IExecuteFunctions,
 	INodeExecutionData,
-	INodeProperties,
 	INodeType,
 	INodeTypeDescription,
+	NodeConnectionTypes,
 	NodeOperationError,
 } from 'n8n-workflow';
 import * as contentActions from './actions/content';
@@ -28,15 +28,45 @@ export class Keephub implements INodeType {
 		defaults: {
 			name: 'Keephub',
 		},
-		inputs: ['main'],
-		outputs: ['main'],
+		inputs: [NodeConnectionTypes.Main],
+		outputs: [NodeConnectionTypes.Main],
 		credentials: [
 			{
-				name: 'keephubApi',
+				name: 'keephubBearerApi',
 				required: true,
+				displayOptions: {
+					show: {
+						authentication: ['bearerToken'],
+					},
+				},
+			},
+			{
+				name: 'keephubLoginApi',
+				required: true,
+				displayOptions: {
+					show: {
+						authentication: ['loginCredentials'],
+					},
+				},
 			},
 		],
 		properties: [
+			{
+				displayName: 'Authentication',
+				name: 'authentication',
+				type: 'options',
+				options: [
+					{
+						name: 'Bearer Token',
+						value: 'bearerToken',
+					},
+					{
+						name: 'Login Credentials',
+						value: 'loginCredentials',
+					},
+				],
+				default: 'bearerToken',
+			},
 			{
 				displayName: 'Resource',
 				name: 'resource',
@@ -56,7 +86,7 @@ export class Keephub implements INodeType {
 			...orgchartFields,
 			...taskFields,
 			...userFields,
-		] as INodeProperties[],
+		],
 		usableAsTool: true,
 	};
 

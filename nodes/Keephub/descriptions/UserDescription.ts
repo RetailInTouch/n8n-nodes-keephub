@@ -1,4 +1,6 @@
-export const userFields = [
+import type { INodeProperties } from 'n8n-workflow';
+
+export const userFields: INodeProperties[] = [
 	{
 		displayName: 'Operation',
 		name: 'operation',

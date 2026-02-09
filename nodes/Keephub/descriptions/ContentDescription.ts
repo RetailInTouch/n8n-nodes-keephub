@@ -1,4 +1,6 @@
-export const contentFields = [
+import type { INodeProperties } from 'n8n-workflow';
+
+export const contentFields: INodeProperties[] = [
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -163,22 +165,6 @@ export const contentFields = [
 		required: true,
 	},
 	{
-		displayName: 'Limit',
-		name: 'limit',
-		type: 'number',
-		typeOptions: {
-			minValue: 1,
-		},
-		displayOptions: {
-			show: {
-				resource: ['content'],
-				operation: ['findByContentPool', 'findByGroup', 'findByOrgunit'],
-			},
-		},
-		default: 50,
-		description: 'Max number of results to return',
-	},
-	{
 		displayName: 'Update Fields',
 		name: 'updateFields',
 		type: 'assignmentCollection',
@@ -193,42 +179,53 @@ export const contentFields = [
 		default: {},
 	},
 	{
-    displayName: 'Options',
-    name: 'options',
-    type: 'collection',
-    displayOptions: {
-        show: {
-            resource: ['content'],
-            operation: ['findByContentPool', 'findByGroup', 'findByOrgunit'],
-        },
-    },
-    default: {},
-    placeholder: 'Add option',
-    options: [
-        {
-            displayName: 'Skip',
-            name: 'skip',
-            type: 'number',
-            default: 0,
-            description: 'Number of results to skip (pagination)',
-        },
-        {
-            displayName: 'Sort Field',
-            name: 'sortBy',
-            type: 'string',
-            default: '',
-            placeholder: 'createdAt',
-            description: 'Field to sort by',
-        },
-        {
-            displayName: 'Sort Order',
-            name: 'sortOrder',
-            type: 'options',
-            options: [
-                { name: 'Ascending', value: 1 },
-                { name: 'Descending', value: -1 },
-            ],
-            default: 1,
-        },
-    ],
-},]
+		displayName: 'Options',
+		name: 'options',
+		type: 'collection',
+		displayOptions: {
+			show: {
+				resource: ['content'],
+				operation: ['findByContentPool', 'findByGroup', 'findByOrgunit'],
+			},
+		},
+		default: {},
+		placeholder: 'Add option',
+		options: [
+			{
+				displayName: 'Limit',
+				name: 'limit',
+				type: 'number',
+				typeOptions: {
+					minValue: 1,
+				},
+				default: 50,
+				description: 'Max number of results to return',
+			},
+			{
+				displayName: 'Skip',
+				name: 'skip',
+				type: 'number',
+				default: 0,
+				description: 'Number of results to skip (pagination)',
+			},
+			{
+				displayName: 'Sort Field',
+				name: 'sortBy',
+				type: 'string',
+				default: '',
+				placeholder: 'createdAt',
+				description: 'Field to sort by',
+			},
+			{
+				displayName: 'Sort Order',
+				name: 'sortOrder',
+				type: 'options',
+				options: [
+					{ name: 'Ascending', value: 1 },
+					{ name: 'Descending', value: -1 },
+				],
+				default: 1,
+			},
+		],
+	},
+]

@@ -8,45 +8,33 @@ export async function execute(
 	index: number,
 ): Promise<INodeExecutionData[]> {
 	const nodeId = this.getNodeParameter('nodeId', index) as string;
-	const limit = this.getNodeParameter('limit', index) as number;
+	const additionalFields = this.getNodeParameter('additionalFields', index, {}) as IDataObject;
+	const limit = (additionalFields.limit as number) || 50;
 
 	if (!nodeId) {
 		throw new NodeOperationError(this.getNode(), 'Node ID is required', { itemIndex: index });
 	}
 
+	const childrenResponse = (await apiRequest.call(
+		this,
+		'GET',
+		`/orgchart?parent=${encodeURIComponent(nodeId)}`,
+	)) as IDataObject | IDataObject[];
+
+	const childNodes = Array.isArray(childrenResponse)
+		? childrenResponse
+		: (childrenResponse.data as IDataObject[]) || [];
+
 	const children: Array<{ childId: string; childName: string }> = [];
-	// eslint-disable-next-line @typescript-eslint/no-this-alias
-	const executeFunctions = this;
-
-	async function traverseChildren(parentId: string): Promise<void> {
+	for (const child of childNodes) {
 		if (limit > 0 && children.length >= limit) {
-			return;
+			break;
 		}
-
-		const childrenResponse = (await apiRequest.call(
-			executeFunctions,
-			'GET',
-			`/orgchart?parent=${encodeURIComponent(parentId)}`,
-		)) as IDataObject | IDataObject[];
-
-		const childNodes = Array.isArray(childrenResponse)
-			? childrenResponse
-			: (childrenResponse.data as IDataObject[]) || [];
-
-		// Add direct children
-		for (const child of childNodes) {
-			if (limit > 0 && children.length >= limit) {
-				break;
-			}
-
-			children.push({
-				childId: child._id as string,
-				childName: child.name as string,
-			});
-		}
+		children.push({
+			childId: child._id as string,
+			childName: child.name as string,
+		});
 	}
-
-	await traverseChildren(nodeId);
 
 	if (children.length === 0) {
 		return [

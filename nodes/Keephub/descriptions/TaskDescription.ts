@@ -1,4 +1,6 @@
-export const taskFields = [
+import type { INodeProperties } from 'n8n-workflow';
+
+export const taskFields: INodeProperties[] = [
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -98,26 +100,40 @@ export const taskFields = [
 		required: true,
 	},
 	{
-		displayName: 'Message',
-		name: 'taskMessage',
-		type: 'string',
-		typeOptions: { rows: 4 },
+		displayName: 'Additional Fields',
+		name: 'additionalFields',
+		type: 'collection',
+		placeholder: 'Add Field',
+		default: {},
 		displayOptions: {
 			show: { resource: ['task'], operation: ['createTask'], defineTaskInput: ['fields'] },
 		},
-		default: '',
-		placeholder: 'Task description',
-		description: 'Message for the task',
-	},
-	{
-		displayName: 'Send Notification',
-		name: 'taskNotification',
-		type: 'boolean',
-		displayOptions: {
-			show: { resource: ['task'], operation: ['createTask'], defineTaskInput: ['fields'] },
-		},
-		default: false,
-		description: 'Whether to send notifications',
+		options: [
+			{
+				displayName: 'Message',
+				name: 'taskMessage',
+				type: 'string',
+				typeOptions: { rows: 4 },
+				default: '',
+				placeholder: 'Task description',
+				description: 'Message for the task',
+			},
+			{
+				displayName: 'Send Notification',
+				name: 'taskNotification',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to send notifications',
+			},
+			{
+				displayName: 'Timezone',
+				name: 'timezone',
+				type: 'string',
+				default: 'Europe/Amsterdam',
+				placeholder: 'Europe/Amsterdam',
+				description: 'IANA timezone for the task schedule (e.g. Europe/London, America/New_York)',
+			},
+		],
 	},
 	{
 		displayName: 'Orgunit ID',
@@ -135,20 +151,6 @@ export const taskFields = [
 		required: true,
 	},
 	{
-		displayName: 'Limit',
-		name: 'limit',
-		type: 'number',
-		typeOptions: { minValue: 1 },
-		displayOptions: {
-			show: {
-				resource: ['task'],
-				operation: ['getTaskByOrgunit'],
-			},
-		},
-		default: 50,
-		description: 'Max number of results to return',
-	},
-	{
 		displayName: 'Options',
 		name: 'options',
 		type: 'collection',
@@ -162,6 +164,14 @@ export const taskFields = [
 		noDataExpression: true,
 		placeholder: 'Add option',
 		options: [
+			{
+				displayName: 'Limit',
+				name: 'limit',
+				type: 'number',
+				typeOptions: { minValue: 1 },
+				default: 50,
+				description: 'Max number of results to return',
+			},
 			{
 				displayName: 'Skip',
 				name: 'skip',

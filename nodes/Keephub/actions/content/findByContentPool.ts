@@ -8,17 +8,11 @@ export async function execute(
 	index: number,
 ): Promise<INodeExecutionData[]> {
 	const contentPoolId = this.getNodeParameter('filterContentPoolId', index) as string;
-	const limit = this.getNodeParameter('limit', index, 50) as number;
 	const options = this.getNodeParameter('options', index, {}) as IDataObject;
+	const limit = (options.limit as number) || 50;
 
 	if (!contentPoolId || contentPoolId.trim().length === 0) {
 		throw new NodeOperationError(this.getNode(), 'Content Pool ID cannot be empty', {
-			itemIndex: index,
-		});
-	}
-
-	if (limit < 1) {
-		throw new NodeOperationError(this.getNode(), 'Limit must be greater than 0', {
 			itemIndex: index,
 		});
 	}

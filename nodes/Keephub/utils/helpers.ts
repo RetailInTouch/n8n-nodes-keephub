@@ -8,6 +8,13 @@ import type {
 import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 
 /**
+ * Cache for API tokens per execution to avoid re-authenticating on every request.
+ * Uses a WeakMap keyed by the execution context so entries are automatically
+ * garbage-collected when the execution completes.
+ */
+const tokenCache = new WeakMap<object, string>();
+
+/**
  * Generates API URL from client URL by inserting 'api' subdomain
  * @param clientUrl - The client URL to convert
  * @returns The API URL
@@ -33,65 +40,99 @@ export function generateApiUrl(clientUrl: string): string {
 }
 
 /**
+ * Resolves the active credential type and returns its data
+ * @param this - The execution context
+ * @returns Object with authType and credentials
+ */
+async function getActiveCredentials(
+	this: IExecuteFunctions,
+): Promise<{
+	authType: string;
+	credentials: {
+		clientUrl: string;
+		bearerToken?: string;
+		loginName?: string;
+		password?: string;
+		language?: string;
+		tokenEndpoint?: string;
+	};
+}> {
+	const authType = this.getNodeParameter('authentication', 0) as string;
+
+	if (authType === 'bearerToken') {
+		const credentials = (await this.getCredentials('keephubBearerApi')) as {
+			clientUrl: string;
+			bearerToken: string;
+			language?: string;
+		};
+		return { authType, credentials };
+	}
+
+	const credentials = (await this.getCredentials('keephubLoginApi')) as {
+		clientUrl: string;
+		loginName: string;
+		password: string;
+		language?: string;
+		tokenEndpoint?: string;
+	};
+	return { authType, credentials };
+}
+
+/**
  * Acquires API token from Keephub using credentials
  * @param this - The execution context
  * @returns The API token
  */
 export async function acquireApiToken(this: IExecuteFunctions): Promise<string> {
-	const credentials = (await this.getCredentials('keephubApi')) as {
-		clientUrl: string;
-		authType: string;
-		bearerToken?: string;
-		loginName?: string;
-		password?: string;
-		language?: string;
-	};
-
-	const clientUrl = credentials.clientUrl;
-	const baseUrl = generateApiUrl(clientUrl);
-	const authType = credentials.authType;
-
-	let apiToken: string;
+	const { authType, credentials } = await getActiveCredentials.call(this);
 
 	if (authType === 'bearerToken') {
-		apiToken = credentials.bearerToken as string;
-	} else if (authType === 'apiCredentials') {
-		const loginName = credentials.loginName as string;
-		const password = credentials.password as string;
-
-		try {
-			const tokenResponse = (await this.helpers.httpRequest({
-				method: 'POST',
-				url: `${baseUrl}/authentication`,
-				headers: { 'Content-Type': 'application/json' },
-				body: {
-					loginName,
-					password,
-				},
-			} as IHttpRequestOptions)) as JsonObject;
-
-			const token = (tokenResponse.accessToken || tokenResponse.token) as string;
-
-			if (!token) {
-				throw new NodeApiError(this.getNode(), tokenResponse, {
-					message: 'No access token returned from authentication endpoint',
-				});
-			}
-
-			apiToken = token;
-		} catch (error) {
-			if (error instanceof NodeApiError) {
-				throw error;
-			}
-			throw new NodeApiError(this.getNode(), error as JsonObject, {
-				message: 'Failed to authenticate with Keephub',
-			});
-		}
-	} else {
-		throw new NodeOperationError(this.getNode(), `Unsupported authentication type: ${authType}`);
+		return credentials.bearerToken as string;
 	}
 
-	return apiToken;
+	// Return cached token if available (avoids re-authenticating per API call)
+	const cached = tokenCache.get(this);
+	if (cached) {
+		return cached;
+	}
+
+	// Login credentials flow
+	const baseUrl = generateApiUrl(credentials.clientUrl);
+	const loginName = credentials.loginName as string;
+	const password = credentials.password as string;
+	const tokenEndpoint = credentials.tokenEndpoint || '/authentication';
+
+	try {
+		const tokenResponse = (await this.helpers.httpRequest({
+			method: 'POST',
+			url: `${baseUrl}${tokenEndpoint}`,
+			headers: { 'Content-Type': 'application/json' },
+			body: {
+				loginName,
+				password,
+			},
+		} as IHttpRequestOptions)) as JsonObject;
+
+		const token = (tokenResponse.accessToken || tokenResponse.token) as string;
+
+		if (!token) {
+			throw new NodeApiError(this.getNode(), tokenResponse, {
+				message: 'No access token returned from authentication endpoint',
+			});
+		}
+
+		// Cache the token for subsequent calls within this execution
+		tokenCache.set(this, token);
+
+		return token;
+	} catch (error) {
+		if (error instanceof NodeApiError) {
+			throw error;
+		}
+		throw new NodeApiError(this.getNode(), error as JsonObject, {
+			message: 'Failed to authenticate with Keephub',
+		});
+	}
 }
 
 /**
@@ -108,14 +149,7 @@ export async function apiRequest(
 	endpoint: string,
 	body?: IDataObject,
 ): Promise<IDataObject> {
-	const credentials = (await this.getCredentials('keephubApi')) as {
-		clientUrl: string;
-		authType: string;
-		bearerToken?: string;
-		loginName?: string;
-		password?: string;
-		language?: string;
-	};
+	const { credentials } = await getActiveCredentials.call(this);
 
 	const baseUrl = generateApiUrl(credentials.clientUrl);
 	const apiToken = await acquireApiToken.call(this);

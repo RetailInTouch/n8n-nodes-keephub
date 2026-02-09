@@ -23,6 +23,7 @@
     "strictFunctionTypes": true
   },
   "include": [
+    "index.ts",
     "nodes/**/*.ts",
     "credentials/**/*.ts"
   ],

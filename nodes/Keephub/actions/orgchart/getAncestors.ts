@@ -15,7 +15,8 @@ export async function execute(
 	index: number,
 ): Promise<INodeExecutionData[]> {
 	const nodeId = this.getNodeParameter('nodeId', index) as string;
-	const depthLimit = this.getNodeParameter('depthLimit', index) as number;
+	const additionalFields = this.getNodeParameter('additionalFields', index, {}) as IDataObject;
+	const depthLimit = (additionalFields.depthLimit as number) || 0;
 
 	if (!nodeId) {
 		throw new NodeOperationError(this.getNode(), 'Node ID is required', { itemIndex: index });

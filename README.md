@@ -82,11 +82,25 @@ npm install -g n8n-nodes-keephub
 
 ### 1️⃣ Set Up Credentials
 
+Keephub supports **two separate credential types**. Choose the one that matches your setup:
+
+**Option A — Bearer Token** (recommended for API integrations):
 1. In n8n, go to **Credentials** 🔐
-2. Create **New** → Search for **Keephub API**
-3. Fill in your credentials:
-   - **Client URL**: https://yourcompany.keephub.io
-   - **Auth Type**: Choose Bearer Token or Username/Password
+2. Create **New** → Search for **Keephub Bearer API**
+3. Fill in:
+   - **Client URL**: `https://yourcompany.keephub.io`
+   - **Bearer Token**: Your API token
+   - **Language** (optional): Default is `en`
+4. Test & Save ✔️
+
+**Option B — Login Credentials** (username & password):
+1. In n8n, go to **Credentials** 🔐
+2. Create **New** → Search for **Keephub Login API**
+3. Fill in:
+   - **Client URL**: `https://yourcompany.keephub.io`
+   - **Login Name**: Your username
+   - **Password**: Your password
+   - **Token Endpoint** (optional): Custom token endpoint path
    - **Language** (optional): Default is `en`
 4. Test & Save ✔️
 
@@ -94,9 +108,10 @@ npm install -g n8n-nodes-keephub
 
 1. Click **+** to add a node
 2. Search for **Keephub**
-3. Select your resource and operation
-4. Configure parameters
-5. Run! 🏃
+3. Select your **Authentication** method (Bearer Token or Login Credentials)
+4. Select your resource and operation
+5. Configure parameters
+6. Run! 🏃
 
 ### 3️⃣ Example: Get User Info
 
@@ -179,8 +194,8 @@ Output:
 	"resource": "content",
 	"operation": "findByOrgunit",
 	"orgunitId": "root0077",
-	"limit": 50,
 	"options": {
+		"limit": 50,
 		"skip": 0,
 		"sortBy": "createdAt",
 		"sortOrder": 1
@@ -188,17 +203,16 @@ Output:
 }
 ```
 
-Content Filtering Parameters:
+**Content Filtering Parameters:**
 
-Limit (optional, default: 50): Maximum number of results to return
+- **Orgunit ID** (required): The organization unit ID
 
-Options:
+**Options** (all optional):
 
-Skip: Number of results to skip (pagination)
-
-Sort Field: Field to sort by (e.g., createdAt, updatedAt)
-
-Sort Order: 1 for ascending, -1 for descending
+- **Limit**: Maximum number of results (default: 50)
+- **Skip**: Number of results to skip (pagination)
+- **Sort Field**: Field to sort by (e.g., `createdAt`, `updatedAt`)
+- **Sort Order**: `1` for ascending, `-1` for descending
 
 ---
 
@@ -213,24 +227,40 @@ Sort Order: 1 for ascending, -1 for descending
 | 📊 **Get Progress**      | Check task template progress                                 |
 | 📈 **Get Status Counts** | View task completion statistics                              |
 
-**Example:**
+**Example - Create Task with JSON Body:**
 
-```javascript
+```json
 {
-  "resource": "task",
-  "operation": "create",
-  "defineTaskInput": "json",
-  "taskJsonBody": {
-    "title": { "en": "Q4 Performance Review" },
-    "template": {
-      "form": {
-        "fields": [
-          { "name": "rating", "type": "number" },
-          { "name": "feedback", "type": "text" }
-        ]
-      }
-    }
-  }
+	"resource": "task",
+	"operation": "create",
+	"defineTaskInput": "json",
+	"taskJsonBody": {
+		"title": { "en": "Q4 Performance Review" },
+		"template": {
+			"form": {
+				"fields": [
+					{ "name": "rating", "type": "number" },
+					{ "name": "feedback", "type": "text" }
+				]
+			}
+		}
+	}
+}
+```
+
+**Example - Create Task with Additional Fields:**
+
+```json
+{
+	"resource": "task",
+	"operation": "create",
+	"defineTaskInput": "fields",
+	"taskTitle": "Q4 Performance Review",
+	"taskType": "form",
+	"additionalFields": {
+		"taskMessage": "Please complete your review by end of quarter.",
+		"taskNotification": true
+	}
 }
 ```
 
@@ -241,8 +271,8 @@ Sort Order: 1 for ascending, -1 for descending
 	"resource": "task",
 	"operation": "getTaskByOrgunit",
 	"orgunitId": "root0077",
-	"limit": 50,
 	"options": {
+		"limit": 50,
 		"skip": 0,
 		"sortBy": "template.dueDate",
 		"sortOrder": 1,
@@ -252,23 +282,28 @@ Sort Order: 1 for ascending, -1 for descending
 }
 ```
 
-Parameters:
+**Task Create Parameters:**
 
-Orgunit ID (required): The organization unit ID to filter tasks
+- **Task Title** (required): Name of the task
+- **Task Type** (required): `form`, `confirmation`, or `read`
 
-Limit (optional, default: 50): Maximum number of results to return
+**Additional Fields** (optional):
 
-Options:
+- **Message**: Custom message body for the task
+- **Send Notification**: Whether to notify assigned users (`true`/`false`)
 
-Skip: Number of results to skip (pagination)
+**Task Get by Orgunit Parameters:**
 
-Sort Field: Field to sort by (e.g., template.dueDate)
+- **Orgunit ID** (required): The organization unit ID to filter tasks
 
-Sort Order: 1 for ascending, -1 for descending
+**Options** (all optional):
 
-Start Date After: Filter tasks created/updated after this date (dateTime picker)
-
-Start Date Before: Filter tasks created/updated before this date (dateTime picker)
+- **Limit**: Maximum number of results (default: 50)
+- **Skip**: Number of results to skip (pagination)
+- **Sort Field**: Field to sort by (e.g., `template.dueDate`)
+- **Sort Order**: `1` for ascending, `-1` for descending
+- **Start Date After**: Filter tasks after this date
+- **Start Date Before**: Filter tasks before this date
 
 ---
 
@@ -314,35 +349,74 @@ Start Date Before: Filter tasks created/updated before this date (dateTime picke
 | **Get Children**        | Retrieve all children/descendants                  |
 | **Get Parent**          | Fetch the parent node of an orgchart node          |
 
-**Example:**
+**Example - Get Children with Depth Limit:**
 
-```javascript
+```json
 {
-  resource: "orgchart",
-operation: "getChildren",
-nodeId: "node123"
+	"resource": "orgchart",
+	"operation": "getChildren",
+	"orgunitId": "node123",
+	"additionalFields": {
+		"limit": 100
+	}
 }
 ```
+
+**Example - Get Ancestors with Depth Limit:**
+
+```json
+{
+	"resource": "orgchart",
+	"operation": "getAncestors",
+	"orgunitId": "node123",
+	"additionalFields": {
+		"depthLimit": 3
+	}
+}
+```
+
+**Optional Additional Fields:**
+
+- **Get Children** → `limit`: Maximum number of child nodes to return (default: 0 = unlimited)
+- **Get Ancestors** → `depthLimit`: How many levels up to traverse (default: 0 = unlimited)
 
 ---
 
 ## 🔐 Credentials Setup
 
-### Bearer Token Authentication
+Keephub uses **two separate credential types** — select the matching authentication method from the **Authentication** dropdown on the Keephub node.
+
+### 🔑 Keephub Bearer API
 
 ```
 ✓ Most secure for API integrations
 ✓ Use existing API tokens from Keephub
 ✓ Perfect for server-to-server communication
+✓ Uses IAuthenticateGeneric — token sent automatically in headers
 ```
 
-### Username/Password Authentication
+| Field          | Description                          |
+| -------------- | ------------------------------------ |
+| **Client URL** | Your Keephub instance base URL       |
+| **Bearer Token** | API bearer token                   |
+| **Language**   | Language code (default: `en`)        |
+
+### 🔒 Keephub Login API
 
 ```
-✓ Automatic token generation
+✓ Automatic token generation from username/password
 ✓ Simple to set up
-✓ Credentials securely stored in n8n
+✓ Token refreshed dynamically per request
+✓ Credentials securely stored and encrypted in n8n
 ```
+
+| Field              | Description                                     |
+| ------------------ | ----------------------------------------------- |
+| **Client URL**     | Your Keephub instance base URL                  |
+| **Login Name**     | Username for authentication                     |
+| **Password**       | Password for authentication                     |
+| **Token Endpoint** | Custom token path (default: `/api/v2/auth/token`) |
+| **Language**       | Language code (default: `en`)                   |
 
 **All credentials are encrypted** 🔒 and never exposed in logs or workflows.
 
@@ -389,6 +463,13 @@ Send thank you message
 ---
 
 ## ⚙️ Node Configuration
+
+### Authentication
+
+The Keephub node provides an **Authentication** dropdown at the top of the configuration panel:
+
+- **Bearer Token** → uses the **Keephub Bearer API** credential
+- **Login Credentials** → uses the **Keephub Login API** credential
 
 ### Input Data
 
@@ -475,7 +556,8 @@ n8n-nodes-keephub/
 │       └── utils/
 │           └── helpers.ts
 ├── credentials/
-│   └── KeephubApi.credentials.ts
+│   ├── KeephubBearerApi.credentials.ts
+│   └── KeephubLoginApi.credentials.ts
 ├── package.json
 └── README.md
 ```
@@ -543,6 +625,19 @@ npm run lint
 
 - 🔧 Added externalRef of orgunit to the output of the Get submission orgunits node
 - 🧹 Fixed typo that was causing README rendering issues
+
+### v1.4.0 (2026-02-09) 🔐
+
+- 🔑 **Split credentials** into two separate types: **Keephub Bearer API** and **Keephub Login API**
+- 🛡️ Added `IAuthenticateGeneric` to Bearer credential for automatic header injection
+- 🔀 Added **Authentication** selector dropdown to the node UI (Bearer Token / Login Credentials)
+- 🔌 Updated `inputs`/`outputs` to use `NodeConnectionTypes.Main` (n8n best practice)
+- 📦 Moved non-required fields into **Additional Fields** / **Options** collections:
+  - Content: Limit, Skip, Sort Field, Sort Order → Options
+  - Orgchart: Depth Limit, Result Limit → Additional Fields
+  - Task: Message, Send Notification → Additional Fields; Limit → Options
+- 🧹 Updated helpers to dynamically resolve credentials based on authentication selector
+- 📖 Updated README documentation to reflect all changes
 
 ---
 

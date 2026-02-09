@@ -76,32 +76,50 @@ export const orgchartFields: INodeProperties[] = [
 		description: 'The external reference of the orgchart node to retrieve',
 	},
 	{
-		displayName: 'Depth Limit',
-		name: 'depthLimit',
-		type: 'number',
-		default: 0,
+		displayName: 'Additional Fields',
+		name: 'additionalFields',
+		type: 'collection',
+		placeholder: 'Add Field',
+		default: {},
 		displayOptions: {
 			show: {
 				resource: ['orgchart'],
 				operation: ['getAncestors'],
 			},
 		},
-		description: 'Maximum depth to traverse (0 = unlimited)',
+		options: [
+			{
+				displayName: 'Depth Limit',
+				name: 'depthLimit',
+				type: 'number',
+				default: 0,
+				description: 'Maximum depth to traverse (0 = unlimited)',
+			},
+		],
 	},
 	{
-		displayName: 'Result Limit',
-		name: 'limit',
-		type: 'number',
-		typeOptions: {
-			minValue: 1,
-		},
-		default: 50,
+		displayName: 'Additional Fields',
+		name: 'additionalFields',
+		type: 'collection',
+		placeholder: 'Add Field',
+		default: {},
 		displayOptions: {
 			show: {
 				resource: ['orgchart'],
 				operation: ['getChildren'],
 			},
 		},
-		description: 'Max number of results to return',
+		options: [
+			{
+				displayName: 'Result Limit',
+				name: 'limit',
+				type: 'number',
+				typeOptions: {
+					minValue: 1,
+				},
+				default: 50,
+				description: 'Max number of results to return',
+			},
+		],
 	},
 ];
