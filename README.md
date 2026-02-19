@@ -639,7 +639,7 @@ npm run lint
 - 🧹 Updated helpers to dynamically resolve credentials based on authentication selector
 - 📖 Updated README documentation to reflect all changes
 
-### v1.4.1 (2026-02-19)
+### v1.4.3 (2026-02-19)
 
 - 🖼️ Changed Image assets to better match n8n's dark theme
 
