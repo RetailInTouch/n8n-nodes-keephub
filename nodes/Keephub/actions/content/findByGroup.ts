@@ -38,12 +38,6 @@ export async function execute(
 			items = response.data as IDataObject[];
 		}
 
-		if (items.length === 0) {
-			throw new NodeOperationError(this.getNode(), `No content found in group: ${groupId}`, {
-				itemIndex: index,
-			});
-		}
-
 		return items.map((dataItem: IDataObject) => ({
 			json: dataItem,
 			pairedItem: { item: index },

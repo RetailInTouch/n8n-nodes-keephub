@@ -22,15 +22,22 @@ export async function execute(
 		});
 	}
 
-	const response = await apiRequest.call(
+	const response = (await apiRequest.call(
 		this,
 		'GET',
 		`/users?orgunits=${encodeURIComponent(orgunitId)}`,
-	);
+	)) as IDataObject;
 
-	const results = Array.isArray(response) ? response : [response];
+	let results: IDataObject[];
+	if (Array.isArray(response)) {
+		results = response as IDataObject[];
+	} else if (response && Array.isArray(response.data)) {
+		results = response.data as IDataObject[];
+	} else {
+		results = [];
+	}
 
-	return results.map((entry: IDataObject) => ({
+	return results.map((entry) => ({
 		json: entry,
 		pairedItem: { item: index },
 	}));

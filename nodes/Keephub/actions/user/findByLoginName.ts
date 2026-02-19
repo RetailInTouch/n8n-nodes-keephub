@@ -28,10 +28,17 @@ export async function execute(
 		`/users?loginName=${encodeURIComponent(loginName)}`,
 	);
 
-	return [
-		{
-			json: response as IDataObject,
-			pairedItem: { item: index },
-		},
-	];
+	let results: IDataObject[];
+	if (Array.isArray(response)) {
+		results = response as IDataObject[];
+	} else if (response && Array.isArray((response as IDataObject).data)) {
+		results = ((response as IDataObject).data) as IDataObject[];
+	} else {
+		results = [response as IDataObject];
+	}
+
+	return results.map((entry: IDataObject) => ({
+		json: entry,
+		pairedItem: { item: index },
+	}));
 }

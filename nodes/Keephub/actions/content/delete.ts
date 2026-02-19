@@ -14,24 +14,24 @@ export async function execute(
 	item: INodeExecutionData,
 	index: number,
 ): Promise<INodeExecutionData[]> {
-		const contentId = this.getNodeParameter('contentId', index) as string;
+	const contentId = this.getNodeParameter('contentId', index) as string;
 
-		if (!contentId || contentId.trim().length === 0) {
-			throw new NodeOperationError(this.getNode(), 'Content ID cannot be empty', {
-				itemIndex: index,
-			});
-		}
+	if (!contentId || contentId.trim().length === 0) {
+		throw new NodeOperationError(this.getNode(), 'Content ID cannot be empty', {
+			itemIndex: index,
+		});
+	}
 
-		const response = await apiRequest.call(
-			this,
-			'DELETE',
-			`/contents/${encodeURIComponent(contentId)}`,
-		);
+	const response = await apiRequest.call(
+		this,
+		'DELETE',
+		`/contents/${encodeURIComponent(contentId)}`,
+	);
 
-		return [
-			{
-				json: response as IDataObject,
-				pairedItem: { item: index },
-			},
-		];
+	return [
+		{
+			json: response as IDataObject,
+			pairedItem: { item: index },
+		},
+	];
 }

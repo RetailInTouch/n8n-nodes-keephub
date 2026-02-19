@@ -24,6 +24,7 @@ export class Keephub implements INodeType {
 		icon: 'file:Keephub.svg',
 		group: ['transform'],
 		version: 1,
+		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Interact with Keephub API',
 		defaults: {
 			name: 'Keephub',

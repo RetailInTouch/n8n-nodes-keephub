@@ -23,7 +23,7 @@ export async function execute(
 	}
 
 	// Get the initial node
-	const nodeData = (await apiRequest.call(this, 'GET', `/orgchart/${nodeId}`)) as IDataObject;
+	const nodeData = (await apiRequest.call(this, 'GET', `/orgchart/${encodeURIComponent(nodeId)}`)) as IDataObject;
 
 	const ancestors: Array<{ ancestorId: string; ancestorName: string }> = [];
 	let currentParentId = nodeData.parent as string;
@@ -34,7 +34,7 @@ export async function execute(
 		const parentData = (await apiRequest.call(
 			this,
 			'GET',
-			`/orgchart/${currentParentId}`,
+			`/orgchart/${encodeURIComponent(currentParentId)}`,
 		)) as IDataObject;
 
 		ancestors.push({

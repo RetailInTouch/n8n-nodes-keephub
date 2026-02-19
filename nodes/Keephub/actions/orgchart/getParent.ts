@@ -21,7 +21,7 @@ export async function execute(
 	}
 
 	// Get the node to access its parent information
-	const nodeData = (await apiRequest.call(this, 'GET', `/orgchart/${nodeId}`)) as IDataObject;
+	const nodeData = (await apiRequest.call(this, 'GET', `/orgchart/${encodeURIComponent(nodeId)}`)) as IDataObject;
 
 	const parentId = nodeData.parent as string;
 
@@ -34,7 +34,7 @@ export async function execute(
 	}
 
 	// Fetch parent node details
-	const parentData = (await apiRequest.call(this, 'GET', `/orgchart/${parentId}`)) as IDataObject;
+	const parentData = (await apiRequest.call(this, 'GET', `/orgchart/${encodeURIComponent(parentId)}`)) as IDataObject;
 
 	return [
 		{

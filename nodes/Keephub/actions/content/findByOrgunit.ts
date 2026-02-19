@@ -38,14 +38,6 @@ export async function execute(
 			items = response.data as IDataObject[];
 		}
 
-		if (items.length === 0) {
-			throw new NodeOperationError(
-				this.getNode(),
-				`No content found in organization unit: ${orgunitId}`,
-				{ itemIndex: index },
-			);
-		}
-
 		return items.map((dataItem: IDataObject) => ({
 			json: dataItem,
 			pairedItem: { item: index },

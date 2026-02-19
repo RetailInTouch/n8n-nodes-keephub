@@ -1,0 +1,41 @@
+{
+	"node": "n8n-nodes-keephub.keephub",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Communication", "Productivity"],
+	"subcategories": {
+		"Communication": ["Employee Engagement"],
+		"Productivity": ["Task Management"]
+	},
+	"alias": [
+		"keephub",
+		"employee",
+		"engagement",
+		"orgchart",
+		"organization chart",
+		"task",
+		"content",
+		"form",
+		"form submission",
+		"frontline",
+		"deskless",
+		"workforce",
+		"internal communication",
+		"company news",
+		"user management",
+		"retail",
+		"hospitality"
+	],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://github.com/RetailInTouch/n8n-nodes-keephub#-credentials-setup"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/RetailInTouch/n8n-nodes-keephub#readme"
+			}
+		]
+	}
+}

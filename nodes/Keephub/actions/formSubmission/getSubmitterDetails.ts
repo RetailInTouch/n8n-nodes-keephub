@@ -33,7 +33,13 @@ export async function execute(
 	const submitterId =
 		typeof formSubmission.createdBy === 'string'
 			? (formSubmission.createdBy as string)
-			: (formSubmission.createdBy as IDataObject)._id;
+			: (formSubmission.createdBy as IDataObject)?._id;
+
+	if (!submitterId) {
+		throw new NodeOperationError(this.getNode(), 'Could not determine submitter ID from form submission', {
+			itemIndex: index,
+		});
+	}
 
 	const submitterData = await apiRequest.call(this, 'GET', `/users/${submitterId}`);
 

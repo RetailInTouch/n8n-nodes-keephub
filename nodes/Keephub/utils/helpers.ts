@@ -21,8 +21,16 @@ const tokenCache = new WeakMap<object, string>();
  */
 export function generateApiUrl(clientUrl: string): string {
 	try {
-		const url = new URL(clientUrl);
+		let raw = clientUrl;
+		if (!/^https?:\/\//i.test(raw)) {
+			raw = `https://${raw}`;
+		}
+		const url = new URL(raw);
 		const hostname = url.hostname;
+		if (hostname.includes('.api.')) {
+			const value = url.toString();
+			return value.endsWith('/') ? value.slice(0, -1) : value;
+		}
 		const parts = hostname.split('.');
 
 		if (parts.length >= 2) {
@@ -54,6 +62,7 @@ async function getActiveCredentials(
 		loginName?: string;
 		password?: string;
 		language?: string;
+		authEndpoint?: string;
 		tokenEndpoint?: string;
 	};
 }> {
@@ -73,6 +82,7 @@ async function getActiveCredentials(
 		loginName: string;
 		password: string;
 		language?: string;
+		authEndpoint?: string;
 		tokenEndpoint?: string;
 	};
 	return { authType, credentials };
@@ -100,7 +110,7 @@ export async function acquireApiToken(this: IExecuteFunctions): Promise<string> 
 	const baseUrl = generateApiUrl(credentials.clientUrl);
 	const loginName = credentials.loginName as string;
 	const password = credentials.password as string;
-	const tokenEndpoint = credentials.tokenEndpoint || '/authentication';
+	const tokenEndpoint = credentials.authEndpoint || credentials.tokenEndpoint || '/authentication';
 
 	try {
 		const tokenResponse = (await this.helpers.httpRequest({

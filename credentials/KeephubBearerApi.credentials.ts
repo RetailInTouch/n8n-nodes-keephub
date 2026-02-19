@@ -7,7 +7,7 @@ import {
 
 export class KeephubBearerApi implements ICredentialType {
 	name = 'keephubBearerApi';
-	displayName = 'Keephub Bearer Token API';
+	displayName = 'Keephub Bearer API';
 	documentationUrl = 'https://dev.api.keephub.io/api-docs/';
 	icon = 'file:Keephub.svg' as const;
 
@@ -17,8 +17,9 @@ export class KeephubBearerApi implements ICredentialType {
 			name: 'clientUrl',
 			type: 'string',
 			default: '',
-			placeholder: 'https://kega.keephub.io',
-			description: 'Your Keephub instance URL (e.g. https://kega.keephub.io)',
+			placeholder: 'https://yourcompany.keephub.io',
+			description:
+				'Your Keephub instance URL (e.g. https://yourcompany.keephub.io). Do not use the API URL.',
 			required: true,
 		},
 		{
@@ -59,7 +60,7 @@ export class KeephubBearerApi implements ICredentialType {
 
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: '={{$credentials.clientUrl}}',
+			baseURL: '={{($credentials.clientUrl || "").replace(".api.", ".")}}',
 			url: '/api/user/current',
 		},
 	};

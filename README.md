@@ -10,7 +10,7 @@
 
 [![npm version](https://img.shields.io/npm/v/n8n-nodes-keephub.svg?style=flat-square)](https://www.npmjs.com/package/n8n-nodes-keephub)
 [![npm downloads](https://img.shields.io/npm/dm/n8n-nodes-keephub.svg?style=flat-square)](https://www.npmjs.com/package/n8n-nodes-keephub)
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](./LICENSE)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](./LICENSE.md)
 [![Maintenance](https://img.shields.io/badge/maintained%3F-yes-green.svg?style=flat-square)](https://github.com/RetailInTouch/n8n-nodes-keephub)
 
 **Seamlessly integrate Keephub with your n8n workflows** 🎯
@@ -100,7 +100,7 @@ Keephub supports **two separate credential types**. Choose the one that matches 
    - **Client URL**: `https://yourcompany.keephub.io`
    - **Login Name**: Your username
    - **Password**: Your password
-   - **Token Endpoint** (optional): Custom token endpoint path
+   - **Auth Endpoint** (optional): Custom auth endpoint path
    - **Language** (optional): Default is `en`
 4. Test & Save ✔️
 
@@ -232,7 +232,7 @@ Output:
 ```json
 {
 	"resource": "task",
-	"operation": "create",
+	"operation": "createTask",
 	"defineTaskInput": "json",
 	"taskJsonBody": {
 		"title": { "en": "Q4 Performance Review" },
@@ -253,7 +253,7 @@ Output:
 ```json
 {
 	"resource": "task",
-	"operation": "create",
+	"operation": "createTask",
 	"defineTaskInput": "fields",
 	"taskTitle": "Q4 Performance Review",
 	"taskType": "form",
@@ -339,15 +339,15 @@ Output:
 
 ---
 
-### Orgchart Operations
+### 🏢 **Orgchart Operations**
 
-| Operation               | Description                                        |
-| ----------------------- | -------------------------------------------------- |
-| **Get Ancestors**       | Get all ancestors in the org hierarchy             |
-| **Get by External Ref** | Retrieve an orgchart node by its externalRef value |
-| **Get by ID**           | Retrieve an orgchart node by ID                    |
-| **Get Children**        | Retrieve all children/descendants                  |
-| **Get Parent**          | Fetch the parent node of an orgchart node          |
+| Operation                   | Description                                        |
+| --------------------------- | -------------------------------------------------- |
+| 🌳 **Get Ancestors**        | Get all ancestors in the org hierarchy             |
+| 🔗 **Get by External Ref**  | Retrieve an orgchart node by its externalRef value |
+| 🆔 **Get by ID**            | Retrieve an orgchart node by ID                    |
+| 👶 **Get Children**         | Retrieve all children/descendants                  |
+| ⬆️ **Get Parent**            | Fetch the parent node of an orgchart node          |
 
 **Example - Get Children with Depth Limit:**
 
@@ -415,7 +415,7 @@ Keephub uses **two separate credential types** — select the matching authentic
 | **Client URL**     | Your Keephub instance base URL                  |
 | **Login Name**     | Username for authentication                     |
 | **Password**       | Password for authentication                     |
-| **Token Endpoint** | Custom token path (default: `/api/v2/auth/token`) |
+| **Auth Endpoint**  | Custom auth path (default: `/authentication`)   |
 | **Language**       | Language code (default: `en`)                   |
 
 **All credentials are encrypted** 🔒 and never exposed in logs or workflows.
@@ -449,15 +449,15 @@ Slack: Create channels per active users in group
 ### 📋 Example 3: Form Response Automation
 
 ```
-Keephub: Form Submission Trigger
+Schedule Trigger (daily)
   ↓
-Get submitter details
+Keephub: Get Form Submission
   ↓
-Calculate response time
+Keephub: Get Submitter Details
+  ↓
+Keephub: Calculate Response Duration
   ↓
 Store in database
-  ↓
-Send thank you message
 ```
 
 ---
@@ -496,11 +496,11 @@ Enable "Continue on Error" to handle failures gracefully in your workflow.
 
 ## 📦 Requirements
 
-| Requirement | Version   |
-| ----------- | --------- |
-| **n8n**     | v0.199.0+ |
-| **Node.js** | 14.20.0+  |
-| **npm**     | 6.0.0+    |
+| Requirement | Version  |
+| ----------- | -------- |
+| **n8n**     | v1.0.0+  |
+| **Node.js** | 18.17.0+ |
+| **npm**     | 8.0.0+   |
 
 ---
 
@@ -572,7 +572,7 @@ n8n-nodes-keephub/
 npm run build
 ```
 
-### Test
+### Verify (lint + build)
 
 ```bash
 npm run test
@@ -643,6 +643,31 @@ npm run lint
 
 - 🖼️ Changed Image assets to better match n8n's dark theme
 
+### v1.4.4 (2026-02-19)
+
+- 🐛 Empty content/task searches now return `[]` instead of throwing error (`findByContentPool`, `findByGroup`, `findByOrgunit`, `task/getByOrgunit`)
+- 🐛 Orgchart node IDs now properly URL-encoded (`getById`, `getParent`, `getAncestors`)
+- 🐛 Added null check for submitter ID in form submissions (`getSubmitterDetails`)
+- 🐛 Fixed double indentation in content delete operation
+- 🐛 Fixed paginated response unwrapping in user `findByLoginName`, `findByGroup`, `findByOrgunit` — now correctly returns individual user items instead of the raw envelope
+- 📋 Added codex metadata with expanded aliases for better node discoverability
+- 🔍 Expanded package keywords from 4 to 19 for better discoverability
+- 🖼️ Optimized icon SVG viewBox to show full logo without cutoff
+- 🖼️ Restored white ellipse border for visibility in dark mode
+- 🔐 Improved credential test behavior for both auth methods:
+	- Bearer credential test now handles both client URL and API subdomain URL formats (strips `.api.` for compatibility)
+	- Login credential test now performs real auth validation via `POST` to the configured auth endpoint (uses string manipulation compatible with n8n's expression sandbox)
+	- Both use protocol normalization to handle URLs without `https://` prefix
+- 🧩 Renamed Login credential field from **Token Endpoint** to **Auth Endpoint** for clarity (runtime keeps backward compatibility with legacy `tokenEndpoint`)
+- 📚 Fixed metadata/docs pointers:
+	- Updated node credential documentation anchor link
+	- Fixed README MIT badge link target
+	- Updated clientUrl field descriptions to clarify "Do not use the API URL"
+- 📦 Added `prepublishOnly` guard (`npm run test`) and aligned package Node engine requirement to `>=18.17.0`
+- 🔗 Enhanced URL transformation robustness:
+	- Client URL now auto-normalizes `.api.` subdomain (handles both formats transparently)
+	- Protocol normalization adds `https://` if missing
+
 ---
 
 ## 🤝 Contributing
@@ -668,7 +693,7 @@ npm run build
 
 ## 📄 License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE.md) file for details.
 
 ---
 

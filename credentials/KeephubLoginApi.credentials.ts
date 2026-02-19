@@ -16,8 +16,9 @@ export class KeephubLoginApi implements ICredentialType {
 			name: 'clientUrl',
 			type: 'string',
 			default: '',
-			placeholder: 'https://kega.keephub.io',
-			description: 'Your Keephub instance URL (e.g. https://kega.keephub.io)',
+			placeholder: 'https://yourcompany.keephub.io',
+			description:
+				'Your Keephub instance URL (e.g. https://yourcompany.keephub.io). Do not use the API URL.',
 			required: true,
 		},
 		{
@@ -55,18 +56,27 @@ export class KeephubLoginApi implements ICredentialType {
 		},
 		{
 			displayName: 'Token Endpoint',
-			name: 'tokenEndpoint',
+			name: 'authEndpoint',
 			type: 'string',
 			default: '/authentication',
-			description: 'The endpoint to get your token (/authentication for Keephub)',
-			typeOptions: { password: true },
+			description: 'Authentication endpoint path (default: /authentication)',
 		},
 	];
 
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: '={{$credentials.clientUrl}}',
-			url: '/api/user/current',
+			method: 'POST',
+			baseURL:
+				'={{(() => { let r = ($credentials.clientUrl || "").trim(); if (!r.includes("://")) r = "https://" + r; if (r.endsWith("/")) r = r.slice(0, -1); if (r.includes(".api.")) return r; const p = r.indexOf("://") + 3; const d = r.indexOf(".", p); if (d > -1) r = r.substring(0, d) + ".api" + r.substring(d); return r; })()}}',
+			url: '={{$credentials.authEndpoint?.startsWith("/") ? $credentials.authEndpoint : `/${$credentials.authEndpoint || "authentication"}`}}',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: {
+				loginName: '={{$credentials.loginName}}',
+				password: '={{$credentials.password}}',
+			},
+			json: true,
 		},
 	};
 }

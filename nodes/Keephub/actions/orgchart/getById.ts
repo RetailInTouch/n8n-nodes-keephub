@@ -20,7 +20,7 @@ export async function execute(
 		throw new NodeOperationError(this.getNode(), 'Node ID is required', { itemIndex: index });
 	}
 
-	const response = (await apiRequest.call(this, 'GET', `/orgchart/${nodeId}`)) as IDataObject;
+	const response = (await apiRequest.call(this, 'GET', `/orgchart/${encodeURIComponent(nodeId)}`)) as IDataObject;
 
 	return [
 		{
