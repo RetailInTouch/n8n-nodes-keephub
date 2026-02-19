@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-keephub",
-	"version": "1.4.1",
+	"version": "1.4.2",
 	"description": "Keephub integration node for n8n workflow automation",
 	"longDescription": "Keephub is your AI-powered frontline employee platform. Connect teams across communication, scheduling, HR admin, tasks, and audits—all from one hub. With n8n, automate workflows that sync schedules, trigger HR actions, coordinate communications, and manage tasks across your entire tech stack.",
 	"license": "MIT",
