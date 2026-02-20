@@ -111,6 +111,7 @@ export class Keephub implements INodeType {
 				getSubmissionOrgunits: formSubmissionActions.getSubmissionOrgunitsExecute,
 				updateSubmissionOrgunits: formSubmissionActions.updateSubmissionOrgunitsExecute,
 				calculateResponseDuration: formSubmissionActions.calculateResponseDurationExecute,
+				findByForm: formSubmissionActions.getByFormExecute,
 			},
 			orgchart: {
 				getByExternalRef: orgchartActions.getByExternalRefExecute,

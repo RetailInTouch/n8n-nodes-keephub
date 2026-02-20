@@ -309,13 +309,41 @@ Output:
 
 ### 📋 **Form Submission Operations**
 
-| Operation                          | Description                             |
-| ---------------------------------- | --------------------------------------- |
-| 📥 **Get**                         | Fetch complete form submission data     |
-| 👤 **Get Submitter Details**       | Retrieve full user profile of submitter |
-| 🏢 **Get Submission Orgunits**     | View orgunit hierarchy                  |
-| 📍 **Update Submission Orgunits**  | Change visibility by orgunit            |
-| ⏱️ **Calculate Response Duration** | Time from creation to submission        |
+| Operation                          | Description                                       |
+| ---------------------------------- | ------------------------------------------------- |
+| 🔍 **Find by Form**               | Retrieve all submissions for a form with filtering |
+| 📥 **Get**                         | Fetch complete form submission data               |
+| 👤 **Get Submitter Details**       | Retrieve full user profile of submitter           |
+| 🏢 **Get Submission Orgunits**     | View orgunit hierarchy                            |
+| 📍 **Update Submission Orgunits**  | Change visibility by orgunit                      |
+| ⏱️ **Calculate Response Duration** | Time from creation to submission                  |
+
+**Example - Find Submissions by Form:**
+
+```json
+{
+	"resource": "formSubmission",
+	"operation": "findByForm",
+	"contentRef": "699848533ab62d9d50409890",
+	"options": {
+		"limit": 50,
+		"skip": 0,
+		"sortBy": "updatedAt",
+		"sortOrder": -1
+	}
+}
+```
+
+**Find by Form Parameters:**
+
+- **Form Content ID** (required): The content ID of the form (24-character MongoDB ObjectID)
+
+**Options** (all optional):
+
+- **Limit**: Maximum number of results (default: 50)
+- **Skip**: Number of results to skip (pagination)
+- **Sort Field**: Field to sort by (default: `updatedAt`)
+- **Sort Order**: `-1` for descending (newest first), `1` for ascending
 
 **Example - Calculate Response Time:**
 
@@ -642,6 +670,12 @@ npm run lint
 ### v1.4.3 (2026-02-19)
 
 - 🖼️ Changed Image assets to better match n8n's dark theme
+
+### v1.5.0 (2026-02-20) 📋
+
+- 🔍 Added **Find by Form** operation to Form Submission resource — retrieve all submissions for a given form with pagination & sorting
+- 📦 Supports Limit, Skip, Sort Field, Sort Order options (consistent with Content and Task list operations)
+- 🔗 Uses `$sort[_id]=1` tiebreaker for stable pagination across pages
 
 ### v1.4.4 (2026-02-19)
 
