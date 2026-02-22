@@ -414,6 +414,47 @@ Output:
 
 ---
 
+### 🗄️ **Storage Operations**
+
+| Operation           | Description                                               |
+| ------------------- | --------------------------------------------------------- |
+| 🔗 **Get Signed URL** | Generate a pre-signed URL for secure access to a stored file |
+
+**Use case:** Retrieve a signed CloudFront URL for a file attached to a task, form answer, or content item, then pass it directly to an AI vision model for analysis.
+
+**Required fields:**
+
+| Field | Description |
+| ----- | ----------- |
+| **Origin** | The entity type that owns the file (e.g. `Task Form Answer`, `Content Attachment`) |
+| **Origin ID** | The `_id` of the owning entity — use `{{ $json._id }}` from a preceding Keephub node |
+| **Storage ID** | The S3 path of the file — use `{{ $json.answers[N].value.value }}` for upload form answers |
+| **Force Download** | Optional. Sets `Content-Disposition: attachment` to force a file download instead of inline display |
+
+**Example:**
+
+```json
+{
+	"resource": "storage",
+	"operation": "getSignedUrl",
+	"origin": "taskFormAnswer",
+	"originId": "699974e8f6c386b2e3e93cbc",
+	"storageId": "live/image/dev/contents/abc123/photo.jpg"
+}
+```
+
+**Output:**
+
+```json
+{
+	"url": "https://d2qp115j4w1ptn.cloudfront.net/live/image/...?Expires=...&Signature=..."
+}
+```
+
+> ⚠️ The returned URL is time-limited and contains embedded credentials. Treat it as a secret and use it immediately in your workflow — do not log or store it.
+
+---
+
 ## 🔐 Credentials Setup
 
 Keephub uses **two separate credential types** — select the matching authentication method from the **Authentication** dropdown on the Keephub node.
@@ -578,13 +619,15 @@ n8n-nodes-keephub/
 │       │   ├── ContentDescription.ts
 │       │   ├── TaskDescription.ts
 │       │   ├── FormSubmissionDescription.ts
-│       │   └── OrgchartDescription.ts
+│       │   ├── OrgchartDescription.ts
+│       │   └── StorageDescription.ts
 │       ├── actions/                  # Operation implementations
 │       │   ├── user/
 │       │   ├── content/
 │       │   ├── task/
 │       │   ├── formSubmission/
-│       │   └── orgchart/
+│       │   ├── orgchart/
+│       │   └── storage/
 │       └── utils/
 │           └── helpers.ts
 ├── credentials/
@@ -713,6 +756,13 @@ npm run lint
 - ❌ Added **Reject Task** operation — reject a pending task with a required reason
 - ✅ Added **Approve Content** operation — approve content pending approval
 - ❌ Added **Reject Content** operation — reject content pending approval
+
+### v1.7.0 (2026-02-22)
+
+- 🗄️ Added **Storage** resource with **Get Signed URL** operation
+- Generates pre-signed CloudFront URLs for secure file access from tasks, form answers, and content
+- Supports all 11 origin types with inline field hints for common expressions
+- Optional Force Download flag to set `Content-Disposition: attachment`
 
 ---
 

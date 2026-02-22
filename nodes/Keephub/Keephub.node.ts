@@ -11,11 +11,13 @@ import * as formSubmissionActions from './actions/formSubmission/index';
 import * as orgchartActions from './actions/orgchart/index';
 import * as userActions from './actions/user';
 import * as taskActions from './actions/task';
+import * as storageActions from './actions/storage';
 import { contentFields } from './descriptions/ContentDescription';
 import { formSubmissionFields } from './descriptions/FormSubmissionDescription';
 import { orgchartFields } from './descriptions/OrgchartDescription';
 import { taskFields } from './descriptions/TaskDescription';
 import { userFields } from './descriptions/UserDescription';
+import { storageFields } from './descriptions/StorageDescription';
 
 export class Keephub implements INodeType {
 	description: INodeTypeDescription = {
@@ -77,6 +79,7 @@ export class Keephub implements INodeType {
 					{ name: 'Content', value: 'content' },
 					{ name: 'Form Submission', value: 'formSubmission' },
 					{ name: 'Orgchart', value: 'orgchart' },
+					{ name: 'Storage', value: 'storage' },
 					{ name: 'Task', value: 'task' },
 					{ name: 'User', value: 'user' },
 				],
@@ -85,6 +88,7 @@ export class Keephub implements INodeType {
 			...contentFields,
 			...formSubmissionFields,
 			...orgchartFields,
+			...storageFields,
 			...taskFields,
 			...userFields,
 		],
@@ -131,6 +135,9 @@ export class Keephub implements INodeType {
 				getTaskByOrgunit: taskActions.getByOrgunitExecute,
 				approveTask: taskActions.approveTaskExecute,
 				rejectTask: taskActions.rejectTaskExecute,
+			},
+			storage: {
+				getSignedUrl: storageActions.getSignedUrlExecute,
 			},
 			user: {
 				getById: userActions.getByIdExecute,

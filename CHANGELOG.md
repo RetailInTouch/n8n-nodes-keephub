@@ -1,6 +1,14 @@
 ## 📝 Version History
 
-### v1.0.0 (2025-01-09) 🎉
+### v1.7.0 (2026-02-22) 🗄️
+
+- 🗄️ Added **Storage** resource with **Get Signed URL** (`getObject`) operation
+- Generates pre-signed CloudFront URLs for secure access to files stored in Keephub (attachments, images, videos)
+- Supports all 11 origin types: `taskFormAnswer`, `taskAttachment`, `contentAttachment`, `contentVideo`, `formValuesAttachment`, `formValuesVideo`, `tasktemplateAttachment`, `tasktemplateVideo`, `contentTemplateAttachment`, `externalAttachment`, `lessonAttachment`
+- Optional `attachment` flag to force `Content-Disposition: attachment` for downloads
+- Inline field hints guide users to the correct n8n expressions (`{{ $json._id }}`, `{{ $json.answers[N].value.value }}`)
+
+ (2025-01-09) 🎉
 
 - ✨ Initial release
 - 👥 User management operations
