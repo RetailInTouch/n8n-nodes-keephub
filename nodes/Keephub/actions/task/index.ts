@@ -4,3 +4,5 @@ export { execute as getTaskProgressExecute } from './getProgress';
 export { execute as getTaskStatusCountsExecute } from './getStatusCounts';
 export { execute as getByOrgunitExecute} from './getByOrgunit';
 export { execute as deleteTaskExecute } from './delete';
+export { execute as approveTaskExecute } from './approveTask';
+export { execute as rejectTaskExecute } from './rejectTask';

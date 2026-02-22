@@ -9,6 +9,12 @@ export const taskFields: INodeProperties[] = [
 		displayOptions: { show: { resource: ['task'] } },
 		options: [
 			{
+				name: 'Approve Task',
+				value: 'approveTask',
+				description: 'Approve a pending task',
+				action: 'Approve a task',
+			},
+			{
 				name: 'Create',
 				value: 'createTask',
 				description: 'Create a new task template',
@@ -43,6 +49,12 @@ export const taskFields: INodeProperties[] = [
 				value: 'getTaskStatusCounts',
 				description: 'Get task template status counts',
 				action: 'Get status counts for a task template',
+			},
+			{
+				name: 'Reject Task',
+				value: 'rejectTask',
+				description: 'Reject a pending task with a reason',
+				action: 'Reject a task',
 			},
 		],
 
@@ -79,13 +91,38 @@ export const taskFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['task'],
-				operation: ['getTask', 'deleteTask', 'getTaskProgress', 'getTaskStatusCounts'],
+				operation: ['getTask', 'deleteTask', 'getTaskProgress', 'getTaskStatusCounts', 'approveTask', 'rejectTask'],
 			},
 		},
 		default: '',
 		placeholder: '63bd885034d0466d11073575',
 		description: 'The ID of the task',
 		required: true,
+	},
+	{
+		displayName: 'Rejection Reason',
+		name: 'rejectionReason',
+		type: 'string',
+		typeOptions: { rows: 3 },
+		displayOptions: {
+			show: { resource: ['task'], operation: ['rejectTask'] },
+		},
+		default: '',
+		placeholder: 'Reason for rejection here',
+		description: 'The reason this task is being rejected',
+		required: true,
+	},
+	{
+		displayName: 'Approval Comment',
+		name: 'approvalComment',
+		type: 'string',
+		typeOptions: { rows: 3 },
+		displayOptions: {
+			show: { resource: ['task'], operation: ['approveTask'] },
+		},
+		default: '',
+		placeholder: 'Optional comment with approval',
+		description: 'Optional comment to include with the approval',
 	},
 	{
 		displayName: 'Title',

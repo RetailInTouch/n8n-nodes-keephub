@@ -5,3 +5,5 @@ export { execute as findByGroupExecute } from './findByGroup';
 export { execute as findByOrgunitExecute } from './findByOrgunit';
 export { execute as updateByIdExecute } from './updateById';
 export { execute as deleteExecute } from './delete';
+export { execute as approveContentExecute } from './approve';
+export { execute as rejectContentExecute } from './reject';

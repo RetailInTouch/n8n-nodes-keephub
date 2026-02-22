@@ -104,6 +104,8 @@ export class Keephub implements INodeType {
 				findByOrgunit: contentActions.findByOrgunitExecute,
 				updateById: contentActions.updateByIdExecute,
 				delete: contentActions.deleteExecute,
+				approveContent: contentActions.approveContentExecute,
+				rejectContent: contentActions.rejectContentExecute,
 			},
 			formSubmission: {
 				getFormSubmission: formSubmissionActions.getByIdExecute,
@@ -127,6 +129,8 @@ export class Keephub implements INodeType {
 				getTaskStatusCounts: taskActions.getTaskStatusCountsExecute,
 				deleteTask: taskActions.deleteTaskExecute,
 				getTaskByOrgunit: taskActions.getByOrgunitExecute,
+				approveTask: taskActions.approveTaskExecute,
+				rejectTask: taskActions.rejectTaskExecute,
 			},
 			user: {
 				getById: userActions.getByIdExecute,

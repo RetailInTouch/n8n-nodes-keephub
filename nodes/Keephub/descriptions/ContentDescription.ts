@@ -9,6 +9,12 @@ export const contentFields: INodeProperties[] = [
 		displayOptions: { show: { resource: ['content'] } },
 		options: [
 			{
+				name: 'Approve Content',
+				value: 'approveContent',
+				description: 'Approve content pending approval',
+				action: 'Approve content',
+			},
+			{
 				name: 'Create',
 				value: 'create',
 				description: 'Create new content',
@@ -45,6 +51,12 @@ export const contentFields: INodeProperties[] = [
 				action: 'Get content by ID',
 			},
 			{
+				name: 'Reject Content',
+				value: 'rejectContent',
+				description: 'Reject content pending approval',
+				action: 'Reject content',
+			},
+			{
 				name: 'Update by ID',
 				value: 'updateById',
 				description: 'Update content by ID',
@@ -59,11 +71,23 @@ export const contentFields: INodeProperties[] = [
 		name: 'contentId',
 		type: 'string',
 		displayOptions: {
-			show: { resource: ['content'], operation: ['getById', 'updateById', 'delete'] },
+			show: { resource: ['content'], operation: ['getById', 'updateById', 'delete', 'approveContent', 'rejectContent'] },
 		},
 		default: '',
 		placeholder: '63bd885034d0466d11073575',
 		description: 'The ID of the content',
+		required: true,
+	},
+	{
+		displayName: 'Content Type',
+		name: 'approvalContentType',
+		type: 'string',
+		displayOptions: {
+			show: { resource: ['content'], operation: ['approveContent', 'rejectContent'] },
+		},
+		default: '',
+		placeholder: 'news',
+		description: 'The content type of the item being approved or rejected (e.g. news, form, event)',
 		required: true,
 	},
 	{

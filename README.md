@@ -161,12 +161,14 @@ Output:
 
 | Operation                   | Description                                            |
 | --------------------------- | ------------------------------------------------------ |
+| ✅ **Approve Content**      | Approve content that is pending approval               |
 | ✨ **Create**               | Create new content (news, forms, manuals, etc.)        |
 | 🗑️ **Delete**               | Remove content                                         |
 | 📁 **Find by Content Pool** | Filter content by pool with optional sorting           |
 | 🏷️ **Find by Group**        | Get content assigned to groups with optional sorting   |
 | 🏢 **Find by Orgunit**      | Retrieve content by organization with optional sorting |
 | 📖 **Get by ID**            | Retrieve specific content                              |
+| ❌ **Reject Content**       | Reject content that is pending approval                |
 | ✏️ **Update by ID**         | Modify existing content                                |
 
 **Example - Create Content:**
@@ -218,14 +220,16 @@ Output:
 
 ### ✅ **Task Operations**
 
-| Operation                | Description                                                  |
-| ------------------------ | ------------------------------------------------------------ |
-| ➕ **Create**            | Create a new task template                                   |
-| 🗑️ **Delete**            | Remove a task template                                       |
-| 📋 **Get by ID**         | Retrieve a task template                                     |
-| 🔍 **Get By Orgunit**    | Fetch tasks by organization unit with filtering & pagination |
-| 📊 **Get Progress**      | Check task template progress                                 |
-| 📈 **Get Status Counts** | View task completion statistics                              |
+| Operation                        | Description                                                  |
+| -------------------------------- | ------------------------------------------------------------ |
+| ✅ **Approve Task**             | Approve a pending task, with an optional comment             |
+| ➕ **Create**                   | Create a new task template                                   |
+| 🗑️ **Delete**                   | Remove a task template                                       |
+| 📋 **Get by ID**                | Retrieve a task template                                     |
+| 🔍 **Get By Orgunit**           | Fetch tasks by organization unit with filtering & pagination |
+| 📊 **Get Progress**             | Check task template progress                                 |
+| 📈 **Get Status Counts**        | View task completion statistics                              |
+| ❌ **Reject Task**              | Reject a pending task with a required reason                 |
 
 **Example - Create Task with JSON Body:**
 
@@ -671,11 +675,6 @@ npm run lint
 
 - 🖼️ Changed Image assets to better match n8n's dark theme
 
-### v1.5.0 (2026-02-20) 📋
-
-- 🔍 Added **Find by Form** operation to Form Submission resource — retrieve all submissions for a given form with pagination & sorting
-- 📦 Supports Limit, Skip, Sort Field, Sort Order options (consistent with Content and Task list operations)
-- 🔗 Uses `$sort[_id]=1` tiebreaker for stable pagination across pages
 
 ### v1.4.4 (2026-02-19)
 
@@ -701,6 +700,19 @@ npm run lint
 - 🔗 Enhanced URL transformation robustness:
 	- Client URL now auto-normalizes `.api.` subdomain (handles both formats transparently)
 	- Protocol normalization adds `https://` if missing
+
+### v1.5.0 (2026-02-20) 📋
+
+- 🔍 Added **Find by Form** operation to Form Submission resource — retrieve all submissions for a given form with pagination & sorting
+- 📦 Supports Limit, Skip, Sort Field, Sort Order options (consistent with Content and Task list operations)
+- 🔗 Uses `$sort[_id]=1` tiebreaker for stable pagination across pages
+
+### v1.6.0 (2026-02-22)
+
+- ✅ Added **Approve Task** operation — approve a pending task with an optional comment
+- ❌ Added **Reject Task** operation — reject a pending task with a required reason
+- ✅ Added **Approve Content** operation — approve content pending approval
+- ❌ Added **Reject Content** operation — reject content pending approval
 
 ---
 

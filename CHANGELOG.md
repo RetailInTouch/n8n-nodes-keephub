@@ -1,0 +1,85 @@
+## 📝 Version History
+
+### v1.0.0 (2025-01-09) 🎉
+
+- ✨ Initial release
+- 👥 User management operations
+- 📰 Content creation & management
+- ✅ Task template operations
+- 📋 Form submission handling
+- 🔐 Secure API authentication
+
+### v1.1.0 (2025-11-10) 📦
+
+- 📊 Added Orgchart operations (Get, Parent, Ancestors, Children)
+- 🧹 Fixed console.log in updateById operation
+- 🔧 Code cleanup and optimizations
+
+### v1.2.0 (2025-11-12) 🆕
+
+- 🔍 Added Get By Orgunit task operation
+- 📅 Date range filtering support for tasks (Start Date Before/After)
+- 📰 Enhanced Content filtering
+
+### v1.2.1 (2025-11-20)
+
+- 📖 README updates and documentation improvements
+
+### v1.2.2 (2025-11-20)
+
+- 🧹 Build process improvements (added dist folder cleanup script)
+
+### v1.3.0 (2025-12-04)
+
+- 🔍 Added Get by External Ref operation to Orgchart resource for querying nodes by external reference
+
+### v1.3.4 (2025-12-08)
+
+- 🔧 Added externalRef of orgunit to the output of the Get submission orgunits node
+- 🧹 Fixed typo that was causing README rendering issues
+
+### v1.4.0 (2026-02-09) 🔐
+
+- 🔑 **Split credentials** into two separate types: **Keephub Bearer API** and **Keephub Login API**
+- 🛡️ Added `IAuthenticateGeneric` to Bearer credential for automatic header injection
+- 🔀 Added **Authentication** selector dropdown to the node UI (Bearer Token / Login Credentials)
+- 🔌 Updated `inputs`/`outputs` to use `NodeConnectionTypes.Main` (n8n best practice)
+- 📦 Moved non-required fields into **Additional Fields** / **Options** collections:
+  - Content: Limit, Skip, Sort Field, Sort Order → Options
+  - Orgchart: Depth Limit, Result Limit → Additional Fields
+  - Task: Message, Send Notification → Additional Fields; Limit → Options
+- 🧹 Updated helpers to dynamically resolve credentials based on authentication selector
+- 📖 Updated README documentation to reflect all changes
+
+### v1.4.3 (2026-02-19)
+
+- 🖼️ Changed Image assets to better match n8n's dark theme
+
+### v1.4.4 (2026-02-19)
+
+- 🐛 Empty content/task searches now return `[]` instead of throwing error (`findByContentPool`, `findByGroup`, `findByOrgunit`, `task/getByOrgunit`)
+- 🐛 Orgchart node IDs now properly URL-encoded (`getById`, `getParent`, `getAncestors`)
+- 🐛 Added null check for submitter ID in form submissions (`getSubmitterDetails`)
+- 🐛 Fixed double indentation in content delete operation
+- 🐛 Fixed paginated response unwrapping in user `findByLoginName`, `findByGroup`, `findByOrgunit` — now correctly returns individual user items instead of the raw envelope
+- 📋 Added codex metadata with expanded aliases for better node discoverability
+- 🔍 Expanded package keywords from 4 to 19 for better discoverability
+- 🖼️ Optimized icon SVG viewBox to show full logo without cutoff
+- 🖼️ Restored white ellipse border for visibility in dark mode
+- 🔐 Improved credential test behavior for both auth methods
+- 🧩 Renamed Login credential field from **Token Endpoint** to **Auth Endpoint** for clarity
+- 📦 Added `prepublishOnly` guard (`npm run test`) and aligned package Node engine requirement to `>=18.17.0`
+- 🔗 Enhanced URL transformation robustness
+
+### v1.5.0 (2026-02-20) 📋
+
+- 🔍 Added **Find by Form** operation to Form Submission resource — retrieve all submissions for a given form with pagination & sorting
+- 📦 Supports Limit, Skip, Sort Field, Sort Order options (consistent with Content and Task list operations)
+- 🔗 Uses `$sort[_id]=1` tiebreaker for stable pagination across pages
+
+### v1.6.0 (2026-02-22)
+
+- ✅ Added **Approve Task** operation to Task resource — approve a pending task via the `/workflow` endpoint
+- ❌ Added **Reject Task** operation to Task resource — reject a pending task with a required reason via the `/workflow` endpoint
+- ✅ Added **Approve Content** operation to Content resource — approve content pending approval via the `/workflow` endpoint
+- ❌ Added **Reject Content** operation to Content resource — reject content pending approval via the `/workflow` endpoint
