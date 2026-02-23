@@ -1,27 +1,13 @@
 ## 📝 Version History
 
-### v1.7.3 (2026-02-22)
+### v1.8.0 (2026-02-23)
 
-- 📋 Added **Get Task** operation to Task Template resource — fetches a task instance by its ID from `/tasks/{id}`
-
-### v1.7.2 (2026-02-22)
-
-- 🔍 Added **Get Task Template by Task** operation to Task Template resource — resolves the task template for a given task instance ID by first fetching `/tasks/{id}` to extract `templateRef`, then returning the full template from `/tasktemplates/{templateRef}`
-
-### v1.7.1 (2026-02-22)
-
-- 🏷️ Renamed **Task** resource display name to **Task Template**
-- Renamed operations that manage templates: Create, Delete, Get by ID, Get by Orgunit, Get Progress, Get Status Counts → all now carry "Task Template" in their label
-- **Approve Task** and **Reject Task** intentionally kept as-is — they operate on task instances (children), not templates
-- No breaking changes — all internal `value` keys and operation identifiers are unchanged; existing workflows continue to work
-
-### v1.7.0 (2026-02-22) 🗄️
-
-- 🗄️ Added **Storage** resource with **Get Signed URL** (`getObject`) operation
-- Generates pre-signed CloudFront URLs for secure access to files stored in Keephub (attachments, images, videos)
-- Supports all 11 origin types: `taskFormAnswer`, `taskAttachment`, `contentAttachment`, `contentVideo`, `formValuesAttachment`, `formValuesVideo`, `tasktemplateAttachment`, `tasktemplateVideo`, `contentTemplateAttachment`, `externalAttachment`, `lessonAttachment`
-- Optional `attachment` flag to force `Content-Disposition: attachment` for downloads
-- Inline field hints guide users to the correct n8n expressions (`{{ $json._id }}`, `{{ $json.answers[N].value.value }}`)
+- 🗄️ Added **Storage** resource with **Get Signed URL** operation — generates pre-signed CloudFront URLs for secure file access from tasks, form answers, and content
+- Supports all 11 origin types with inline field hints; optional Force Download flag to set `Content-Disposition: attachment`
+- 🏷️ Renamed **Task** resource display label to **Task Template** for clarity across all template-managing operations
+- **Approve Task** and **Reject Task** intentionally kept as-is — no breaking changes
+- 🔍 Added **Get Task Template by Task** operation — resolves a task template from a task instance ID via `/tasks/{id}` → `/tasktemplates/{templateRef}`
+- 📋 Added **Get Task** operation — fetches a task instance directly by its ID from `/tasks/{id}`
 
  (2025-01-09) 🎉
 

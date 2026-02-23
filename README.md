@@ -759,27 +759,14 @@ npm run lint
 - ✅ Added **Approve Content** operation — approve content pending approval
 - ❌ Added **Reject Content** operation — reject content pending approval
 
-### v1.7.0 (2026-02-22)
+### v1.8.0 (2026-02-23)
 
-- 🗄️ Added **Storage** resource with **Get Signed URL** operation
-- Generates pre-signed CloudFront URLs for secure file access from tasks, form answers, and content
-- Supports all 11 origin types with inline field hints for common expressions
-- Optional Force Download flag to set `Content-Disposition: attachment`
-
-### v1.7.1 (2026-02-22)
-
-- 🏷️ Renamed **Task** resource display label to **Task Template** for clarity
-- Renamed template-managing operations: Create, Delete, Get by ID, Get by Orgunit, Get Progress, Get Status Counts → all now carry "Task Template" in their label
-- **Approve Task** and **Reject Task** intentionally kept as-is — they operate on task instances, not templates
-- No breaking changes — all internal `value` keys and operation identifiers are unchanged
-
-### v1.7.2 (2026-02-22)
-
-- 🔍 Added **Get Task Template by Task** operation to Task Template resource — resolves the task template for a given task instance ID by fetching `/tasks/{id}` to extract `templateRef`, then returning the full template from `/tasktemplates/{templateRef}`
-
-### v1.7.3 (2026-02-22)
-
-- 📋 Added **Get Task** operation to Task Template resource — fetches a task instance directly by its ID from `/tasks/{id}`
+- 🗄️ Added **Storage** resource with **Get Signed URL** operation — generates pre-signed CloudFront URLs for secure file access from tasks, form answers, and content
+- Supports all 11 origin types with inline field hints for common expressions; optional Force Download flag
+- 🏷️ Renamed **Task** resource display label to **Task Template** for clarity across all template-managing operations (Create, Delete, Get by ID, Get by Orgunit, Get Progress, Get Status Counts)
+- **Approve Task** and **Reject Task** intentionally kept as-is — they operate on task instances, not templates; no breaking changes
+- 🔍 Added **Get Task Template by Task** operation — resolves a task template from a task instance ID via `/tasks/{id}` → `/tasktemplates/{templateRef}`
+- 📋 Added **Get Task** operation — fetches a task instance directly by its ID from `/tasks/{id}`
 
 ---
 
