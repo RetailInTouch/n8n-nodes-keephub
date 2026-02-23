@@ -2,9 +2,9 @@ import type { INodeExecutionData, IDataObject, IExecuteFunctions } from 'n8n-wor
 import { apiRequest, parseJsonParameter } from '../../utils/helpers';
 
 export const description = {
-	displayName: 'Create',
+	displayName: 'Create Task Template',
 	name: 'createTask',
-	action: 'Create task template',
+	action: 'Create a task template',
 	description: 'Create a new task template',
 };
 

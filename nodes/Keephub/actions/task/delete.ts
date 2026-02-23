@@ -3,9 +3,9 @@ import { NodeOperationError } from 'n8n-workflow';
 import { apiRequest } from '../../utils/helpers';
 
 export const description = {
-	displayName: 'Delete',
+	displayName: 'Delete Task Template',
 	name: 'deleteTask',
-	action: 'Delete task template',
+	action: 'Delete a task template',
 	description: 'Delete a task template',
 };
 

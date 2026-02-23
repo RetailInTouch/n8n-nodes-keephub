@@ -6,3 +6,5 @@ export { execute as getByOrgunitExecute} from './getByOrgunit';
 export { execute as deleteTaskExecute } from './delete';
 export { execute as approveTaskExecute } from './approveTask';
 export { execute as rejectTaskExecute } from './rejectTask';
+export { execute as getTemplateByTaskExecute } from './getTemplateByTask';
+export { execute as getTaskInstanceExecute } from './getTaskInstance';

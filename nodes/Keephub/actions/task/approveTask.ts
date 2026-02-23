@@ -5,7 +5,7 @@ import { apiRequest } from '../../utils/helpers';
 export const description = {
 	displayName: 'Approve Task',
 	name: 'approveTask',
-	action: 'Approve task',
+	action: 'Approve a task',
 	description: 'Approve a pending task',
 };
 

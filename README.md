@@ -218,18 +218,20 @@ Output:
 
 ---
 
-### ✅ **Task Operations**
+### ✅ **Task Template Operations**
 
-| Operation                        | Description                                                  |
-| -------------------------------- | ------------------------------------------------------------ |
-| ✅ **Approve Task**             | Approve a pending task, with an optional comment             |
-| ➕ **Create**                   | Create a new task template                                   |
-| 🗑️ **Delete**                   | Remove a task template                                       |
-| 📋 **Get by ID**                | Retrieve a task template                                     |
-| 🔍 **Get By Orgunit**           | Fetch tasks by organization unit with filtering & pagination |
-| 📊 **Get Progress**             | Check task template progress                                 |
-| 📈 **Get Status Counts**        | View task completion statistics                              |
-| ❌ **Reject Task**              | Reject a pending task with a required reason                 |
+| Operation                                  | Description                                                            |
+| ------------------------------------------ | ---------------------------------------------------------------------- |
+| ✅ **Approve Task**                     | Approve a pending task, with an optional comment              |
+| ➕ **Create Task Template**              | Create a new task template                                             |
+| 🗑️ **Delete Task Template**              | Remove a task template                                                 |
+| 📋 **Get Task**                          | Fetch a task instance by its ID                                        |
+| 📋 **Get Task Template by ID**           | Retrieve a task template by its own ID                                 |
+| 🔍 **Get Task Template by Task**         | Fetch the template a specific task instance was created from           |
+| 🔍 **Get Task Templates by Orgunit**     | Fetch task templates by organization unit with filtering & pagination  |
+| 📊 **Get Task Template Progress**        | Check task template progress                                           |
+| 📈 **Get Task Template Status Counts**   | View task template completion statistics                               |
+| ❌ **Reject Task**                      | Reject a pending task with a required reason                           |
 
 **Example - Create Task with JSON Body:**
 
@@ -286,19 +288,19 @@ Output:
 }
 ```
 
-**Task Create Parameters:**
+**Task Template Create Parameters:**
 
-- **Task Title** (required): Name of the task
+- **Task Title** (required): Name of the task template
 - **Task Type** (required): `form`, `confirmation`, or `read`
 
 **Additional Fields** (optional):
 
-- **Message**: Custom message body for the task
+- **Message**: Custom message body for the task template
 - **Send Notification**: Whether to notify assigned users (`true`/`false`)
 
-**Task Get by Orgunit Parameters:**
+**Task Template Get by Orgunit Parameters:**
 
-- **Orgunit ID** (required): The organization unit ID to filter tasks
+- **Orgunit ID** (required): The organization unit ID to filter task templates
 
 **Options** (all optional):
 
@@ -763,6 +765,21 @@ npm run lint
 - Generates pre-signed CloudFront URLs for secure file access from tasks, form answers, and content
 - Supports all 11 origin types with inline field hints for common expressions
 - Optional Force Download flag to set `Content-Disposition: attachment`
+
+### v1.7.1 (2026-02-22)
+
+- 🏷️ Renamed **Task** resource display label to **Task Template** for clarity
+- Renamed template-managing operations: Create, Delete, Get by ID, Get by Orgunit, Get Progress, Get Status Counts → all now carry "Task Template" in their label
+- **Approve Task** and **Reject Task** intentionally kept as-is — they operate on task instances, not templates
+- No breaking changes — all internal `value` keys and operation identifiers are unchanged
+
+### v1.7.2 (2026-02-22)
+
+- 🔍 Added **Get Task Template by Task** operation to Task Template resource — resolves the task template for a given task instance ID by fetching `/tasks/{id}` to extract `templateRef`, then returning the full template from `/tasktemplates/{templateRef}`
+
+### v1.7.3 (2026-02-22)
+
+- 📋 Added **Get Task** operation to Task Template resource — fetches a task instance directly by its ID from `/tasks/{id}`
 
 ---
 

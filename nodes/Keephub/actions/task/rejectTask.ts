@@ -5,7 +5,7 @@ import { apiRequest } from '../../utils/helpers';
 export const description = {
 	displayName: 'Reject Task',
 	name: 'rejectTask',
-	action: 'Reject task',
+	action: 'Reject a task',
 	description: 'Reject a pending task with a reason',
 };
 

@@ -80,7 +80,7 @@ export class Keephub implements INodeType {
 					{ name: 'Form Submission', value: 'formSubmission' },
 					{ name: 'Orgchart', value: 'orgchart' },
 					{ name: 'Storage', value: 'storage' },
-					{ name: 'Task', value: 'task' },
+					{ name: 'Task Template', value: 'task' },
 					{ name: 'User', value: 'user' },
 				],
 				default: 'content',
@@ -128,6 +128,8 @@ export class Keephub implements INodeType {
 			},
 			task: {
 				getTask: taskActions.getByIdExecute,
+				getTaskInstance: taskActions.getTaskInstanceExecute,
+				getTemplateByTask: taskActions.getTemplateByTaskExecute,
 				createTask: taskActions.createTaskExecute,
 				getTaskProgress: taskActions.getTaskProgressExecute,
 				getTaskStatusCounts: taskActions.getTaskStatusCountsExecute,
