@@ -17,11 +17,13 @@ export const taskFields: INodeProperties[] = [
 			{
 				name: 'Create Task Template',
 				value: 'createTask',
+				description: 'Create a new task template',
 				action: 'Create a task template',
 			},
 			{
 				name: 'Delete Task Template',
 				value: 'deleteTask',
+				description: 'Delete a task template by ID',
 				action: 'Delete a task template',
 			},
 			{
@@ -33,6 +35,7 @@ export const taskFields: INodeProperties[] = [
 			{
 				name: 'Get Task Template by ID',
 				value: 'getTask',
+				description: 'Fetch a task template by its ID',
 				action: 'Get a task template by ID',
 			},
 			{
@@ -44,16 +47,19 @@ export const taskFields: INodeProperties[] = [
 			{
 				name: 'Get Task Template Progress',
 				value: 'getTaskProgress',
+				description: 'Get completion progress for a task template',
 				action: 'Get progress for a task template',
 			},
 			{
 				name: 'Get Task Template Status Counts',
 				value: 'getTaskStatusCounts',
+				description: 'Get status distribution counts for a task template',
 				action: 'Get status counts for a task template',
 			},
 			{
 				name: 'Get Task Templates by Orgunit',
 				value: 'getTaskByOrgunit',
+				description: 'Find all task templates for a specific organization unit',
 				action: 'Get task templates by orgunit',
 			},
 			{

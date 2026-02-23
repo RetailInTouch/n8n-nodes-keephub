@@ -1,5 +1,9 @@
 ## 📝 Version History
 
+### v1.8.1 (2026-02-23)
+
+- 🐛 Fixed missing `description` property on six Task Template operations (Create, Delete, Get by ID, Progress, Status Counts, By Orgunit) — these were not visible on the [n8n integrations page](https://n8n.io/integrations/keephub/)
+
 ### v1.8.0 (2026-02-23)
 
 - 🗄️ Added **Storage** resource with **Get Signed URL** operation — generates pre-signed CloudFront URLs for secure file access from tasks, form answers, and content

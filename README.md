@@ -768,6 +768,10 @@ npm run lint
 - 🔍 Added **Get Task Template by Task** operation — resolves a task template from a task instance ID via `/tasks/{id}` → `/tasktemplates/{templateRef}`
 - 📋 Added **Get Task** operation — fetches a task instance directly by its ID from `/tasks/{id}`
 
+### v1.8.1 (2026-02-23)
+
+- 🐛 Fixed missing `description` property on six Task Template operations (Create, Delete, Get by ID, Progress, Status Counts, By Orgunit) — these were not visible on the [n8n integrations page](https://n8n.io/integrations/keephub/)
+
 ---
 
 ## 🤝 Contributing

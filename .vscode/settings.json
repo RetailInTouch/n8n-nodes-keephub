@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^python3 << 'PYEOF'\nimport json\n\npath = '/home/niksha/n8n-workspace/n8n-nodes-keephub/qc-workflow-v2\\.json'\nwith open\\(path\\) as f:\n    wf = json\\.load\\(f\\)\n\nnodes = \\{n\\['name'\\]: n for n in wf\\['nodes'\\]\\}\ncode = nodes\\['Parse Agent Output'\\]\\['parameters'\\]\\['jsCode'\\]\nprint\\(\"=== Parse Agent Output ===\"\\)\nfor i, line in enumerate\\(code\\.split\\('\\\\n'\\), 1\\):\n    print\\(f\"\\{i:3\\}: \\{line\\}\"\\)\nPYEOF$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
