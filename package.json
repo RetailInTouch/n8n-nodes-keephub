@@ -80,5 +80,15 @@
 	},
 	"peerDependencies": {
 		"n8n-workflow": "*"
+	},
+	"//overrides": "Patched transitive devDependencies. All stay inside their existing major, so no consumer API changes. Nothing here ships: this package has no runtime dependencies and publishes only dist/, so these only ever affect the build and lint toolchain. Revisit when @n8n/node-cli ships a newer eslint-plugin-n8n-nodes-base.",
+	"overrides": {
+		"handlebars": "^4.7.9",
+		"form-data": "^4.0.6",
+		"eslint-plugin-n8n-nodes-base": {
+			"@typescript-eslint/typescript-estree": {
+				"minimatch": "^9.0.9"
+			}
+		}
 	}
 }
