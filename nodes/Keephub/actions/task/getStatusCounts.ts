@@ -25,7 +25,10 @@ export async function execute(
 	const response = (await apiRequest.call(
 		this,
 		'GET',
-		`/tasktemplates/${encodeURIComponent(taskId)}`,
+		// See getProgress.ts: without management=true the counts read below can
+		// come back undefined, because progress is then an array of per-orgunit
+		// entries with the numbers nested one level deeper.
+		`/tasktemplates/${encodeURIComponent(taskId)}?management=true`,
 	)) as IDataObject;
 
 	const progressArray = (response.progress as IDataObject[]) || [];

@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-keephub",
-	"version": "1.8.1",
+	"version": "1.9.0",
 	"description": "Keephub integration node for n8n workflow automation",
 	"longDescription": "Keephub is your AI-powered frontline employee platform. Connect teams across communication, scheduling, HR admin, tasks, and audits—all from one hub. With n8n, automate workflows that sync schedules, trigger HR actions, coordinate communications, and manage tasks across your entire tech stack.",
 	"license": "MIT",
@@ -51,7 +51,8 @@
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
 		"format": "prettier --write .",
-		"test": "npm run lint && npm run build"
+		"test": "npm run lint && npm run build && npm run verify:reminder",
+		"verify:reminder": "node scripts/verify-reminder.js"
 	},
 	"n8n": {
 		"n8nNodesApiVersion": 1,

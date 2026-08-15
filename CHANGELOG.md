@@ -1,5 +1,12 @@
 ## 📝 Version History
 
+### v1.9.0 (2026-08-15)
+
+- 🔔 Added **Send Task Reminder** operation — reminds everyone who still has a task template open, via `PUT /tasktemplates/{id}?_id={id}&action=reminder`
+- Optional **Verify Reminder Was Sent** (on by default) reads the template back and returns `lastReminderAt`, so a reminder that did not land shows as `verified: false` instead of silent success
+- 🐛 **Get Task Template Progress** and **Get Task Template Status Counts** now request `?management=true` — without it the API can return `progress` as one entry per orgunit, with the counts nested under `directTaskStatusCount`/`zoiTaskStatusCount`, and every field these operations read came back `undefined`
+- ⚙️ **Get Task Template by ID** gained a **Management View** option — adds `lastReminderAt` and `canEdit`, and returns progress as a single aggregated entry. Off by default, so existing workflows see no change
+
 ### v1.8.1 (2026-02-23)
 
 - 🐛 Fixed missing `description` property on six Task Template operations (Create, Delete, Get by ID, Progress, Status Counts, By Orgunit) — these were not visible on the [n8n integrations page](https://n8n.io/integrations/keephub/)
