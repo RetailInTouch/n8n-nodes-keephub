@@ -5,3 +5,9 @@ dist/
 *.log
 .DS_Store
 .github/
+workflow-*.json
+openapi.json
+.n8n-local
+workflows/
+.claude/
+.playwright-mcp/
