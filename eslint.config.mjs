@@ -10,6 +10,11 @@ export default [
 	// @n8n/node-cli's shared config ignores dist today. This keeps it ignored if
 	// that ever changes, or when eslint runs from a different working directory
 	// (editor integrations, CI steps invoking eslint directly).
-	{ ignores: ['dist/**'] },
+	// `**/dist/**`, not `dist/**`: flat-config ignore patterns are anchored to the
+	// config's directory, so `dist/**` misses build output nested any deeper. Git
+	// worktrees live under .claude/worktrees/<name>/, inside the repo, so a plain
+	// `eslint .` at the root walks straight into a worktree's compiled dist and
+	// fails there — while the same command passes inside the worktree itself.
+	{ ignores: ['**/dist/**', '.claude/**'] },
 	...config,
 ];
