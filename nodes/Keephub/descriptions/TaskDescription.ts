@@ -68,6 +68,12 @@ export const taskFields: INodeProperties[] = [
 				description: 'Reject a pending task with a reason',
 				action: 'Reject a task',
 			},
+			{
+				name: 'Send Task Reminder',
+				value: 'sendTaskReminder',
+				description: 'Send a reminder to everyone who still has this task template open',
+				action: 'Send a reminder for a task template',
+			},
 		],
 
 		default: 'createTask',
@@ -103,7 +109,15 @@ export const taskFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['task'],
-				operation: ['getTask', 'deleteTask', 'getTaskProgress', 'getTaskStatusCounts', 'approveTask', 'rejectTask'],
+				operation: [
+					'getTask',
+					'deleteTask',
+					'getTaskProgress',
+					'getTaskStatusCounts',
+					'approveTask',
+					'rejectTask',
+					'sendTaskReminder',
+				],
 			},
 		},
 		default: '',
@@ -195,6 +209,54 @@ export const taskFields: INodeProperties[] = [
 				default: 'Europe/Amsterdam',
 				placeholder: 'Europe/Amsterdam',
 				description: 'IANA timezone for the task schedule (e.g. Europe/London, America/New_York)',
+			},
+		],
+	},
+	{
+		displayName: 'Options',
+		name: 'options',
+		type: 'collection',
+		displayOptions: {
+			show: {
+				resource: ['task'],
+				operation: ['sendTaskReminder'],
+			},
+		},
+		default: {},
+		noDataExpression: true,
+		placeholder: 'Add option',
+		options: [
+			{
+				displayName: 'Verify Reminder Was Sent',
+				name: 'verify',
+				type: 'boolean',
+				default: true,
+				description:
+					'Whether to read the template back afterwards and return its lastReminderAt timestamp. Costs one extra API call, and turns a reminder that silently did not land into a visible result.',
+			},
+		],
+	},
+	{
+		displayName: 'Options',
+		name: 'options',
+		type: 'collection',
+		displayOptions: {
+			show: {
+				resource: ['task'],
+				operation: ['getTask'],
+			},
+		},
+		default: {},
+		noDataExpression: true,
+		placeholder: 'Add option',
+		options: [
+			{
+				displayName: 'Management View',
+				name: 'management',
+				type: 'boolean',
+				default: false,
+				description:
+					'Whether to request the management view. Adds lastReminderAt and canEdit, and returns progress as one aggregated entry instead of one per orgunit.',
 			},
 		],
 	},

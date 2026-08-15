@@ -25,7 +25,11 @@ export async function execute(
 	const response = (await apiRequest.call(
 		this,
 		'GET',
-		`/tasktemplates/${encodeURIComponent(taskId)}`,
+		// management=true returns the aggregated progress entry this operation
+		// reads (done/open/approval/orgunits). Without it the API can answer with
+		// per-orgunit entries whose counts sit under directTaskStatusCount and
+		// zoiTaskStatusCount instead, and every field below comes back undefined.
+		`/tasktemplates/${encodeURIComponent(taskId)}?management=true`,
 	)) as IDataObject;
 
 	const progressArray = (response.progress as IDataObject[]) || [];

@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-keephub",
-	"version": "1.8.1",
+	"version": "1.9.0",
 	"description": "Keephub integration node for n8n workflow automation",
 	"longDescription": "Keephub is your AI-powered frontline employee platform. Connect teams across communication, scheduling, HR admin, tasks, and audits—all from one hub. With n8n, automate workflows that sync schedules, trigger HR actions, coordinate communications, and manage tasks across your entire tech stack.",
 	"license": "MIT",
@@ -51,7 +51,8 @@
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
 		"format": "prettier --write .",
-		"test": "npm run lint && npm run build"
+		"test": "npm run lint && npm run build && npm run verify:reminder",
+		"verify:reminder": "node scripts/verify-reminder.js"
 	},
 	"n8n": {
 		"n8nNodesApiVersion": 1,
@@ -71,8 +72,6 @@
 		"@eslint/js": "^9.39.1",
 		"@n8n/node-cli": "^0.14.0",
 		"@types/node": "^20.19.24",
-		"@typescript-eslint/eslint-plugin": "^7.0.0",
-		"@typescript-eslint/parser": "^7.0.0",
 		"eslint": "^9.39.1",
 		"n8n-workflow": "^1.0.0",
 		"prettier": "^3.6.2",
@@ -81,5 +80,15 @@
 	},
 	"peerDependencies": {
 		"n8n-workflow": "*"
+	},
+	"//overrides": "Patched transitive devDependencies. All stay inside their existing major, so no consumer API changes. Nothing here ships: this package has no runtime dependencies and publishes only dist/, so these only ever affect the build and lint toolchain. Revisit when @n8n/node-cli ships a newer eslint-plugin-n8n-nodes-base.",
+	"overrides": {
+		"handlebars": "^4.7.9",
+		"form-data": "^4.0.6",
+		"eslint-plugin-n8n-nodes-base": {
+			"@typescript-eslint/typescript-estree": {
+				"minimatch": "^9.0.9"
+			}
+		}
 	}
 }

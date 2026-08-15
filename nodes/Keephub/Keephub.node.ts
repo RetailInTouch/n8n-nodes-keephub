@@ -137,6 +137,7 @@ export class Keephub implements INodeType {
 				getTaskByOrgunit: taskActions.getByOrgunitExecute,
 				approveTask: taskActions.approveTaskExecute,
 				rejectTask: taskActions.rejectTaskExecute,
+				sendTaskReminder: taskActions.sendTaskReminderExecute,
 			},
 			storage: {
 				getSignedUrl: storageActions.getSignedUrlExecute,

@@ -8,3 +8,4 @@ export { execute as approveTaskExecute } from './approveTask';
 export { execute as rejectTaskExecute } from './rejectTask';
 export { execute as getTemplateByTaskExecute } from './getTemplateByTask';
 export { execute as getTaskInstanceExecute } from './getTaskInstance';
+export { execute as sendTaskReminderExecute } from './sendReminder';
