@@ -1,0 +1,50 @@
+name: Publish to n8n S3 (Manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build
+        run: npm run build
+      
+      - name: Create tarball
+        run: tar -C dist -czf n8n-custom-node.tar.gz nodes credentials icons
+      
+      - name: Upload to S3
+        run: |
+          aws s3 cp n8n-custom-node.tar.gz s3://${{ secrets.AWS_S3_BUCKET }}/n8n/n8n-custom-node.tar.gz --acl public-read
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'us-east-1'
+      
+      - name: 📢 Notify Deployment
+        run: |
+          echo "✅ Deployed to ${{ inputs.environment }}"
+          echo "📦 Package: n8n-custom-node.tar.gz"
+          echo "🔗 S3 Bucket: ${{ secrets.AWS_S3_BUCKET }}"
+          echo "⚠️ Remember to restart your n8n pod!"

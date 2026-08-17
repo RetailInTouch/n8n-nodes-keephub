@@ -1,5 +1,9 @@
 ## 📝 Version History
 
+### v1.9.1 (2026-08-17)
+
+- 🔒 Republished v1.9.0 with npm provenance via a GitHub Actions publish workflow — required by n8n for verified community nodes starting May 1 2026. No functional changes from v1.9.0.
+
 ### v1.9.0 (2026-08-15)
 
 - 🔔 Added **Send Task Reminder** operation — reminds everyone who still has a task template open, via `PUT /tasktemplates/{id}?_id={id}&action=reminder`

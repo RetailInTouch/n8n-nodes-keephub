@@ -175,7 +175,9 @@ export class Keephub implements INodeType {
 					});
 					continue;
 				}
-				throw error;
+				// NodeOperationError's constructor returns the same instance unchanged
+				// when `error` is already a NodeOperationError, so this also re-throws unwrapped.
+				throw new NodeOperationError(this.getNode(), error as Error, { itemIndex: i });
 			}
 		}
 

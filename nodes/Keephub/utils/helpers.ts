@@ -16,10 +16,11 @@ const tokenCache = new WeakMap<object, string>();
 
 /**
  * Generates API URL from client URL by inserting 'api' subdomain
+ * @param this - The execution context
  * @param clientUrl - The client URL to convert
  * @returns The API URL
  */
-export function generateApiUrl(clientUrl: string): string {
+export function generateApiUrl(this: IExecuteFunctions, clientUrl: string): string {
 	try {
 		let raw = clientUrl;
 		if (!/^https?:\/\//i.test(raw)) {
@@ -43,7 +44,7 @@ export function generateApiUrl(clientUrl: string): string {
 
 		return clientUrl;
 	} catch {
-		throw new Error(`Invalid client URL: ${clientUrl}`);
+		throw new NodeOperationError(this.getNode(), `Invalid client URL: ${clientUrl}`);
 	}
 }
 
@@ -107,7 +108,7 @@ export async function acquireApiToken(this: IExecuteFunctions): Promise<string> 
 	}
 
 	// Login credentials flow
-	const baseUrl = generateApiUrl(credentials.clientUrl);
+	const baseUrl = generateApiUrl.call(this, credentials.clientUrl);
 	const loginName = credentials.loginName as string;
 	const password = credentials.password as string;
 	const tokenEndpoint = credentials.authEndpoint || credentials.tokenEndpoint || '/authentication';
@@ -136,9 +137,8 @@ export async function acquireApiToken(this: IExecuteFunctions): Promise<string> 
 
 		return token;
 	} catch (error) {
-		if (error instanceof NodeApiError) {
-			throw error;
-		}
+		// NodeApiError's constructor returns the same instance unchanged when
+		// `error` is already a NodeApiError, so this also re-throws unwrapped.
 		throw new NodeApiError(this.getNode(), error as JsonObject, {
 			message: 'Failed to authenticate with Keephub',
 		});
@@ -161,7 +161,7 @@ export async function apiRequest(
 ): Promise<IDataObject> {
 	const { credentials } = await getActiveCredentials.call(this);
 
-	const baseUrl = generateApiUrl(credentials.clientUrl);
+	const baseUrl = generateApiUrl.call(this, credentials.clientUrl);
 	const apiToken = await acquireApiToken.call(this);
 	const language = credentials.language || 'en';
 

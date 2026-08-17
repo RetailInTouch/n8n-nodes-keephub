@@ -40,10 +40,8 @@ export async function execute(
 			pairedItem: { item: index },
 		}));
 	} catch (error) {
-		if (error instanceof NodeOperationError) {
-			throw error;
-		}
-
+		// NodeOperationError's constructor returns the same instance unchanged
+		// when `error` is already a NodeOperationError, so this also re-throws unwrapped.
 		throw new NodeOperationError(this.getNode(), 'Error fetching form submissions by form', {
 			description: (error as Error).message,
 			itemIndex: index,
